@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tất Tần Tập | Tất để đi, tập để ghi</title>
+
+  <!-- Link tới file CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="header-top">
+      <!-- Logo -->
+      <a class="logo" href="index.html">
+        <img src="Tattantap_logo1.png" alt="Tất Tần Tập logo" />
+      </a>
+
+      <!-- NAV / CATEGORIES -->
+        <nav class="main-nav">
+          <ul>
+            <li><a href="Main.html">Trang chủ</a></li>      
+            <li><a href="products.html">Sản phẩm</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li>
+            <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          </ul>
+        </nav>
+
+      <!-- SEARCH + ACCOUNT + CART -->
+      <div class="header-actions">
+        <form class="search-form" action="#" method="get">
+          <input type="search" name="q" placeholder="Tìm sản phẩm..." />
+        </form>
+        <!-- <a class="cart-link" href="#">Giỏ hàng (0)</a> -->
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== HERO / BANNER ========== -->
+  <section class="hero">
+    <img src="banner.png" alt="Banner Tất Tần Tập" />
+    <div class="hero-inner">
+      <h1>Tất Tần Tập</h1>
+      <p class="tagline">Tất để đi, tập để ghi</p>
+    </div>
+  </section>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="site-main">
+
+        <!-- Features -->
+    <section class="features">
+      <div class="feature">
+        <h3>Chất lượng chọn lọc</h3>
+        <p>Mỗi đôi tất và cuốn tập đều được lựa chọn kỹ lưỡng để mang lại cảm giác thoải mái và tinh tế.</p>
+      </div>
+      <div class="feature">
+        <h3>Thiết kế tối giản</h3>
+        <p>Trắng tinh, sạch sẽ, phù hợp với mọi phong cách — từ trường học đến văn phòng.</p>
+      </div>
+      <div class="feature">
+        <h3>Giao hàng nhanh</h3>
+        <p>Đặt hôm nay, nhận ngay trong 2–3 ngày trên toàn quốc.</p>
+      </div>
+    </section>
+
+    <!-- ========== PRODUCT GRID ========== -->
+    <section id="products" class="product-section">
+      <header class="section-header">
+        <h2>Sản phẩm của chúng tôi</h2>
+      </header>
+
+      <div class="product-grid">
+        <!-- Tất trắng -->
+        <article class="product-card">
+          <a class="product-media" href="#">
+            <img src="tat_trang.jpg" alt="Tất trắng">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="#">Tất trắng tinh</a></h3>
+            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
+            <div class="product-footer">
+              <span class="price">35.000₫ / đôi</span>
+              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Tập thiết kế -->
+        <article class="product-card">
+          <a class="product-media" href="#">
+            <img src="so_thietke.jpg" alt="Sổ thiết kế">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="#">Tập thiết kế tối giản</a></h3>
+            <p class="product-meta">Bìa kraft, giấy trắng mịn, dễ viết & vẽ</p>
+            <div class="product-footer">
+              <span class="price">45.000₫ / quyển</span>
+              <button class="add-to-cart" data-product-id="tap">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ========== SUBSCRIPTION / PROMO ========== -->
+    <section class="promo">
+      <div class="promo-inner">
+        <h2>Bộ quà Tất & Tập</h2>
+        <p>Combo nhỏ gọn, tinh tế — món quà ý nghĩa cho người bạn đồng hành trên mọi hành trình.</p>
+        <a class="btn-secondary" href="#">Mua combo ngay</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+      <div class="footer-support">
+        <ul>
+          <li><a href="#">Facebook: Tất Tần Tập</a></li>
+          <li><a href="#">Liên hệ hỗ trợ: 01234 123 123</a></li>
+        </ul>
+      </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Tất Tần Tập. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Giả lập thêm vào giỏ
+    const cartButtons = document.querySelectorAll('.add-to-cart');
+    cartButtons.forEach(btn => {
+      btn.addEventListener('click', () => alert('Đã thêm vào giỏ hàng!'));
+    });
+  </script>
+
+</body>
+</html>

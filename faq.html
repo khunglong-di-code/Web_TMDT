@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Câu hỏi thường gặp | Tất Tần Tập</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* FAQ layout */
+    .faq-section {
+      padding: 60px 10%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-section h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    .faq-item {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question {
+      padding: 18px 20px;
+      background: #f8f8f8;
+      cursor: pointer;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .faq-question::after {
+      content: "+";
+      position: absolute;
+      right: 20px;
+      font-size: 1.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.active .faq-question::after {
+      content: "–";
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 18px 20px;
+      background: #fff;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="header-top">
+      <a class="logo" href="index.html">
+        <img src="Tattantap_logo1.png" alt="Tất Tần Tập logo" />
+      </a>
+
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>      
+          <li><a href="products.html">Sản phẩm</a></li>
+          <li><a href="about.html">Về chúng tôi</a></li>
+          <li><a href="faq.html" class="active">Câu hỏi thường gặp</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== FAQ CONTENT ========== -->
+  <main class="faq-section">
+    <h1>Câu hỏi thường gặp</h1>
+
+    <div class="faq-item">
+      <div class="faq-question">⏱ Muộn nhất thì bao lâu nhận được hàng?</div>
+      <div class="faq-answer">Thời gian giao hàng tối đa là 3 ngày làm việc, tuỳ theo địa chỉ và khu vực của bạn.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">📞 Nếu có vấn đề về hàng hóa thì liên hệ ai?</div>
+      <div class="faq-answer">Bạn có thể liên hệ hotline <strong>0987 654 321</strong> hoặc email <strong>support@tattantap.vn</strong> để được hỗ trợ nhanh nhất.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">🧦 Tất làm từ chất liệu gì?</div>
+      <div class="faq-answer">Tất của chúng tôi được làm từ 90% cotton tự nhiên và 10% sợi spandex, mang lại độ co giãn và thoáng khí tối đa.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">👣 Tất có vừa với mọi size chân không?</div>
+      <div class="faq-answer">Có! Tất được dệt co giãn linh hoạt, phù hợp với hầu hết kích cỡ chân nam và nữ.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">📓 Tập có loại dòng kẻ khác không?</div>
+      <div class="faq-answer">Hiện tại chúng tôi chỉ có loại <strong>dòng kẻ ngang tiêu chuẩn</strong>, phù hợp cho ghi chép và học tập.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">🖋 Tập bằng giấy có dễ bị nhòe mực không?</div>
+      <div class="faq-answer">Không. Giấy của <strong>Tất Tần Tập</strong> có độ dày 100gsm, bề mặt nhẵn, bám mực tốt và không lem khi viết bút mực hoặc bút gel.</div>
+    </div>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer">
+    <div class="footer-bottom">
+      <p>© 2025 Tất Tần Tập. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
