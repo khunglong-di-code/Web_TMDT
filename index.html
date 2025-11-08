@@ -4,8 +4,6 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tất Tần Tập | Tất để đi, tập để ghi</title>
-
-  <!-- Link tới file CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,12 +11,9 @@
   <!-- ========== HEADER ========== -->
   <header class="site-header">
     <div class="header-top">
-      <!-- Logo -->
       <a class="logo" href="index.html">
         <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
       </a>
-
-      <!-- NAV / CATEGORIES -->
         <nav class="main-nav">
           <ul>
             <li><a href="index.html">Trang chủ</a></li>      
@@ -28,12 +23,8 @@
           </ul>
         </nav>
 
-      <!-- SEARCH + ACCOUNT + CART -->
       <div class="header-actions">
-        <form class="search-form" action="#" method="get">
-          <input type="search" name="q" placeholder="Tìm sản phẩm..." />
-        </form>
-        <!-- <a class="cart-link" href="#">Giỏ hàng (0)</a> -->
+        <a class="cart-link" href="cart.html">Giỏ hàng (0)</a>
       </div>
     </div>
   </header>
@@ -69,25 +60,69 @@
     <!-- ========== PRODUCT GRID ========== -->
     <section id="products" class="product-section">
       <header class="section-header">
-        <h2>Sản phẩm của chúng tôi</h2>
+        <h2>
+          <a class="product_head" href="products.html">Sản phẩm của chúng tôi</a> 
+        </h2>
       </header>
 
       <div class="product-grid">
-        <!-- Tất trắng -->
+        
         <article class="product-card">
           <a class="product-media" href="#">
             <img src="image/1.png" alt="Tất trắng">
           </a>
           <div class="product-body">
-            <h3 class="product-title"><a href="#">Tất trắng tinh</a></h3>
+            <h3 class="product-title"><a href="#">Tất cổ ngắn</a></h3>
             <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
             <div class="product-footer">
-              <span class="price">35.000₫ / đôi</span>
+              <span class="price">10.000₫ / đôi</span>
+              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </article>
+        
+        <article class="product-card">
+          <a class="product-media" href="#">
+            <img src="image/tatcolung1.jpg" alt="Tất trắng">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="#">Tất cổ lửng 1</a></h3>
+            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
+            <div class="product-footer">
+              <span class="price">12.000₫ / đôi</span>
               <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
             </div>
           </div>
         </article>
 
+        <article class="product-card">
+          <a class="product-media" href="#">
+            <img src="image/tatcolung2.jpg" alt="Tất trắng">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="#">Tất cổ lửng 2 </a></h3>
+            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
+            <div class="product-footer">
+              <span class="price">15.000₫ / đôi</span>
+              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <a class="product-media" href="#">
+            <img src="image/tatcodai.jpg" alt="Tất trắng">
+          </a>
+          <div class="product-body">
+            <h3 class="product-title"><a href="#">Tất cổ dài</a></h3>
+            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
+            <div class="product-footer">
+              <span class="price">18.000₫ / đôi</span>
+              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </article>
+        
         <!-- Tập thiết kế -->
         <article class="product-card">
           <a class="product-media" href="#">
@@ -97,7 +132,7 @@
             <h3 class="product-title"><a href="#">Tập thiết kế tối giản</a></h3>
             <p class="product-meta">Bìa kraft, giấy trắng mịn, dễ viết & vẽ</p>
             <div class="product-footer">
-              <span class="price">45.000₫ / quyển</span>
+              <span class="price">35.000₫ / quyển</span>
               <button class="add-to-cart" data-product-id="tap">Thêm vào giỏ</button>
             </div>
           </div>
@@ -119,7 +154,12 @@
   <!-- ========== FOOTER ========== -->
       <div class="footer-support">
         <ul>
-          <li><a href="#">Facebook: Tất Tần Tập</a></li>
+          <li>
+            <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
+              Facebook: Tất Tần Tập
+            </a>
+          </li>
+
           <li><a href="#">Liên hệ hỗ trợ: 01234 123 123</a></li>
         </ul>
       </div>
