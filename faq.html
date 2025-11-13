@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Câu hỏi thường gặp | Tất Tần Tập</title>
+   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <style>
     /* FAQ layout */
@@ -121,22 +123,37 @@
     </div>
   </main>
 
-  <!-- ========== FOOTER ========== -->
+  <!-- ========== FOOTER (Từ index.html) ========== -->
   <footer class="site-footer">
+    <div class="footer-info">
+      <h3>Tất Tần Tập Shop</h3>
+      <p>Địa chỉ: Số 29 Ngõ Hòa Bình 7, Minh Khai, Hai Bà Trưng, Hà Nội</p>
+      <p>Đại diện: Đào Tất Thành</p>
+      <p>Điện thoại: <a href="tel:0967067332">0967 067 332</a></p>
+      <p>Email: <a href="mailto:lienhe@tattantap.com">lienhe@tattantap.com</a></p>
+    </div>
+
+    <div class="footer-support">
+      <ul>
+        <li>
+          <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
+            Facebook: Tất Tần Tập
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/tattantap/" target="_blank" rel="noopener noreferrer">
+            Instagram: @tattantap
+          </a>
+        </li>
+        <li>
+          <a href="tel:01234123123">Liên hệ hỗ trợ: 0967 067 332</a>
+        </li>
+      </ul>
+    </div>
+
     <div class="footer-bottom">
       <p>© 2025 Tất Tần Tập. All rights reserved.</p>
     </div>
   </footer>
-
-  <script>
-    // FAQ accordion logic
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-      item.querySelector('.faq-question').addEventListener('click', () => {
-        item.classList.toggle('active');
-      });
-    });
-  </script>
-
 </body>
 </html>
