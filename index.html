@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Tất Tần Tập | Tất để đi, tập để ghi</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ========== HEADER ========== -->
+<!-- ========== HEADER (Từ index.html) ========== -->
   <header class="site-header">
     <div class="header-top">
       <a class="logo" href="index.html">
@@ -16,15 +18,18 @@
       </a>
         <nav class="main-nav">
           <ul>
-            <li><a href="index.html">Trang chủ</a></li>      
+            <li><a href="index.html"  class="active">Trang chủ</a></li>      
             <li><a href="products.html">Sản phẩm</a></li>
-            <li><a href="about.html">Về chúng tôi</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
             <li><a href="faq.html">Câu hỏi thường gặp</a></li>
           </ul>
         </nav>
 
       <div class="header-actions">
-        <a class="cart-link" href="cart.html">Giỏ hàng (0)</a>
+          <a class="cart-link" href="cart.html">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+          </a>
       </div>
     </div>
   </header>
@@ -144,30 +149,46 @@
     <section class="promo">
       <div class="promo-inner">
         <h2>Bộ quà Tất & Tập</h2>
-        <p>Combo nhỏ gọn, tinh tế — món quà ý nghĩa cho người bạn đồng hành trên mọi hành trình.</p>
-        <a class="btn-secondary" href="#">Mua combo ngay</a>
+        <p>Combo nhỏ gọn, tinh tế — Ưu đãi khi mua theo combo.</p>
+        <a class="btn-secondary" href="#">Khám phá combo ngay</a>
       </div>
     </section>
 
   </main>
 
-  <!-- ========== FOOTER ========== -->
-      <div class="footer-support">
-        <ul>
-          <li>
-            <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
-              Facebook: Tất Tần Tập
-            </a>
-          </li>
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="footer-info">
+    <h3>Tất Tần Tập Shop</h3>
+    <p>Địa chỉ: Số 29 Ngõ Hòa Bình 7, Minh Khai, Hai Bà Trưng, Hà Nội</p>
+    <p>Đại diện: Đào Tất Thành</p>
+    <p>Điện thoại: <a href="tel:0967067332">0967 067 332</a></p>
+    <p>Email: <a href="mailto:lienhe@tattantap.com">lienhe@tattantap.com</a></p>
+  </div>
 
-          <li><a href="#">Liên hệ hỗ trợ: 01234 123 123</a></li>
-        </ul>
-      </div>
+  <div class="footer-support">
+    <ul>
+      <li>
+        <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
+          Facebook: Tất Tần Tập
+        </a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com/tattantap/" target="_blank" rel="noopener noreferrer">
+          Instagram: @tattantap
+        </a>
+      </li>
+      <li>
+        <a href="tel:01234123123">Liên hệ hỗ trợ: 0967 067 332</a>
+      </li>
+    </ul>
+  </div>
 
-    <div class="footer-bottom">
-      <p>© 2025 Tất Tần Tập. All rights reserved.</p>
-    </div>
-  </footer>
+  <div class="footer-bottom">
+    <p>© 2025 Tất Tần Tập. All rights reserved.</p>
+  </div>
+</footer>
+
 
   <script>
     // Giả lập thêm vào giỏ

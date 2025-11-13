@@ -3,42 +3,131 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Về chúng tôi | Tất Tần Tập</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"> <!-- Liên kết với file CSS chung -->
 </head>
 <body>
 
+  <!-- ========== HEADER (Từ index.html) ========== -->
   <header class="site-header">
     <div class="header-top">
       <a class="logo" href="index.html">
         <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
       </a>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="index.html">Trang chủ</a></li>      
-          <li><a href="products.html">Sản phẩm</a></li>
-          <li><a href="about.html" class="active">Về chúng tôi</a></li>
-          <li><a href="faq.html">Câu hỏi thường gặp</a></li>
-        </ul>
-      </nav>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>      
+            <li><a href="products.html">Sản phẩm</a></li>
+            <li><a href="about.html" class="active">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
+            <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          </ul>
+        </nav>
+
+      <div class="header-actions">
+          <a class="cart-link" href="cart.html">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+          </a>
+      </div>
     </div>
   </header>
 
+  <!-- ========== MAIN CONTENT CHO TRANG "VỀ CHÚNG TÔI" ========== -->
   <main class="site-main">
-    <section class="about-page">
-      <h1>Về Tất Tần Tập</h1>
-      <p>Chúng tôi là <strong>Tất Tần Tập</strong> — cửa hàng nhỏ mang tinh thần “đi và ghi”.  
-      Ban đầu, chúng tôi ấp ủ ý tưởng về một thương hiệu văn phòng phẩm,  
-      nhưng chúng tôi tin rằng mọi hành trình nên bắt đầu từ những điều nhỏ bé.  
-      Vì vậy, <em>Tất</em> và <em>Tập</em> chính là hai sản phẩm đầu tiên,  
-      gắn với bước chân và ý tưởng mỗi ngày của bạn.</p>
 
-      <p>Slogan: <strong>“Tất để đi, tập để ghi.”</strong></p>
+    <!-- PHẦN INTRO ĐÃ SỬA -->
+    <section class="about-intro-section section-container">
+        <div class="intro-text">
+            <h1>XIN CHÀO, <br> CHÚNG TÔI LÀ TẤT TẬN TẬP</h1>
+            <p class="tagline">Tất để đi, Tập để ghi</p>
+        </div>
     </section>
+
+    <section class="section-container about-section">
+        <div class="content-row">
+            <div class="text-column">
+                <h2>Vì sao chúng tôi bắt đầu?</h2>
+                <p>Chúng tôi tin rằng cảm hứng có thể bắt đầu từ những điều nhỏ nhất — một trang sổ trống hay một đôi tất êm.</p>
+                <p>Một cuốn sổ để viết ra ý tưởng, một đôi tất để sải bước thoải mái — hai thứ tưởng chừng chẳng liên quan, nhưng đều mang chung tinh thần: nhẹ nhàng, gần gũi và thành thật.</p>
+                <p>Từ đó, chúng tôi bắt đầu hành trình tạo nên những món đồ đơn giản nhưng có gu, dành cho những ai yêu sự tinh tế trong từng chi tiết.</p>
+                <p>Một cuốn sổ để viết ra ý tưởng, một đôi tất để sải bước thoải mái — hai thứ tưởng chừng chẳng liên quan, nhưng đều mang chung tinh thần: nhẹ nhàng, gần gũi và thành thật.</p>
+            </div>
+            <div class="image-column">
+                <!-- Hình ảnh minh họa cho Text 1 -->
+                <img src="image/AB1.png" alt="Why We Started">
+            </div>
+        </div>
+
+        <div class="content-row reverse">
+            <div class="text-column">
+                <h2>Chúng tôi đang cố gắng mang lại điều gì?</h2>
+                <p>Chúng tôi mong những sản phẩm này có thể trở thành một phần nhỏ trong nhịp sống của bạn — giản dị thôi, nhưng đủ để khiến ngày bạn dễ chịu hơn một chút.</p>
+            </div>
+            <div class="image-column">
+                <!-- Hình ảnh minh họa cho Text 2 -->
+                <img src="image/AB3.jpg" alt="What We Offer">
+            </div>
+        </div>
+
+        <div class="content-row">
+            <div class="text-column">
+                <h2>Chúng tôi hướng đến điều gì trong tương lai?</h2>
+                <p>Trở thành một thương hiệu trẻ được yêu mến vì sự tinh tế và chân thật — nơi mọi thiết kế đều phản ánh phong cách sống hiện đại, tối giản và đầy năng lượng tích cực.</p>
+            </div>
+            <div class="image-column">
+                <!-- Hình ảnh minh họa cho Text 3 -->
+                <img src="image/AB6.png" alt="Future Vision">
+            </div>
+        </div>
+
+        <div class="full-width-section">
+            <h2>Đội ngũ</h2>
+            <p>Chúng tôi là một tập thể trẻ đầy nhiệt huyết, được gắn kết bởi chung một mục tiêu: tạo nên những sản phẩm mang tính ứng dụng cao và truyền cảm hứng tích cực cho người dùng. Mỗi thành viên đều đảm nhận vai trò riêng — từ thiết kế, truyền thông đến vận hành — cùng hướng đến sự chỉn chu trong từng chi tiết nhỏ. Với tinh thần trách nhiệm và khát vọng phát triển bền vững, chúng tôi tin rằng mỗi nỗ lực hôm nay sẽ tạo nên dấu ấn của một thương hiệu được tin yêu mai sau.</p>
+        </div>
+
+        <div class="full-width-section core-values-section">
+            <h2>GIÁ TRỊ CỐT LÕI</h2>
+            <ul class="values-list">
+                <li>Trách nhiệm và uy tín</li>
+                <li>Sáng tạo không giới hạn</li>
+                <li>Chân thành trong từng chi tiết</li>
+                <li>Học hỏi và phát triển không ngừng</li>
+            </ul>
+        </div>
+    </section>
+
   </main>
 
-  <!-- FOOTER (giữ nguyên như index.html) -->
+  <!-- ========== FOOTER (Từ index.html) ========== -->
   <footer class="site-footer">
+    <div class="footer-info">
+      <h3>Tất Tần Tập Shop</h3>
+      <p>Địa chỉ: Số 29 Ngõ Hòa Bình 7, Minh Khai, Hai Bà Trưng, Hà Nội</p>
+      <p>Đại diện: Đào Tất Thành</p>
+      <p>Điện thoại: <a href="tel:0967067332">0967 067 332</a></p>
+      <p>Email: <a href="mailto:lienhe@tattantap.com">lienhe@tattantap.com</a></p>
+    </div>
+
+    <div class="footer-support">
+      <ul>
+        <li>
+          <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
+            Facebook: Tất Tần Tập
+          </a>
+        </li>
+        <li>
+          <a href="https://www.instagram.com/tattantap/" target="_blank" rel="noopener noreferrer">
+            Instagram: @tattantap
+          </a>
+        </li>
+        <li>
+          <a href="tel:01234123123">Liên hệ hỗ trợ: 0967 067 332</a>
+        </li>
+      </ul>
+    </div>
+
     <div class="footer-bottom">
       <p>© 2025 Tất Tần Tập. All rights reserved.</p>
     </div>

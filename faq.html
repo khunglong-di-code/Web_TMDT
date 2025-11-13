@@ -61,23 +61,28 @@
     }
   </style>
 </head>
-<body>
 
-  <!-- ========== HEADER ========== -->
+  <!-- ========== HEADER (Từ index.html) ========== -->
   <header class="site-header">
     <div class="header-top">
       <a class="logo" href="index.html">
         <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
       </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>      
+            <li><a href="products.html">Sản phẩm</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
+            <li><a href="faq.html" class="active">Câu hỏi thường gặp</a></li>
+          </ul>
+        </nav>
 
-      <nav class="main-nav">
-        <ul>
-          <li><a href="index.html">Trang chủ</a></li>      
-          <li><a href="products.html">Sản phẩm</a></li>
-          <li><a href="about.html">Về chúng tôi</a></li>
-          <li><a href="faq.html" class="active">Câu hỏi thường gặp</a></li>
-        </ul>
-      </nav>
+      <div class="header-actions">
+          <a class="cart-link" href="cart.html">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+          </a>
+      </div>
     </div>
   </header>
 

@@ -11,11 +11,13 @@
     .product-section {
       padding: 60px 10%;
       text-align: center;
+      font-family: 'Nunito', Arial, sans-serif;
     }
 
     .section-header h2 {
       font-size: 2rem;
       margin-bottom: 30px;
+      color: #222;
     }
 
     .product-grid {
@@ -44,7 +46,7 @@
     .product-slideshow {
       position: relative;
       width: 100%;
-      aspect-ratio: 1 / 1; /* Tỷ lệ 1:1 để bạn thêm ảnh vuông */
+      aspect-ratio: 1 / 1;
       overflow: hidden;
     }
 
@@ -69,6 +71,11 @@
     .product-title {
       font-size: 1.1rem;
       margin: 8px 0;
+    }
+
+    .product-title a {
+      text-decoration: none;
+      color: #222;
     }
 
     .product-meta {
@@ -96,30 +103,143 @@
       border-radius: 8px;
       padding: 8px 12px;
       cursor: pointer;
+      font-size: 0.9rem;
     }
 
     .add-to-cart:hover {
       background: #444;
     }
+
+/* ===== COMBO SECTION ===== */
+.combo-section {
+  padding: 60px 10%;
+  text-align: center;
+  background-color: #fafafa;
+}
+
+.combo-section h2 {
+  font-size: 2rem;
+  color: #222;
+  margin-bottom: 40px;
+}
+
+.combo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.combo-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+  overflow: hidden;
+  width: 300px;
+  text-align: left;
+  transition: transform 0.2s ease;
+}
+
+.combo-card:hover {
+  transform: translateY(-5px);
+}
+
+.combo-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.combo-body {
+  padding: 15px 18px;
+}
+
+.combo-title {
+  font-size: 1.1rem;
+  margin: 8px 0;
+}
+
+.combo-meta {
+  font-size: 0.9rem;
+  color: #555;
+  min-height: 50px;
+}
+
+.combo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.combo-footer .price {
+  font-weight: bold;
+  color: #222;
+}
+
+.combo-footer .add-to-cart {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.combo-footer .add-to-cart:hover {
+  background: #444;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .combo-section {
+    padding: 40px 5%;
+  }
+}
+
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #555;
+      font-size: 0.9rem;
+      border-top: 1px solid #ddd;
+      background-color: #f8f8f8;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .product-section {
+        padding: 40px 5%;
+      }
+    }
   </style>
 </head>
-<body>
 
-  <!-- HEADER -->
+  <!-- ========== HEADER (Từ index.html) ========== -->
   <header class="site-header">
     <div class="header-top">
       <a class="logo" href="index.html">
         <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
       </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">Trang chủ</a></li>      
+            <li><a href="products.html" class="active">Sản phẩm</a></li>
+            <li><a href="about.html">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
+            <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          </ul>
+        </nav>
 
-      <nav class="main-nav">
-        <ul>
-          <li><a href="index.html">Trang chủ</a></li>      
-          <li><a href="products.html" class="active">Sản phẩm</a></li>
-          <li><a href="about.html">Về chúng tôi</a></li>
-          <li><a href="faq.html">Câu hỏi thường gặp</a></li>
-        </ul>
-      </nav>
+      <div class="header-actions">
+          <a class="cart-link" href="cart.html">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+          </a>
+      </div>
     </div>
   </header>
 
@@ -131,55 +251,82 @@
 
     <div class="product-grid">
 
-      <!-- ========== PRODUCT 1: Tất trắng ========== -->
+      <!-- Tất cổ ngắn -->
       <article class="product-card">
         <div class="product-slideshow">
-          <!-- 🖼 NOTE: Thay 3 đường dẫn ảnh tất tại đây -->
-          <img src="image/1.png" alt="Tất trắng 1" class="active">
-          <img src="image/2.png" alt="Tất trắng 2">
-          <img src="image/3.png" alt="Tất trắng 3">
+          <img src="image/1.png" alt="Tất cổ ngắn" class="active">
+          <img src="image/conganden.png" alt="Tất cổ ngắn 2">
         </div>
         <div class="product-body">
-          <h3 class="product-title"><a href="#">Tất trắng tinh</a></h3>
-          <p class="product-meta">Cotton co giãn, thoáng khí, mềm mại cả ngày dài.</p>
+          <h3 class="product-title"><a href="#">Tất cổ ngắn</a></h3>
+          <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái. Chiều cao ngang mắt cá chân.</p>
           <div class="product-footer">
-            <span class="price">35.000₫ / đôi</span>
+            <span class="price">10.000₫ / đôi</span>
             <button class="add-to-cart">Thêm vào giỏ</button>
           </div>
         </div>
       </article>
 
-      <!-- ========== PRODUCT 2: Tập thiết kế ========== -->
+      <!-- Tất cổ lửng 1 -->
       <article class="product-card">
         <div class="product-slideshow">
-          <!-- 🖼 NOTE: Thay 3 đường dẫn ảnh tập tại đây -->
+          <img src="image/tatcolung1.jpg" alt="Tất cổ lửng 1" class="active">
+          <img src="image/colung1den.png" alt="Tất cổ lửng 1 - khác màu">
+        </div>
+        <div class="product-body">
+          <h3 class="product-title"><a href="#">Tất cổ lửng 1</a></h3>
+          <p class="product-meta">Cotton co giãn, thoáng mát. Chiều cao qua mắt cá chân 3cm.</p>
+          <div class="product-footer">
+            <span class="price">12.000₫ / đôi</span>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tất cổ lửng 2 -->
+      <article class="product-card">
+        <div class="product-slideshow">
+          <img src="image/tatcolung2.jpg" alt="Tất cổ lửng 2" class="active">
+          <img src="image/colungden2.png" alt="Tất cổ lửng 2 - khác màu">
+        </div>
+        <div class="product-body">
+          <h3 class="product-title"><a href="#">Tất cổ lửng 2</a></h3>
+          <p class="product-meta">Chất vải cotton dày dặn. Chiều cao qua mắt cá chân 10cm.</p>
+          <div class="product-footer">
+            <span class="price">15.000₫ / đôi</span>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tất cổ dài -->
+      <article class="product-card">
+        <div class="product-slideshow">
+          <img src="image/tatcodai.jpg" alt="Tất cổ dài" class="active">
+          <img src="image/codaiden.png" alt="Tất cổ dài đen">
+        </div>
+        <div class="product-body">
+          <h3 class="product-title"><a href="#">Tất cổ dài</a></h3>
+          <p class="product-meta">Giữ ấm tốt, phù hợp mùa đông. Chiều cao ngang bắp chân.</p>
+          <div class="product-footer">
+            <span class="price">18.000₫ / đôi</span>
+            <button class="add-to-cart">Thêm vào giỏ</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Tập thiết kế -->
+      <article class="product-card">
+        <div class="product-slideshow">
           <img src="image/4.png" alt="Tập thiết kế 1" class="active">
           <img src="image/5.png" alt="Tập thiết kế 2">
           <img src="image/6.png" alt="Tập thiết kế 3">
         </div>
         <div class="product-body">
           <h3 class="product-title"><a href="#">Tập thiết kế tối giản</a></h3>
-          <p class="product-meta">Bìa kraft, giấy dày mịn – ghi chép mượt, không lem mực.</p>
+          <p class="product-meta">Bìa kraft, giấy trắng mịn – ghi chép mượt, không lem mực.</p>
           <div class="product-footer">
-            <span class="price">45.000₫ / quyển</span>
-            <button class="add-to-cart">Thêm vào giỏ</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- ========== PRODUCT 2: Combo 3 tất ========== -->
-      <article class="product-card">
-        <div class="product-slideshow">
-          <!-- 🖼 NOTE: Thay 3 đường dẫn ảnh tập tại đây -->
-          <img src="image/4.png" alt="Tập thiết kế 1" class="active">
-          <img src="image/5.png" alt="Tập thiết kế 2">
-          <img src="image/6.png" alt="Tập thiết kế 3">
-        </div>
-        <div class="product-body">
-          <h3 class="product-title"><a href="#">Tập thiết kế tối giản</a></h3>
-          <p class="product-meta">Bìa kraft, giấy dày mịn – ghi chép mượt, không lem mực.</p>
-          <div class="product-footer">
-            <span class="price">45.000₫ / quyển</span>
+            <span class="price">35.000₫ / quyển</span>
             <button class="add-to-cart">Thêm vào giỏ</button>
           </div>
         </div>
@@ -188,17 +335,81 @@
     </div>
   </section>
 
+<!-- COMBO SECTION -->
+<section class="combo-section">
+  <header class="section-header">
+    <h2>Combo Ưu Đãi</h2>
+  </header>
+
+  <div class="combo-grid">
+
+    <!-- Combo 4 tất trắng -->
+    <article class="combo-card">
+      <img src="image/combo-tattrang.jpg" alt="Combo 4 tất trắng đủ loại">
+      <div class="combo-body">
+        <h3 class="combo-title">Combo 4 tất trắng đủ loại</h3>
+        <p class="combo-meta">Gồm 4 đôi tất trắng: cổ ngắn, cổ lửng, cổ trung & cổ dài. Chất cotton cao cấp, thoáng mát.</p>
+        <div class="combo-footer">
+          <span class="price">60.000₫ / combo</span>
+          <button class="add-to-cart">Thêm vào giỏ</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Combo 4 tất đen -->
+    <article class="combo-card">
+      <img src="image/combo-tatden.jpg" alt="Combo 4 tất đen đủ loại">
+      <div class="combo-body">
+        <h3 class="combo-title">Combo 4 tất đen đủ loại</h3>
+        <p class="combo-meta">4 đôi tất đen các kiểu dáng – tiện lợi, sang trọng, dễ phối đồ.</p>
+        <div class="combo-footer">
+          <span class="price">60.000₫ / combo</span>
+          <button class="add-to-cart">Thêm vào giỏ</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Combo 3 tất cùng loại -->
+    <article class="combo-card">
+      <img src="image/combo-3tat.jpg" alt="Combo 3 tất cùng loại">
+      <div class="combo-body">
+        <h3 class="combo-title">Combo 3 tất cùng loại</h3>
+        <p class="combo-meta">Chọn 1 loại tất và màu yêu thích – combo 3 đôi đồng nhất, tiết kiệm hơn.</p>
+        <div class="combo-footer">
+          <span class="price">35.000₫ / combo</span>
+          <button class="add-to-cart">Thêm vào giỏ</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- Combo 3 sổ -->
+    <article class="combo-card">
+      <img src="image/combo-3so.jpg" alt="Combo 3 sổ thiết kế">
+      <div class="combo-body">
+        <h3 class="combo-title">Combo 3 sổ thiết kế</h3>
+        <p class="combo-meta">3 quyển sổ bìa kraft cao cấp – giấy dày mịn, phong cách tối giản.</p>
+        <div class="combo-footer">
+          <span class="price">90.000₫ / combo</span>
+          <button class="add-to-cart">Thêm vào giỏ</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+
+
+
+
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-bottom">
-      <p>© 2025 Tất Tần Tập. All rights reserved.</p>
-    </div>
+  <footer>
+    <p>© 2025 Tất Tần Tập. All rights reserved.</p>
   </footer>
 
   <script>
     // ==== AUTO SLIDESHOW ====
     const slideshows = document.querySelectorAll('.product-slideshow');
-
     slideshows.forEach(slideshow => {
       const imgs = slideshow.querySelectorAll('img');
       let index = 0;
@@ -206,7 +417,7 @@
         imgs[index].classList.remove('active');
         index = (index + 1) % imgs.length;
         imgs[index].classList.add('active');
-      }, 2500); // đổi ảnh mỗi 2.5s
+      }, 2500);
     });
   </script>
 
