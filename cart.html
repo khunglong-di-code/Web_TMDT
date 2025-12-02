@@ -99,9 +99,38 @@
 
   </main>
 
-  <a href="https://m.me/61582495130534" target="_blank" class="chat-widget" title="Chat Facebook">
-    <i class="fa-brands fa-facebook-messenger"></i>
-  </a>
+ <!-- Messenger Chat Plugin Code -->
+<div id="fb-root"></div>
+
+<!-- Your Chat Plugin code -->
+<div id="fb-customer-chat" class="fb-customerchat">
+</div>
+
+<script>
+  var chatbox = document.getElementById('fb-customer-chat');
+  
+  // 👇👇👇 THAY ID FANPAGE CỦA BẠN VÀO DÒNG DƯỚI ĐÂY 👇👇👇
+  // Ví dụ: chatbox.setAttribute("page_id", "105682495130534");
+  chatbox.setAttribute("page_id", "61582495130534N");
+  
+  chatbox.setAttribute("attribution", "biz_inbox");
+
+  // Đoạn mã chuẩn của Facebook để tải SDK
+  window.fbAsyncInit = function() {
+    FB.init({
+      xfbml            : true,
+      version          : 'v18.0'
+    });
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
 
   <script>
     // === LOGIC TÍNH GIÁ TIỀN (QUAN TRỌNG) ===
