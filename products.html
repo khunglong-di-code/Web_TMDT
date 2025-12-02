@@ -7,109 +7,140 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="image/logo.png" type="image/png">
+  <link rel="icon" href="image/Tattantap_logo1.png" type="image/png">
 
   <style>
-    /* CSS CHO PHẦN SẢN PHẨM ĐƠN GIẢN HÓA */
+    /* --- CSS SẢN PHẨM (TO & RÕ) --- */
     .product-grid {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        flex-wrap: wrap;
-    }
-    .product-card {
-        width: 300px;
-        cursor: pointer;
-        transition: transform 0.3s;
-        background: #fff;
-        border: 1px solid #eee; /* Thêm viền nhẹ */
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* Bóng mờ nhẹ */
-    }
-    .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-    }
-    .btn-select {
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 20px;
-        width: 100%;
-        margin-top: 10px;
-        cursor: pointer;
-        font-weight: bold;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Chia 2 cột đều nhau */
+        gap: 40px;
+        max-width: 1000px;
+        margin: 0 auto;
     }
 
-    /* CSS CHO POP-UP TRƯỢT (SLIDING SHEET) */
+    .product-card {
+        background: #fff;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden; /* Bo góc ảnh */
+        border: 1px solid #eee;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    /* Ảnh sản phẩm to, cao */
+    .product-img {
+        width: 100%;
+        height: 450px; /* Chiều cao cố định để ảnh to */
+        object-fit: cover; /* Cắt ảnh vừa khung mà không bị méo */
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .product-info {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .product-name {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        color: var(--secondary-color);
+    }
+
+    .product-price-preview {
+        display: block;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .btn-select {
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 100%;
+    }
+    
+    .btn-select:hover {
+        background: var(--primary-color);
+        transform: scale(1.02);
+    }
+
+    /* --- RESPONSIVE MOBILE --- */
+    @media (max-width: 768px) {
+        .product-grid {
+            grid-template-columns: 1fr; /* Mobile hiện 1 cột dọc */
+        }
+        .product-img {
+            height: 350px; /* Mobile ảnh thấp hơn chút */
+        }
+    }
+
+    /* --- CSS POP-UP TRƯỢT (SLIDING SHEET) --- */
     .popup-overlay {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.6);
         z-index: 2000;
-        opacity: 0;
-        visibility: hidden;
+        opacity: 0; visibility: hidden;
         transition: all 0.3s ease;
+        backdrop-filter: blur(2px); /* Làm mờ nền sau */
     }
-    .popup-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
+    .popup-overlay.active { opacity: 1; visibility: visible; }
 
     .sliding-sheet {
         position: fixed;
-        bottom: -100%;
-        left: 50%;
+        bottom: -100%; left: 50%;
         transform: translateX(-50%);
-        width: 100%;
-        max-width: 500px;
+        width: 100%; max-width: 500px;
         background: white;
         border-radius: 20px 20px 0 0;
-        padding: 20px;
+        padding: 25px;
         z-index: 2001;
-        transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
-        max-height: 80vh;
+        transition: bottom 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
+        max-height: 85vh;
         overflow-y: auto;
     }
+    .sliding-sheet.active { bottom: 0; }
 
-    .sliding-sheet.active {
-        bottom: 0;
-    }
-
-    /* Chi tiết bên trong Popup */
     .sheet-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 15px;
+        display: flex; justify-content: space-between; align-items: flex-start;
+        margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px;
     }
-    .sheet-info h3 { margin: 0 0 5px 0; font-size: 1.2rem; }
-    .sheet-price { color: var(--primary-color); font-weight: bold; font-size: 1.1rem; }
-    .sheet-close {
-        background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #999;
-    }
+    .sheet-info h3 { margin: 0 0 5px 0; font-size: 1.3rem; color: var(--secondary-color); }
+    .sheet-price { color: var(--primary-color); font-weight: bold; font-size: 1.2rem; }
+    .sheet-close { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #999; }
     
     .sheet-body img {
-        width: 100px; height: 100px; object-fit: cover; border-radius: 8px;
-        float: left; margin-right: 15px; border: 1px solid #eee;
+        width: 120px; height: 120px; object-fit: cover; border-radius: 12px;
+        float: left; margin-right: 20px; border: 1px solid #eee;
     }
     
-    .option-group { margin-bottom: 15px; clear: both; }
-    .option-group label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; }
+    .option-group { margin-bottom: 20px; clear: both; }
+    .option-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem; color: #444; }
     .option-group select, .option-group input {
-        width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;
+        width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none;
     }
+    .option-group select:focus, .option-group input:focus { border-color: var(--primary-color); }
 
-    .sheet-footer { margin-top: 20px; }
     .btn-add-cart {
-        width: 100%; background: var(--secondary-color); color: white;
-        padding: 15px; border: none; border-radius: 8px;
-        font-size: 1.1rem; font-weight: bold; cursor: pointer;
+        width: 100%; background: var(--primary-color); color: white;
+        padding: 16px; border: none; border-radius: 12px;
+        font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px;
     }
-    .btn-add-cart:hover { background: #1a252f; }
   </style>
 </head>
 <body>
@@ -144,28 +175,28 @@
     </div>
   </section>
 
-  <!-- PHẦN HIỂN THỊ 2 SẢN PHẨM (GIAO DIỆN MỚI) -->
+  <!-- PHẦN HIỂN THỊ 2 SẢN PHẨM (TO & RÕ) -->
   <section class="section">
     <div class="container">
       <div class="product-grid">
 
-        <!-- SẢN PHẨM 1: TẤT (Mặc định ảnh 1.png - Tất trắng ngắn) -->
+        <!-- SẢN PHẨM 1: TẤT (Ảnh Tất trắng) -->
         <article class="product-card" onclick="openPopup('sock')">
           <img src="image/1.png" class="product-img" alt="Tất Cotton Premium">
           <div class="product-info">
             <h3 class="product-name">Tất Cotton Premium</h3>
-            <span class="product-price-preview">Từ 6.000₫ - 14.000₫</span>
-            <button class="btn-select">Chọn phân loại <i class="fa-solid fa-chevron-up"></i></button>
+            <span class="product-price-preview">Chỉ từ 6.000₫</span>
+            <button class="btn-select">Chọn phân loại</button>
           </div>
         </article>
 
-        <!-- SẢN PHẨM 2: SỔ -->
+        <!-- SẢN PHẨM 2: SỔ (Ảnh Sổ tay) -->
         <article class="product-card" onclick="openPopup('book')">
           <img src="image/4.png" class="product-img" alt="Sổ Tay Minimalist">
           <div class="product-info">
             <h3 class="product-name">Sổ Tay Minimalist</h3>
             <span class="product-price-preview">35.000₫</span>
-            <button class="btn-select">Thêm vào giỏ <i class="fa-solid fa-plus"></i></button>
+            <button class="btn-select">Thêm vào giỏ</button>
           </div>
         </article>
 
@@ -188,7 +219,7 @@
       <div class="sheet-body">
           <img id="popup-img" src="" alt="Ảnh chi tiết">
           
-          <!-- Các tùy chọn (Sẽ ẩn hiện tùy loại sản phẩm) -->
+          <!-- Các tùy chọn cho Tất -->
           <div id="sock-options">
               <div class="option-group">
                   <label>Kích thước (Size):</label>
@@ -221,59 +252,30 @@
       </div>
   </div>
 
-  <!-- FOOTER (Đã phục hồi nguyên trạng) -->
+  <!-- FOOTER -->
   <footer>
     <style>
-        /* CSS cho phần cuối trang: Dàn hàng ngang, đẩy 2 bên */
-        .copyright-container {
-            display: flex;
-            justify-content: space-between; /* Text bên trái, Icon bên phải */
-            align-items: center; /* Căn giữa theo chiều dọc */
-            width: 100%;
-        }
-
-        /* CSS cho icon Mạng xã hội ở góc phải */
-        .social-bottom-right {
-            display: flex;
-            gap: 15px; /* Khoảng cách giữa 2 icon */
-        }
-        .social-bottom-right a {
-            color: inherit; /* Giữ nguyên màu chữ hiện tại của web */
-            font-size: 20px;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: 0.3s;
-        }
-        .social-bottom-right a:hover {
-            opacity: 1; /* Sáng lên khi di chuột */
-            transform: scale(1.1);
-        }
-
-        /* CSS cho logo Bộ Công Thương */
-        .bct-logo {
-            width: 150px; /* Kích thước logo vừa vặn */
-            margin-top: 15px;
-            display: block;
-        }
+        .copyright-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .social-bottom-right { display: flex; gap: 15px; }
+        .social-bottom-right a { color: inherit; font-size: 20px; text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
+        .bct-logo { width: 150px; margin-top: 15px; display: block; }
     </style>
 
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
         <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
-        
         <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
             <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
         </a>
       </div>
-
       <div class="footer-col">
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
         <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
       </div>
-
       <div class="footer-col">
         <h4>Hỗ Trợ</h4>
         <ul>
@@ -283,18 +285,12 @@
         </ul>
       </div>
     </div>
-
     <div class="copyright">
         <div class="copyright-container">
             <span>© 2025 Bản quyền thuộc về Tất Tần Tập. Thiết kế bởi Đào Tất Thành.</span>
-            
             <div class="social-bottom-right">
-                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
-                    <i class="fa-brands fa-facebook"></i>
-                </a>
+                <a href="https://www.instagram.com/tattantap/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             </div>
         </div>
     </div>
@@ -305,7 +301,7 @@
   <div id="fb-customer-chat" class="fb-customerchat"></div>
   <script>
     var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "61582495130534"); // Đã sửa lại ID cho đúng format (bỏ chữ N nếu có)
+    chatbox.setAttribute("page_id", "61582495130534");
     chatbox.setAttribute("attribution", "biz_inbox");
     window.fbAsyncInit = function() { FB.init({ xfbml : true, version : 'v18.0' }); };
     (function(d, s, id) {
@@ -317,9 +313,9 @@
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <!-- LOGIC POPUP & GIỎ HÀNG -->
+  <!-- LOGIC POPUP & CART -->
   <script>
-      // 1. DATA VÀ BIẾN TOÀN CỤC
+      // 1. KHO ẢNH
       const sockImages = {
           "S_Đen": "image/conganden.png",
           "M_Đen": "image/colung1den.png",
@@ -329,49 +325,43 @@
           "L_Trắng": "image/tatcodai.jpg"
       };
       
-      let currentProductType = ''; // 'sock' hoặc 'book'
+      let currentProductType = '';
 
-      // 2. HÀM MỞ POPUP
+      // 2. MỞ POPUP
       function openPopup(type) {
           currentProductType = type;
           const sheet = document.getElementById('product-sheet');
           const overlay = document.getElementById('popup-overlay');
           const sockOptions = document.getElementById('sock-options');
           const qtyInput = document.getElementById('popup-qty');
+          const imgElement = document.getElementById('popup-img');
 
-          qtyInput.value = 1; // Reset số lượng về 1
+          qtyInput.value = 1;
 
           if (type === 'sock') {
-              // Cấu hình cho Tất
               document.getElementById('popup-name').innerText = "Tất Cotton Premium";
-              sockOptions.style.display = 'block'; // Hiện tùy chọn size/màu
-              
-              // Reset về mặc định
+              sockOptions.style.display = 'block';
               document.getElementById('size-sock').value = 'S';
               document.getElementById('color-sock').value = 'Trắng';
-              
           } else {
-              // Cấu hình cho Sổ
+              // CẤU HÌNH CHO SỔ
               document.getElementById('popup-name').innerText = "Sổ Tay Minimalist";
-              sockOptions.style.display = 'none'; // Ẩn tùy chọn size/màu
-              document.getElementById('popup-img').src = "image/4.png";
+              sockOptions.style.display = 'none'; // Ẩn chọn size/màu
+              imgElement.src = "image/4.png"; // <-- Đặt ảnh sổ ở đây
           }
 
-          // Cập nhật giá và ảnh lần đầu khi mở
           updatePopupState();
-
-          // Hiển thị Popup
           overlay.classList.add('active');
           sheet.classList.add('active');
       }
 
-      // 3. HÀM ĐÓNG POPUP
+      // 3. ĐÓNG POPUP
       function closePopup() {
           document.getElementById('product-sheet').classList.remove('active');
           document.getElementById('popup-overlay').classList.remove('active');
       }
 
-      // 4. LOGIC TÍNH GIÁ VÀ ĐỔI ẢNH TRONG POPUP
+      // 4. CẬP NHẬT TRẠNG THÁI POPUP
       function updatePopupState() {
           const qty = parseInt(document.getElementById('popup-qty').value) || 1;
           const priceLabel = document.getElementById('popup-price');
@@ -381,26 +371,26 @@
               const size = document.getElementById('size-sock').value;
               const color = document.getElementById('color-sock').value;
 
-              // Đổi ảnh
+              // Đổi ảnh tất theo size/màu
               const key = size + "_" + color;
               imgElement.src = sockImages[key] || 'image/1.png';
 
-              // Tính giá Tất
               let unitPrice = 0;
               if (size === 'S') unitPrice = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
               else if (size === 'M') unitPrice = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
               else if (size === 'L') unitPrice = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
 
-              priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫ <small style="color:#666; font-weight:normal">/đôi (Tổng: ${(unitPrice * qty).toLocaleString('vi-VN')}₫)</small>`;
-
+              priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫`;
           } else {
-              // Tính giá Sổ
+              // Giá Sổ tay (Cố định 35k)
               const unitPrice = 35000;
-              priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫ <small style="color:#666; font-weight:normal">/quyển (Tổng: ${(unitPrice * qty).toLocaleString('vi-VN')}₫)</small>`;
+              // Nếu bạn có nhiều ảnh sổ, logic đổi ảnh sổ sẽ nằm ở đây, hiện tại cố định 1 ảnh
+              // imgElement.src = "image/4.png"; 
+              priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫`;
           }
       }
 
-      // 5. THÊM VÀO GIỎ HÀNG (LẤY DỮ LIỆU TỪ POPUP)
+      // 5. THÊM VÀO GIỎ
       function confirmAddToCart() {
           let product = {};
           const qty = parseInt(document.getElementById('popup-qty').value);
@@ -410,7 +400,6 @@
               const color = document.getElementById('color-sock').value;
               const sizeName = (size === 'S') ? "Nhỏ" : (size === 'M') ? "Vừa" : "Lớn";
               
-              // Tính lại giá lần cuối để lưu vào giỏ
               let price = 0;
               if (size === 'S') price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
               else if (size === 'M') price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
@@ -437,7 +426,6 @@
               };
           }
 
-          // Lưu vào LocalStorage
           let cart = JSON.parse(localStorage.getItem('myCart')) || [];
           let existingItem = cart.find(item => item.id === product.id);
           
@@ -447,8 +435,6 @@
               cart.push(product);
           }
           localStorage.setItem('myCart', JSON.stringify(cart));
-          
-          // Cập nhật icon giỏ hàng và đóng popup
           updateCartCount();
           closePopup();
           alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
@@ -461,7 +447,6 @@
           document.getElementById('cart-count').innerText = total;
       }
 
-      // Khởi chạy
       updateCartCount();
   </script>
 
