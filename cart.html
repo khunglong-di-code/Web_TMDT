@@ -228,80 +228,74 @@
         }
     }
 
-    function checkout() {
-        // 1. Kiểm tra giỏ hàng có trống không
+    async function checkout() {
+        // --- 1. KIỂM TRA GIỎ HÀNG & THÔNG TIN (VALIDATION) ---
         let cart = JSON.parse(localStorage.getItem('myCart')) || [];
-        if (cart.length === 0) {
-            alert("Giỏ hàng của bạn đang trống!");
-            return;
-        }
+        if (cart.length === 0) { alert("Giỏ hàng trống!"); return; }
 
-        // 2. Lấy giá trị từ các ô nhập liệu
         let name = document.getElementById('cus-name').value.trim();
         let address = document.getElementById('cus-address').value.trim();
         let phone = document.getElementById('cus-phone').value.trim();
 
-        // --- BẮT ĐẦU KIỂM TRA THÔNG TIN (VALIDATION) ---
-        
-        if (name === "") {
-            alert("Vui lòng nhập Họ và tên của bạn!");
-            document.getElementById('cus-name').focus(); // Đưa con trỏ chuột về ô này
-            return; // Dừng hàm lại, không chạy tiếp
-        }
+        if (name === "") { alert("Vui lòng nhập tên!"); document.getElementById('cus-name').focus(); return; }
+        if (address === "") { alert("Vui lòng nhập địa chỉ!"); document.getElementById('cus-address').focus(); return; }
+        if (phone === "") { alert("Vui lòng nhập SĐT!"); document.getElementById('cus-phone').focus(); return; }
+        if (!/(0[3|5|7|8|9])+([0-9]{8})\b/.test(phone)) { alert("SĐT không hợp lệ!"); document.getElementById('cus-phone').focus(); return; }
+        if (!selectedPayment) { alert("Vui lòng chọn thanh toán!"); return; }
 
-        if (address === "") {
-            alert("Vui lòng nhập Địa chỉ giao hàng!");
-            document.getElementById('cus-address').focus();
-            return;
-        }
+        // --- 2. CHUẨN BỊ DỮ LIỆU ĐỂ GỬI ĐI (PAYLOAD) ---
+        // Đây là gói dữ liệu JSON sẽ gửi về Backend của bạn
+        let orderData = {
+            customer: {
+                name: name,
+                phone: phone,
+                address: address
+            },
+            payment_method: selectedPayment, // 'cod' hoặc 'qr'
+            items: cart, // Danh sách sản phẩm
+            total_price: document.getElementById('cart-total').innerText // Tổng tiền
+        };
 
-        if (phone === "") {
-            alert("Vui lòng nhập Số điện thoại để chúng tôi liên hệ!");
-            document.getElementById('cus-phone').focus();
-            return;
-        }
+        // ============================================================
+        // 👇👇👇 VỊ TRÍ BẠN CẦN ĐIỀN LINK SERVER/API CỦA BẠN VÀO ĐÂY 👇👇👇
+        // Ví dụ: 'https://api.tattantap.com/create-order' hoặc Link Google Sheet App Script
+        const API_ENDPOINT = 'https://docs.google.com/spreadsheets/d/1fI0ro0Wq8KYlKkLjZ4YglzzJMtXBd95FUH_1SCUOPg8/edit?usp=sharing'; 
+        // ============================================================
 
-        // Kiểm tra số điện thoại có đúng định dạng số không (cơ bản)
-        // Regex này kiểm tra: Bắt đầu bằng số 0, theo sau là 9 chữ số
-        let phoneRegex = /(0[3|5|7|8|9])+([0-9]{8})\b/;
-        if (!phoneRegex.test(phone)) {
-             alert("Số điện thoại không hợp lệ! Vui lòng kiểm tra lại (10 số, bắt đầu bằng 0).");
-             document.getElementById('cus-phone').focus();
-             return;
-        }
+        // --- 3. GỬI DỮ LIỆU (FETCH API) ---
+        // Nút bấm sẽ đổi thành "Đang xử lý..." để khách không bấm nhiều lần
+        let btn = document.querySelector('.btn-checkout');
+        let originalText = btn.innerText;
+        btn.innerText = "Đang gửi đơn hàng...";
+        btn.disabled = true;
 
-        // 3. Kiểm tra hình thức thanh toán
-        if (!selectedPayment) {
-            alert("Vui lòng chọn hình thức thanh toán (COD hoặc QR)!");
-            return;
-        }
+        try {
+            // Gửi lệnh POST đến server
+            let response = await fetch(API_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(orderData)
+            });
 
-        // --- NẾU VƯỢT QUA HẾT CÁC BƯỚC TRÊN THÌ MỚI XỬ LÝ ĐẶT HÀNG ---
-        
-        // Tạo nội dung đơn hàng để gửi mail (như đã hướng dẫn ở câu trả lời trước)
-        let orderContent = `ĐƠN HÀNG MỚI\nKhách hàng: ${name}\nSĐT: ${phone}\nĐịa chỉ: ${address}\n\nCHI TIẾT: \n`;
-        let total = 0;
-        
-        cart.forEach(item => {
-            let unitPrice = item.type === 'sock' ? calculateSockPrice(item.size, item.quantity) : item.price;
-            let subTotal = unitPrice * item.quantity;
-            total += subTotal;
-            orderContent += `- ${item.name} x ${item.quantity}: ${subTotal.toLocaleString('vi-VN')}đ\n`;
-        });
-        
-        orderContent += `\nTổng cộng: ${total.toLocaleString('vi-VN')}đ\nThanh toán: ${selectedPayment === 'cod' ? 'Tiền mặt' : 'Chuyển khoản'}`;
-
-        // Gửi qua mailto
-        let emailTo = "lienhe@tattantap.com";
-        let subject = encodeURIComponent(`Đặt hàng từ ${name} - ${phone}`);
-        let body = encodeURIComponent(orderContent);
-        
-        window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
-
-        // Xác nhận xóa giỏ hàng
-        if(confirm("Đã chuyển sang ứng dụng Email. Bạn đã gửi thư chưa? Bấm OK để hoàn tất và xóa giỏ hàng.")) {
-            localStorage.removeItem('myCart');
-            window.location.href = 'index.html';
+            // Nếu Server trả về thành công (HTTP 200)
+            if (response.ok) {
+                alert("🎉 Đặt hàng thành công! Cảm ơn bạn đã ủng hộ Tất Tần Tập.");
+                localStorage.removeItem('myCart'); // Xóa giỏ hàng
+                window.location.href = 'index.html'; // Quay về trang chủ
+            } else {
+                // Nếu Server lỗi
+                alert("❌ Có lỗi xảy ra phía máy chủ. Vui lòng thử lại sau.");
+            }
+        } catch (error) {
+            // Lỗi mạng hoặc chưa có Server (Hiện tại sẽ nhảy vào đây)
+            console.error("Lỗi gửi đơn:", error);
+            alert("⚠️ Chưa kết nối được đến Server đặt hàng. (Do bạn chưa điền API thật)");
+        } finally {
+            // Trả lại trạng thái nút bấm
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
     }
 
