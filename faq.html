@@ -66,23 +66,22 @@
 
   <!-- ========== HEADER (Từ index.html) ========== -->
   <header class="site-header">
-    <div class="header-top">
+    <div class="header-inner">
       <a class="logo" href="index.html">
-        <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
+        <img src="image/Tattantap_logo1.png" alt="Logo">
       </a>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="index.html">Trang chủ</a></li>      
-            <li><a href="products.html">Sản phẩm</a></li>
-            <li><a href="about.html">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
-            <li><a href="faq.html" class="active">Câu hỏi thường gặp</a></li>
-          </ul>
-        </nav>
-
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>      
+          <li><a href="about.html">Về chúng tôi</a></li>
+          <li><a href="products.html" >Cửa hàng</a></li>
+          <li><a href="faq.html" class="active">Hỗ trợ</a></li>
+        </ul>
+      </nav>
       <div class="header-actions">
           <a class="cart-link" href="cart.html">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count" id="cart-count">0</span>
           </a>
       </div>
     </div>
@@ -124,36 +123,96 @@
   </main>
 
   <!-- ========== FOOTER (Từ index.html) ========== -->
-  <footer class="site-footer">
-    <div class="footer-info">
-      <h3>Tất Tần Tập Shop</h3>
-      <p>Địa chỉ: Số 29 Ngõ Hòa Bình 7, Minh Khai, Hai Bà Trưng, Hà Nội</p>
-      <p>Đại diện: Đào Tất Thành</p>
-      <p>Điện thoại: <a href="tel:0967067332">0967 067 332</a></p>
-      <p>Email: <a href="mailto:lienhe@tattantap.com">lienhe@tattantap.com</a></p>
+  <footer>
+    <style>
+        /* CSS cho phần cuối trang: Dàn hàng ngang, đẩy 2 bên */
+        .copyright-container {
+            display: flex;
+            justify-content: space-between; /* Text bên trái, Icon bên phải */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            width: 100%;
+        }
+
+        /* CSS cho icon Mạng xã hội ở góc phải */
+        .social-bottom-right {
+            display: flex;
+            gap: 15px; /* Khoảng cách giữa 2 icon */
+        }
+        .social-bottom-right a {
+            color: inherit; /* Giữ nguyên màu chữ hiện tại của web */
+            font-size: 20px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .social-bottom-right a:hover {
+            opacity: 1; /* Sáng lên khi di chuột */
+            transform: scale(1.1);
+        }
+
+        /* CSS cho logo Bộ Công Thương */
+        .bct-logo {
+            width: 150px; /* Kích thước logo vừa vặn */
+            margin-top: 15px;
+            display: block;
+        }
+    </style>
+
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Về Tất Tần Tập</h4>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
+        
+        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
+            <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liên Hệ</h4>
+        <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
+        <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <ul>
+          <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="footer-support">
-      <ul>
-        <li>
-          <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
-            Facebook: Tất Tần Tập
-          </a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/tattantap/" target="_blank" rel="noopener noreferrer">
-            Instagram: @tattantap
-          </a>
-        </li>
-        <li>
-          <a href="tel:01234123123">Liên hệ hỗ trợ: 0967 067 332</a>
-        </li>
-      </ul>
+    <div class="copyright">
+        <div class="copyright-container">
+            <span>© 2025 Bản quyền thuộc về Tất Tần Tập. Thiết kế bởi Đào Tất Thành.</span>
+            
+            <div class="social-bottom-right">
+                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </div>
+        </div>
     </div>
+</footer>
+<a href="mailto:lienhe@tattantap.com" class="chat-widget">
+  <i class="fa-solid fa-comment-dots"></i>
+</a>
 
-    <div class="footer-bottom">
-      <p>© 2025 Tất Tần Tập. All rights reserved.</p>
-    </div>
-  </footer>
+  <script>
+    // FAQ accordion logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.querySelector('.faq-question').addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+
 </body>
 </html>

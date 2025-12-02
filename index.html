@@ -3,199 +3,212 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Tất Tần Tập - Tất để đi, Tập để ghi</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <title>Tất Tần Tập | Tất để đi, tập để ghi</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ========== HEADER (Từ index.html) ========== -->
   <header class="site-header">
-    <div class="header-top">
+    <div class="header-inner">
       <a class="logo" href="index.html">
-        <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
+        <img src="image/Tattantap_logo1.png" alt="Logo">
       </a>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="index.html"  class="active">Trang chủ</a></li>      
-            <li><a href="products.html">Sản phẩm</a></li>
-            <li><a href="about.html">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
-            <li><a href="faq.html">Câu hỏi thường gặp</a></li>
-          </ul>
-        </nav>
-
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html" class="active">Trang chủ</a></li>      
+          <li><a href="about.html">Về chúng tôi</a></li>
+          <li><a href="products.html">Cửa hàng</a></li>
+          <li><a href="faq.html">Hỗ trợ</a></li>
+        </ul>
+      </nav>
       <div class="header-actions">
           <a class="cart-link" href="cart.html">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count" id="cart-count">0</span>
           </a>
       </div>
     </div>
   </header>
 
-  <!-- ========== HERO / BANNER ========== -->
   <section class="hero">
-    <img src="image/banner.png" alt="Banner Tất Tần Tập" />
-    <div class="hero-inner">
-      <h1>Tất Tần Tập</h1>
-      <p class="tagline">Tất để đi, tập để ghi</p>
+    <div class="hero-content">
+      <h1>Tinh tế trong từng điểm chạm</h1>
+      <p>Chúng tôi mang đến sự thoải mái từ đôi chân đến những trang viết đầu tiên.</p>
+      <a href="products.html" class="btn-primary">Khám phá ngay</a>
     </div>
   </section>
 
-  <!-- ========== MAIN CONTENT ========== -->
-  <main class="site-main">
-
-        <!-- Features -->
-    <section class="features">
-      <div class="feature">
-        <h3>Chất lượng chọn lọc</h3>
-        <p>Mỗi đôi tất và cuốn tập đều được lựa chọn kỹ lưỡng để mang lại cảm giác thoải mái và tinh tế.</p>
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-title">
+        <h2>Giá Trị Cốt Lõi</h2>
+        <p>Điều làm nên sự khác biệt của Tất Tần Tập</p>
       </div>
-      <div class="feature">
-        <h3>Thiết kế tối giản</h3>
-        <p>Trắng tinh, sạch sẽ, phù hợp với mọi phong cách — từ trường học đến văn phòng.</p>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><i class="fa-solid fa-leaf"></i></div>
+          <h3>Chất liệu tự nhiên</h3>
+          <p>Sử dụng 100% Cotton hữu cơ và giấy tái chế thân thiện môi trường.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fa-solid fa-heart"></i></div>
+          <h3>Tận tâm phục vụ</h3>
+          <p>Mỗi sản phẩm đều được gói ghém cẩn thận như một món quà.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><i class="fa-solid fa-bolt"></i></div>
+          <h3>Giao hàng thần tốc</h3>
+          <p>Nhận hàng chỉ sau 2-3 ngày làm việc trên toàn quốc.</p>
+        </div>
       </div>
-      <div class="feature">
-        <h3>Giao hàng nhanh</h3>
-        <p>Đặt hôm nay, nhận ngay trong 2–3 ngày trên toàn quốc.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="story-wrap">
+        <div class="story-img">
+          <img src="image/AB3.jpg" alt="Về chúng tôi">
+        </div>
+        <div class="story-content">
+          <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+            <h2>Câu Chuyện Thương Hiệu</h2>
+          </div>
+          <p><strong>"Tất để đi, Tập để ghi"</strong> – Đó không chỉ là slogan, đó là phong cách sống.</p>
+          <p>Chúng tôi tin rằng cảm hứng bắt đầu từ những điều nhỏ nhất. Một đôi tất êm ái giúp bạn tự tin sải bước, một cuốn sổ tinh tươm giúp bạn lưu giữ những ý tưởng tuyệt vời.</p>
+          <p>Tại Tất Tần Tập, chúng tôi không bán sản phẩm, chúng tôi bán sự khởi đầu cho một ngày mới đầy năng lượng.</p>
+          <a href="about.html" style="color: var(--primary-color); font-weight: bold;">Xem thêm về chúng tôi <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ========== PRODUCT GRID ========== -->
-    <section id="products" class="product-section">
-      <header class="section-header">
-        <h2>
-          <a class="product_head" href="products.html">Sản phẩm của chúng tôi</a> 
-        </h2>
-      </header>
-
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-title">
+        <h2>Sản Phẩm Nổi Bật</h2>
+        <p>Những lựa chọn được yêu thích nhất tháng này</p>
+      </div>
       <div class="product-grid">
-        
         <article class="product-card">
-          <a class="product-media" href="#">
-            <img src="image/1.png" alt="Tất trắng">
-          </a>
-          <div class="product-body">
-            <h3 class="product-title"><a href="#">Tất cổ ngắn</a></h3>
-            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
-            <div class="product-footer">
-              <span class="price">10.000₫ / đôi</span>
-              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
-            </div>
+          <a href="products.html"><img src="image/1.png" class="product-img" alt="Tất"></a>
+          <div class="product-info">
+            <div class="product-name">Tất Cotton Basic</div>
+            <span class="product-price-preview">Chỉ từ 6.000₫</span>
+            <a href="products.html" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
           </div>
         </article>
-        
         <article class="product-card">
-          <a class="product-media" href="#">
-            <img src="image/tatcolung1.jpg" alt="Tất trắng">
-          </a>
-          <div class="product-body">
-            <h3 class="product-title"><a href="#">Tất cổ lửng 1</a></h3>
-            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
-            <div class="product-footer">
-              <span class="price">12.000₫ / đôi</span>
-              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
-            </div>
+          <a href="products.html"><img src="image/4.png" class="product-img" alt="Sổ"></a>
+          <div class="product-info">
+            <div class="product-name">Sổ Tay Minimalist</div>
+            <span class="product-price-preview">35.000₫</span>
+            <a href="products.html" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
           </div>
         </article>
-
         <article class="product-card">
-          <a class="product-media" href="#">
-            <img src="image/tatcolung2.jpg" alt="Tất trắng">
-          </a>
-          <div class="product-body">
-            <h3 class="product-title"><a href="#">Tất cổ lửng 2 </a></h3>
-            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
-            <div class="product-footer">
-              <span class="price">15.000₫ / đôi</span>
-              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card">
-          <a class="product-media" href="#">
-            <img src="image/tatcodai.jpg" alt="Tất trắng">
-          </a>
-          <div class="product-body">
-            <h3 class="product-title"><a href="#">Tất cổ dài</a></h3>
-            <p class="product-meta">Chất liệu cotton mềm, co giãn thoải mái</p>
-            <div class="product-footer">
-              <span class="price">18.000₫ / đôi</span>
-              <button class="add-to-cart" data-product-id="tat">Thêm vào giỏ</button>
-            </div>
-          </div>
-        </article>
-        
-        <!-- Tập thiết kế -->
-        <article class="product-card">
-          <a class="product-media" href="#">
-            <img src="image/4.png" alt="Sổ thiết kế">
-          </a>
-          <div class="product-body">
-            <h3 class="product-title"><a href="#">Tập thiết kế tối giản</a></h3>
-            <p class="product-meta">Bìa kraft, giấy trắng mịn, dễ viết & vẽ</p>
-            <div class="product-footer">
-              <span class="price">35.000₫ / quyển</span>
-              <button class="add-to-cart" data-product-id="tap">Thêm vào giỏ</button>
-            </div>
+          <a href="products.html"><img src="image/combo-tattrang.jpg" class="product-img" onerror="this.src='image/banner.png'" alt="Combo"></a>
+          <div class="product-info">
+            <div class="product-name">Combo Tiết Kiệm</div>
+            <span class="product-price-preview">Ưu đãi 20%</span>
+            <a href="products.html" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Xem chi tiết</a>
           </div>
         </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ========== SUBSCRIPTION / PROMO ========== -->
-    <section class="promo">
-      <div class="promo-inner">
-        <h2>Bộ quà Tất & Tập</h2>
-        <p>Combo nhỏ gọn, tinh tế — Ưu đãi khi mua theo combo.</p>
-        <a class="btn-secondary" href="#">Khám phá combo ngay</a>
+  <footer>
+    <style>
+        /* CSS cho phần cuối trang: Dàn hàng ngang, đẩy 2 bên */
+        .copyright-container {
+            display: flex;
+            justify-content: space-between; /* Text bên trái, Icon bên phải */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            width: 100%;
+        }
+
+        /* CSS cho icon Mạng xã hội ở góc phải */
+        .social-bottom-right {
+            display: flex;
+            gap: 15px; /* Khoảng cách giữa 2 icon */
+        }
+        .social-bottom-right a {
+            color: inherit; /* Giữ nguyên màu chữ hiện tại của web */
+            font-size: 20px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .social-bottom-right a:hover {
+            opacity: 1; /* Sáng lên khi di chuột */
+            transform: scale(1.1);
+        }
+
+        /* CSS cho logo Bộ Công Thương */
+        .bct-logo {
+            width: 150px; /* Kích thước logo vừa vặn */
+            margin-top: 15px;
+            display: block;
+        }
+    </style>
+
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Về Tất Tần Tập</h4>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
+        
+        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
+            <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
+        </a>
       </div>
-    </section>
 
-  </main>
+      <div class="footer-col">
+        <h4>Liên Hệ</h4>
+        <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
+        <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
+      </div>
 
-<!-- ========== FOOTER ========== -->
-<footer class="site-footer">
-  <div class="footer-info">
-    <h3>Tất Tần Tập Shop</h3>
-    <p>Địa chỉ: Số 29 Ngõ Hòa Bình 7, Minh Khai, Hai Bà Trưng, Hà Nội</p>
-    <p>Đại diện: Đào Tất Thành</p>
-    <p>Điện thoại: <a href="tel:0967067332">0967 067 332</a></p>
-    <p>Email: <a href="mailto:lienhe@tattantap.com">lienhe@tattantap.com</a></p>
-  </div>
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <ul>
+          <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+        </ul>
+      </div>
+    </div>
 
-  <div class="footer-support">
-    <ul>
-      <li>
-        <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
-          Facebook: Tất Tần Tập
-        </a>
-      </li>
-      <li>
-        <a href="https://www.instagram.com/tattantap/" target="_blank" rel="noopener noreferrer">
-          Instagram: @tattantap
-        </a>
-      </li>
-      <li>
-        <a href="tel:01234123123">Liên hệ hỗ trợ: 0967 067 332</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2025 Tất Tần Tập. All rights reserved.</p>
-  </div>
+    <div class="copyright">
+        <div class="copyright-container">
+            <span>© 2025 Bản quyền thuộc về Tất Tần Tập. Thiết kế bởi Đào Tất Thành.</span>
+            
+            <div class="social-bottom-right">
+                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </div>
+        </div>
+    </div>
 </footer>
+
+<a href="mailto:lienhe@tattantap.com" class="chat-widget">
+    <i class="fa-solid fa-comment-dots"></i>
+</a>
 
 
   <script>
-    // Giả lập thêm vào giỏ
-    const cartButtons = document.querySelectorAll('.add-to-cart');
-    cartButtons.forEach(btn => {
-      btn.addEventListener('click', () => alert('Đã thêm vào giỏ hàng!'));
-    });
+    // Update Cart Count
+    let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+    let total = 0;
+    cart.forEach(item => total += parseInt(item.quantity));
+    document.getElementById('cart-count').innerText = total;
   </script>
 
 </body>

@@ -3,135 +3,386 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Về Chúng Tôi | Tất Tần Tập</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <title>Về chúng tôi | Tất Tần Tập</title>
-  <link rel="stylesheet" href="style.css"> <!-- Liên kết với file CSS chung -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  
+  <!-- Link file CSS gốc (Quan trọng để đồng bộ Header/Footer) -->
+  <link rel="stylesheet" href="style.css"> 
+  
+  <style>
+    /* --- CSS RIÊNG CHO TRANG ABOUT --- */
+    /* Lưu ý: Không định nghĩa lại body hay header ở đây để tránh lệch giao diện */
+
+    /* 1. Hero Banner */
+    .about-hero {
+        background: url('image/banner.png') center/cover no-repeat;
+        height: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        position: relative;
+        margin-top: -2px; /* Xử lý khoảng hở nhỏ nếu có */
+    }
+    .about-hero::after {
+        content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.6); z-index: 0;
+    }
+    .about-hero-content { position: relative; z-index: 1; padding: 0 20px; }
+    .about-hero h1 { font-size: 3rem; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 2px; }
+    .about-hero p { font-size: 1.2rem; font-weight: 300; max-width: 600px; margin: 0 auto; }
+
+    /* 2. Story Section (Bố cục Zig-Zag) */
+    .story-section { padding: 80px 0; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+    
+    .story-block {
+        display: flex;
+        align-items: center;
+        gap: 60px;
+        margin-bottom: 100px;
+    }
+    
+    /* Đảo ngược thứ tự ảnh/chữ cho các khối chẵn */
+    .story-block:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .story-text { flex: 1; }
+    .story-text h3 { 
+        color: #d35400; /* Màu cam đất */
+        font-size: 1.8rem; 
+        margin-bottom: 20px; 
+        position: relative;
+        display: inline-block;
+        line-height: 1.3;
+    }
+    .story-text h3::after {
+        content: ''; display: block; width: 50px; height: 3px; background: #2c3e50; margin-top: 10px;
+    }
+    .story-text p { margin-bottom: 15px; font-size: 1.05rem; text-align: justify; color: #555; }
+    .story-text strong { color: #2c3e50; }
+
+    .story-img { flex: 1; }
+    .story-img img { 
+        width: 100%; 
+        height: 350px; 
+        object-fit: cover; 
+        border-radius: 10px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        transition: transform 0.3s ease;
+    }
+    .story-img img:hover { transform: translateY(-5px); }
+
+    /* 3. Mission & Vision */
+    .mission-vision {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .mv-item {
+        padding: 80px 60px;
+        color: white;
+        text-align: center;
+    }
+    .mv-item.mission { background-color: #d35400; }
+    .mv-item.vision { background-color: #2c3e50; }
+    .mv-item i { font-size: 3rem; margin-bottom: 20px; opacity: 0.8; }
+    .mv-item h3 { font-size: 1.8rem; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* 4. Core Values */
+    .bg-light { background-color: #f9f9f9; padding: 80px 0; }
+    .section-title { text-align: center; margin-bottom: 50px; }
+    .section-title h2 { font-size: 2.2rem; color: #2c3e50; margin-bottom: 10px; }
+    .section-title p { color: #777; font-style: italic; }
+
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+    .value-card {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: 0.3s;
+    }
+    .value-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .value-icon { font-size: 2.5rem; color: #d35400; margin-bottom: 20px; }
+    .value-card h3 { margin-bottom: 15px; font-size: 1.3rem; }
+
+    /* 5. Responsive */
+    @media (max-width: 768px) {
+        .story-block, .story-block:nth-child(even) { flex-direction: column; gap: 30px; margin-bottom: 60px; }
+        .story-img img { height: auto; max-height: 300px; }
+        .mission-vision { grid-template-columns: 1fr; }
+        .values-grid { grid-template-columns: 1fr; }
+        .about-hero h1 { font-size: 2rem; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ========== HEADER (Từ index.html) ========== -->
+  <!-- HEADER (Đã chuẩn hóa header-inner) -->
   <header class="site-header">
-    <div class="header-top">
+    <div class="header-inner">
       <a class="logo" href="index.html">
-        <img src="image/Tattantap_logo1.png" alt="Tất Tần Tập logo" />
+        <img src="image/Tattantap_logo1.png" alt="Logo">
       </a>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="index.html">Trang chủ</a></li>      
-            <li><a href="products.html">Sản phẩm</a></li>
-            <li><a href="about.html" class="active">Về chúng tôi</a></li> <!-- Đặt class "active" tại đây -->
-            <li><a href="faq.html">Câu hỏi thường gặp</a></li>
-          </ul>
-        </nav>
-
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>      
+          <li><a href="about.html" class="active">Về chúng tôi</a></li>
+          <li><a href="products.html">Cửa hàng</a></li>
+          <li><a href="faq.html">Hỗ trợ</a></li>
+        </ul>
+      </nav>
       <div class="header-actions">
           <a class="cart-link" href="cart.html">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span>Giỏ hàng (<span id="cart-count">0</span>)</span>
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count" id="cart-count">0</span>
           </a>
       </div>
     </div>
   </header>
 
-  <!-- ========== MAIN CONTENT CHO TRANG "VỀ CHÚNG TÔI" ========== -->
-  <main class="site-main">
+  <!-- HERO BANNER -->
+  <section class="about-hero">
+    <div class="about-hero-content">
+        <h1>Câu Chuyện Của Chúng Tôi</h1>
+        <p>Hành trình kết nối những tâm hồn yêu cái đẹp, sự chỉn chu và lối sống hiện đại.</p>
+    </div>
+  </section>
 
-    <!-- PHẦN INTRO ĐÃ SỬA -->
-    <section class="about-intro-section section-container">
-        <div class="intro-text">
-            <h1>XIN CHÀO, <br> CHÚNG TÔI LÀ TẤT TẬN TẬP</h1>
-            <p class="tagline">Tất để đi, Tập để ghi</p>
+  <!-- STORYTELLING SECTION (7 CÂU CHUYỆN) -->
+  <section class="story-section">
+    <div class="container">
+      
+      <!-- Story 1: Khởi nguồn -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Khởi nguồn từ những điều giản đơn</h3>
+          <p>Giữa thế giới ồn ào và vội vã, chúng tôi nhận ra rằng hạnh phúc thường ẩn chứa trong những điều bình dị nhất. Một chiếc bút êm ái giúp dòng suy nghĩ tuôn chảy, hay một đôi tất mềm mại nâng niu bàn chân sau ngày dài.</p>
+          <p><strong>"Tất Tần Tập"</strong> ra đời không chỉ để bán sản phẩm, mà để kể câu chuyện về sự trân trọng. Trân trọng cảm xúc, trân trọng trải nghiệm và trân trọng chính bản thân bạn qua những vật dụng nhỏ bé hàng ngày.</p>
         </div>
-    </section>
-
-    <section class="section-container about-section">
-        <div class="content-row">
-            <div class="text-column">
-                <h2>Vì sao chúng tôi bắt đầu?</h2>
-                <p>Chúng tôi tin rằng cảm hứng có thể bắt đầu từ những điều nhỏ nhất — một trang sổ trống hay một đôi tất êm.</p>
-                <p>Một cuốn sổ để viết ra ý tưởng, một đôi tất để sải bước thoải mái — hai thứ tưởng chừng chẳng liên quan, nhưng đều mang chung tinh thần: nhẹ nhàng, gần gũi và thành thật.</p>
-                <p>Từ đó, chúng tôi bắt đầu hành trình tạo nên những món đồ đơn giản nhưng có gu, dành cho những ai yêu sự tinh tế trong từng chi tiết.</p>
-                <p>Một cuốn sổ để viết ra ý tưởng, một đôi tất để sải bước thoải mái — hai thứ tưởng chừng chẳng liên quan, nhưng đều mang chung tinh thần: nhẹ nhàng, gần gũi và thành thật.</p>
-            </div>
-            <div class="image-column">
-                <!-- Hình ảnh minh họa cho Text 1 -->
-                <img src="image/AB1.png" alt="Why We Started">
-            </div>
+        <div class="story-img">
+          <!-- Thay đường dẫn ảnh của bạn vào đây -->
+          <img src="image/AB6.png" alt="Khởi nguồn cảm hứng">
         </div>
+      </div>
 
-        <div class="content-row reverse">
-            <div class="text-column">
-                <h2>Chúng tôi đang cố gắng mang lại điều gì?</h2>
-                <p>Chúng tôi mong những sản phẩm này có thể trở thành một phần nhỏ trong nhịp sống của bạn — giản dị thôi, nhưng đủ để khiến ngày bạn dễ chịu hơn một chút.</p>
-            </div>
-            <div class="image-column">
-                <!-- Hình ảnh minh họa cho Text 2 -->
-                <img src="image/AB3.jpg" alt="What We Offer">
-            </div>
+      <!-- Story 2: Ý nghĩa tên gọi -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Tại sao là "Tất" và "Tập"?</h3>
+          <p>Nhiều người hỏi chúng tôi về cái tên này. Nó là một cách chơi chữ thú vị của <em>"Tất tần tật"</em>, nhưng chứa đựng triết lý cốt lõi của thương hiệu.</p>
+          <p><strong>TẤT (Socks):</strong> Đại diện cho bước chân, cho sự dịch chuyển. Đôi tất tốt giúp bạn tự tin sải bước đi xa hơn.</p>
+          <p><strong>TẬP (Notebooks):</strong> Đại diện cho tri thức, sự sáng tạo. Cuốn tập là nơi khởi nguồn của mọi ý tưởng vĩ đại.</p>
+          <p>Chúng tôi muốn đồng hành cùng bạn cả trong <em>tư duy</em> lẫn <em>hành động</em>.</p>
         </div>
-
-        <div class="content-row">
-            <div class="text-column">
-                <h2>Chúng tôi hướng đến điều gì trong tương lai?</h2>
-                <p>Trở thành một thương hiệu trẻ được yêu mến vì sự tinh tế và chân thật — nơi mọi thiết kế đều phản ánh phong cách sống hiện đại, tối giản và đầy năng lượng tích cực.</p>
-            </div>
-            <div class="image-column">
-                <!-- Hình ảnh minh họa cho Text 3 -->
-                <img src="image/AB6.png" alt="Future Vision">
-            </div>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1516961642265-531546e84af2?q=80&w=1000&auto=format&fit=crop" alt="Tất và Tập">
         </div>
+      </div>
 
-        <div class="full-width-section">
-            <h2>Đội ngũ</h2>
-            <p>Chúng tôi là một tập thể trẻ đầy nhiệt huyết, được gắn kết bởi chung một mục tiêu: tạo nên những sản phẩm mang tính ứng dụng cao và truyền cảm hứng tích cực cho người dùng. Mỗi thành viên đều đảm nhận vai trò riêng — từ thiết kế, truyền thông đến vận hành — cùng hướng đến sự chỉn chu trong từng chi tiết nhỏ. Với tinh thần trách nhiệm và khát vọng phát triển bền vững, chúng tôi tin rằng mỗi nỗ lực hôm nay sẽ tạo nên dấu ấn của một thương hiệu được tin yêu mai sau.</p>
+      <!-- Story 3: Chất lượng -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Những bản nháp không bao giờ ra mắt</h3>
+          <p>Trước khi một cuốn sổ tay đến được tay bạn, ít nhất 10 loại giấy khác nhau đã bị chúng tôi loại bỏ. Quá mỏng? Loại. Quá lóa mắt? Loại. Thấm mực? Loại.</p>
+          <p>Chúng tôi tin rằng cảm hứng sáng tạo rất mong manh. Một tờ giấy kém chất lượng có thể làm đứt gãy dòng suy nghĩ của bạn. Vì vậy, tại Tất Tần Tập, chúng tôi đóng vai những người kiểm duyệt khó tính nhất, để bạn có được trải nghiệm viết lách mượt mà nhất.</p>
         </div>
-
-        <div class="full-width-section core-values-section">
-            <h2>GIÁ TRỊ CỐT LÕI</h2>
-            <ul class="values-list">
-                <li>Trách nhiệm và uy tín</li>
-                <li>Sáng tạo không giới hạn</li>
-                <li>Chân thành trong từng chi tiết</li>
-                <li>Học hỏi và phát triển không ngừng</li>
-            </ul>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1513346940221-18f46db008eb?q=80&w=1000&auto=format&fit=crop" alt="Quy trình kiểm duyệt">
         </div>
-    </section>
+      </div>
 
-  </main>
+      <!-- Story 4: Tinh tế -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Người bạn thầm lặng dưới gót giày</h3>
+          <p>Đôi tất thường là món đồ bị giấu đi, bị che khuất bởi giày và quần. Nhưng chúng tôi hiểu rằng, sự thoải mái thực sự đến từ những điều ít ai nhìn thấy.</p>
+          <p>Chính vì "không ai thấy", nên chúng tôi càng phải chăm chút. Từ đường may ở mũi chân không gây cộm, đến cổ chun co giãn vừa vặn không gây hằn da. Chúng tôi chăm sóc đôi chân bạn âm thầm nhưng bền bỉ, để bạn vững vàng trên mọi hành trình.</p>
+        </div>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1520627977056-c307aeb9a625?q=80&w=1000&auto=format&fit=crop" alt="Đôi tất êm ái">
+        </div>
+      </div>
 
-  <!-- ========== FOOTER (Từ index.html) ========== -->
-  <footer class="site-footer">
-    <div class="footer-info">
-      <h3>Tất Tần Tập Shop</h3>
-      <p>Địa chỉ: Số 29 Ngõ Hòa Bình 7, Minh Khai, Hai Bà Trưng, Hà Nội</p>
-      <p>Đại diện: Đào Tất Thành</p>
-      <p>Điện thoại: <a href="tel:0967067332">0967 067 332</a></p>
-      <p>Email: <a href="mailto:lienhe@tattantap.com">lienhe@tattantap.com</a></p>
+      <!-- Story 5: Sống xanh -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Hành trình Sống Xanh & Bền Vững</h3>
+          <p>Chúng tôi tin rằng cái đẹp không nên đánh đổi bằng gánh nặng cho Trái Đất. Tại Tất Tần Tập, "Sống Xanh" không chỉ là khẩu hiệu marketing.</p>
+          <p>Chúng tôi nỗ lực sử dụng giấy tái chế chất lượng cao và sợi cotton hữu cơ thân thiện. Mỗi sản phẩm bạn cầm trên tay là một lời cam kết về tương lai bền vững mà chúng tôi cùng bạn vun đắp.</p>
+        </div>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1000&auto=format&fit=crop" alt="Sống xanh">
+        </div>
+      </div>
+
+      <!-- Story 6: Đóng gói -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Văn hóa "Gói Ghém" cảm xúc</h3>
+          <p>Bạn đã bao giờ tự mua quà tặng chính mình chưa? Tại Tất Tần Tập, mỗi đơn hàng đều được đóng gói như một món quà.</p>
+          <p>Không chỉ là bọc hàng chống sốc, đó là sự gói ghém cẩn thận, là chiếc tem dán ngay ngắn, là tờ thiệp cảm ơn viết tay. Chúng tôi muốn khoảnh khắc bạn mở hộp là khoảnh khắc của niềm vui (Unboxing Happiness).</p>
+        </div>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1606293926075-69a00febf280?q=80&w=1000&auto=format&fit=crop" alt="Gói quà tỉ mỉ">
+        </div>
+      </div>
+
+      <!-- Story 7: Cộng đồng -->
+      <div class="story-block">
+        <div class="story-text">
+          <h3>Kết nối những tâm hồn đồng điệu</h3>
+          <p>Tất Tần Tập không chỉ là nơi bán hàng, chúng tôi mong muốn xây dựng một cộng đồng những người trẻ yêu viết lách (Journaling) và yêu xê dịch.</p>
+          <p>Chúng ta gặp nhau ở niềm đam mê ghi chép, ở sở thích sưu tầm những món đồ nhỏ xinh nhưng chất lượng. Cảm ơn bạn đã trở thành một mảnh ghép quan trọng trong bức tranh đầy màu sắc của chúng tôi.</p>
+        </div>
+        <div class="story-img">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1000&auto=format&fit=crop" alt="Cộng đồng trẻ">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MISSION & VISION -->
+  <section>
+      <div class="mission-vision">
+          <div class="mv-item mission">
+              <i class="fa-solid fa-bullseye"></i>
+              <h3>Sứ Mệnh</h3>
+              <p>Đồng hành cùng bước chân và tư duy của người trẻ Việt. Chúng tôi cung cấp những sản phẩm chất lượng cao, bền bỉ để bạn tự tin sải bước và thỏa sức sáng tạo.</p>
+          </div>
+          <div class="mv-item vision">
+              <i class="fa-solid fa-eye"></i>
+              <h3>Tầm Nhìn</h3>
+              <p>Trở thành thương hiệu "Top of Mind" về văn phòng phẩm và phụ kiện thời trang tối giản, xây dựng một cộng đồng sống xanh, sống đẹp và đầy cảm hứng.</p>
+          </div>
+      </div>
+  </section>
+
+  <!-- CORE VALUES -->
+  <section class="section bg-light">
+    <div class="container">
+      <div class="section-title">
+        <h2>Giá Trị Cốt Lõi</h2>
+        <p>Kim chỉ nam cho mọi hoạt động của Tất Tần Tập</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+            <div class="value-icon"><i class="fa-solid fa-star"></i></div>
+            <h3>Chất Lượng Thật</h3>
+            <p>Sản phẩm thật, chất liệu thật. Không hào nhoáng ảo, chúng tôi tập trung tối đa vào trải nghiệm sử dụng thực tế của khách hàng.</p>
+        </div>
+        <div class="value-card">
+            <div class="value-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+            <h3>Tận Tâm</h3>
+            <p>Khách hàng là bạn đồng hành. Chúng tôi lắng nghe mọi phản hồi và phục vụ bằng cả trái tim và sự chân thành.</p>
+        </div>
+        <div class="value-card">
+            <div class="value-icon"><i class="fa-solid fa-leaf"></i></div>
+            <h3>Bền Vững</h3>
+            <p>Ưu tiên các chất liệu thân thiện môi trường, bao bì tái chế và cổ vũ lối sống xanh, giảm rác thải nhựa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <style>
+        /* CSS cho phần Footer (Đặt ở đây hoặc chuyển vào style.css đều được) */
+        .copyright-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .social-bottom-right {
+            display: flex;
+            gap: 15px;
+        }
+        .social-bottom-right a {
+            color: inherit;
+            font-size: 20px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .social-bottom-right a:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .bct-logo {
+            width: 150px;
+            margin-top: 15px;
+            display: block;
+        }
+    </style>
+
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Về Tất Tần Tập</h4>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
+        
+        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
+            <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
+        </a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liên Hệ</h4>
+        <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
+        <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <ul>
+          <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="footer-support">
-      <ul>
-        <li>
-          <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" rel="noopener noreferrer">
-            Facebook: Tất Tần Tập
-          </a>
-        </li>
-        <li>
-          <a href="https://www.instagram.com/tattantap/" target="_blank" rel="noopener noreferrer">
-            Instagram: @tattantap
-          </a>
-        </li>
-        <li>
-          <a href="tel:01234123123">Liên hệ hỗ trợ: 0967 067 332</a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© 2025 Tất Tần Tập. All rights reserved.</p>
+    <div class="copyright">
+        <div class="copyright-container">
+            <span>© 2025 Bản quyền thuộc về Tất Tần Tập. Thiết kế bởi Đào Tất Thành.</span>
+            
+            <div class="social-bottom-right">
+                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </div>
+        </div>
     </div>
   </footer>
+
+  <!-- Chat Widget -->
+  <a href="mailto:lienhe@tattantap.com" class="chat-widget">
+    <i class="fa-solid fa-comment-dots"></i>
+  </a>
+
+  <!-- Script cập nhật giỏ hàng -->
+  <script>
+    let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+    let total = 0;
+    if(cart.length > 0) {
+        cart.forEach(item => total += parseInt(item.quantity));
+    }
+    document.getElementById('cart-count').innerText = total;
+  </script>
 
 </body>
 </html>
