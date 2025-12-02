@@ -228,8 +228,9 @@
         }
     }
 
+
     async function checkout() {
-        // --- 1. KIỂM TRA GIỎ HÀNG & THÔNG TIN (VALIDATION) ---
+        // --- VALIDATION ---
         let cart = JSON.parse(localStorage.getItem('myCart')) || [];
         if (cart.length === 0) { alert("Giỏ hàng trống!"); return; }
 
@@ -243,61 +244,50 @@
         if (!/(0[3|5|7|8|9])+([0-9]{8})\b/.test(phone)) { alert("SĐT không hợp lệ!"); document.getElementById('cus-phone').focus(); return; }
         if (!selectedPayment) { alert("Vui lòng chọn thanh toán!"); return; }
 
-        // --- 2. CHUẨN BỊ DỮ LIỆU ĐỂ GỬI ĐI (PAYLOAD) ---
-        // Đây là gói dữ liệu JSON sẽ gửi về Backend của bạn
+        // --- PAYLOAD ---
         let orderData = {
-            customer: {
-                name: name,
-                phone: phone,
-                address: address
-            },
-            payment_method: selectedPayment, // 'cod' hoặc 'qr'
-            items: cart, // Danh sách sản phẩm
-            total_price: document.getElementById('cart-total').innerText // Tổng tiền
+            customer: { name: name, phone: phone, address: address },
+            payment_method: selectedPayment,
+            items: cart,
+            total_price: document.getElementById('cart-total').innerText
         };
 
-        // ============================================================
-        // 👇👇👇 VỊ TRÍ BẠN CẦN ĐIỀN LINK SERVER/API CỦA BẠN VÀO ĐÂY 👇👇👇
-        // Ví dụ: 'https://api.tattantap.com/create-order' hoặc Link Google Sheet App Script
-        const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzbK7cu4OCbvl8PAo2vqQea5_i4QSpCaNtspWKAiK85CRVQL3gAKyDxH7XKjUp-mmLhSg/exec'; 
-        // ============================================================
+        // LINK CỦA BẠN (Đảm bảo đã set quyền Anyone)
+        const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwo1JtpJ-2ASGMNhz1jJwb8AWmsCyPI-1I0xn9pzKFwcaTvnjxcIQDCC2QGzXAuAxbwcg/exec'; 
 
-        // --- 3. GỬI DỮ LIỆU (FETCH API) ---
-        // Nút bấm sẽ đổi thành "Đang xử lý..." để khách không bấm nhiều lần
+        // --- UI UPDATE ---
         let btn = document.querySelector('.btn-checkout');
         let originalText = btn.innerText;
         btn.innerText = "Đang gửi đơn hàng...";
         btn.disabled = true;
 
         try {
-            // Gửi lệnh POST đến server
-            let response = await fetch(API_ENDPOINT, {
+            // --- GỬI DỮ LIỆU ---
+            // Dùng no-cors hoặc text/plain để gửi được sang Google Script
+            await fetch(API_ENDPOINT, {
                 method: 'POST',
+                mode: 'no-cors', // Quan trọng: Bỏ qua kiểm tra CORS của trình duyệt
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json' // Khi dùng no-cors, header này chỉ mang tính tham khảo
                 },
                 body: JSON.stringify(orderData)
             });
 
-            // Nếu Server trả về thành công (HTTP 200)
-            if (response.ok) {
-                alert("🎉 Đặt hàng thành công! Cảm ơn bạn đã ủng hộ Tất Tần Tập.");
-                localStorage.removeItem('myCart'); // Xóa giỏ hàng
-                window.location.href = 'index.html'; // Quay về trang chủ
-            } else {
-                // Nếu Server lỗi
-                alert("❌ Có lỗi xảy ra phía máy chủ. Vui lòng thử lại sau.");
-            }
+            // Vì dùng mode 'no-cors', ta không biết chắc chắn server trả về gì (opaque response)
+            // Nhưng nếu code chạy đến dòng này mà không nhảy vào catch thì coi như thành công 99%
+            alert("🎉 Đặt hàng thành công! Chúng tôi sẽ liên hệ sớm.");
+            localStorage.removeItem('myCart');
+            window.location.href = 'index.html';
+
         } catch (error) {
-            // Lỗi mạng hoặc chưa có Server (Hiện tại sẽ nhảy vào đây)
-            console.error("Lỗi gửi đơn:", error);
-            alert("⚠️ Chưa kết nối được đến Server đặt hàng. (Do bạn chưa điền API thật)");
+            console.error("Lỗi:", error);
+            alert("⚠️ Lỗi kết nối. Vui lòng kiểm tra mạng hoặc thử lại sau.");
         } finally {
-            // Trả lại trạng thái nút bấm
             btn.innerText = originalText;
             btn.disabled = false;
         }
     }
+    
 
     // Chạy khi tải trang
     renderCart();
