@@ -19,8 +19,11 @@
     }
     .product-card {
         width: 300px;
-        cursor: pointer; /* Con trỏ tay để biết bấm được */
+        cursor: pointer;
         transition: transform 0.3s;
+        background: #fff;
+        border: 1px solid #eee; /* Thêm viền nhẹ */
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05); /* Bóng mờ nhẹ */
     }
     .product-card:hover {
         transform: translateY(-5px);
@@ -55,23 +58,23 @@
 
     .sliding-sheet {
         position: fixed;
-        bottom: -100%; /* Giấu dưới đáy màn hình */
+        bottom: -100%;
         left: 50%;
         transform: translateX(-50%);
         width: 100%;
-        max-width: 500px; /* Giới hạn chiều rộng trên PC */
+        max-width: 500px;
         background: white;
         border-radius: 20px 20px 0 0;
         padding: 20px;
         z-index: 2001;
-        transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Hiệu ứng trượt nảy */
+        transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
         max-height: 80vh;
         overflow-y: auto;
     }
 
     .sliding-sheet.active {
-        bottom: 0; /* Trượt lên vị trí hiển thị */
+        bottom: 0;
     }
 
     /* Chi tiết bên trong Popup */
@@ -111,7 +114,7 @@
 </head>
 <body>
 
-  <!-- HEADER GIỮ NGUYÊN -->
+  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html">
@@ -218,49 +221,91 @@
       </div>
   </div>
 
-  <!-- FOOTER GIỮ NGUYÊN -->
+  <!-- FOOTER (Đã phục hồi nguyên trạng) -->
   <footer>
-    <!-- ... (Giữ nguyên footer cũ của bạn) ... -->
     <style>
-        .copyright-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .social-bottom-right { display: flex; gap: 15px; }
-        .social-bottom-right a { color: inherit; font-size: 20px; text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
-        .bct-logo { width: 150px; margin-top: 15px; display: block; }
+        /* CSS cho phần cuối trang: Dàn hàng ngang, đẩy 2 bên */
+        .copyright-container {
+            display: flex;
+            justify-content: space-between; /* Text bên trái, Icon bên phải */
+            align-items: center; /* Căn giữa theo chiều dọc */
+            width: 100%;
+        }
+
+        /* CSS cho icon Mạng xã hội ở góc phải */
+        .social-bottom-right {
+            display: flex;
+            gap: 15px; /* Khoảng cách giữa 2 icon */
+        }
+        .social-bottom-right a {
+            color: inherit; /* Giữ nguyên màu chữ hiện tại của web */
+            font-size: 20px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .social-bottom-right a:hover {
+            opacity: 1; /* Sáng lên khi di chuột */
+            transform: scale(1.1);
+        }
+
+        /* CSS cho logo Bộ Công Thương */
+        .bct-logo {
+            width: 150px; /* Kích thước logo vừa vặn */
+            margin-top: 15px;
+            display: block;
+        }
     </style>
+
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
-        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản.</p>
-        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank"><img src="image_dcd887.png" alt="BCT" class="bct-logo"></a>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
+        
+        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
+            <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
+        </a>
       </div>
+
       <div class="footer-col">
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
       </div>
+
       <div class="footer-col">
         <h4>Hỗ Trợ</h4>
-        <ul><li><a href="faq.html">Câu hỏi thường gặp</a></li></ul>
+        <ul>
+          <li><a href="faq.html">Câu hỏi thường gặp</a></li>
+          <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+        </ul>
       </div>
     </div>
+
     <div class="copyright">
         <div class="copyright-container">
-            <span>© 2025 Tất Tần Tập.</span>
+            <span>© 2025 Bản quyền thuộc về Tất Tần Tập. Thiết kế bởi Đào Tất Thành.</span>
+            
             <div class="social-bottom-right">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
             </div>
         </div>
     </div>
   </footer>
 
-  <!-- Chat Plugin (Đã thêm từ trước) -->
+  <!-- Chat Plugin -->
   <div id="fb-root"></div>
   <div id="fb-customer-chat" class="fb-customerchat"></div>
   <script>
     var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "61582495130534N"); // Kiểm tra lại ID này, thường chỉ là số
+    chatbox.setAttribute("page_id", "61582495130534"); // Đã sửa lại ID cho đúng format (bỏ chữ N nếu có)
     chatbox.setAttribute("attribution", "biz_inbox");
     window.fbAsyncInit = function() { FB.init({ xfbml : true, version : 'v18.0' }); };
     (function(d, s, id) {
@@ -272,7 +317,7 @@
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <!-- LOGIC MỚI CHO POPUP -->
+  <!-- LOGIC POPUP & GIỎ HÀNG -->
   <script>
       // 1. DATA VÀ BIẾN TOÀN CỤC
       const sockImages = {
