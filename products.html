@@ -7,112 +7,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="image/logo.png" type="image/png">
+  <link rel="icon" href="image/Tattantap_logo1.png" type="image/png">
 
   <style>
     /* --- CSS SẢN PHẨM (TO & RÕ) --- */
     .product-grid {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* Chia 2 cột đều nhau */
+        grid-template-columns: repeat(2, 1fr);
         gap: 40px;
         max-width: 1000px;
         margin: 0 auto;
     }
-
     .product-card {
-        background: #fff;
-        cursor: pointer;
+        background: #fff; cursor: pointer;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 12px;
-        overflow: hidden; /* Bo góc ảnh */
-        border: 1px solid #eee;
+        border-radius: 12px; overflow: hidden; border: 1px solid #eee;
     }
-
-    .product-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
-
-    /* Ảnh sản phẩm to, cao */
-    .product-img {
-        width: 100%;
-        height: 450px; /* Chiều cao cố định để ảnh to */
-        object-fit: cover; /* Cắt ảnh vừa khung mà không bị méo */
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .product-info {
-        padding: 25px;
-        text-align: center;
-    }
-
-    .product-name {
-        font-size: 1.4rem;
-        margin-bottom: 10px;
-        color: var(--secondary-color);
-    }
-
-    .product-price-preview {
-        display: block;
-        font-size: 1.1rem;
-        color: var(--primary-color);
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+    .product-img { width: 100%; height: 450px; object-fit: cover; border-bottom: 1px solid #f0f0f0; }
+    .product-info { padding: 25px; text-align: center; }
+    .product-name { font-size: 1.4rem; margin-bottom: 10px; color: var(--secondary-color); }
+    .product-price-preview { display: block; font-size: 1.1rem; color: var(--primary-color); font-weight: bold; margin-bottom: 15px; }
     .btn-select {
-        background: var(--secondary-color);
-        color: white;
-        border: none;
-        padding: 12px 30px;
-        border-radius: 30px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        width: 100%;
+        background: var(--secondary-color); color: white; border: none;
+        padding: 12px 30px; border-radius: 30px; font-size: 1rem;
+        font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%;
     }
-    
-    .btn-select:hover {
-        background: var(--primary-color);
-        transform: scale(1.02);
-    }
+    .btn-select:hover { background: var(--primary-color); transform: scale(1.02); }
 
-    /* --- RESPONSIVE MOBILE --- */
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-        .product-grid {
-            grid-template-columns: 1fr; /* Mobile hiện 1 cột dọc */
-        }
-        .product-img {
-            height: 350px; /* Mobile ảnh thấp hơn chút */
-        }
+        .product-grid { grid-template-columns: 1fr; }
+        .product-img { height: 350px; }
     }
 
-    /* --- CSS POP-UP TRƯỢT (SLIDING SHEET) --- */
+    /* --- CSS POP-UP TRƯỢT --- */
     .popup-overlay {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6);
-        z-index: 2000;
-        opacity: 0; visibility: hidden;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(2px); /* Làm mờ nền sau */
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6); z-index: 2000;
+        opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        backdrop-filter: blur(2px);
     }
     .popup-overlay.active { opacity: 1; visibility: visible; }
 
     .sliding-sheet {
-        position: fixed;
-        bottom: -100%; left: 50%;
-        transform: translateX(-50%);
-        width: 100%; max-width: 500px;
-        background: white;
-        border-radius: 20px 20px 0 0;
-        padding: 25px;
-        z-index: 2001;
+        position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%);
+        width: 100%; max-width: 500px; background: white;
+        border-radius: 20px 20px 0 0; padding: 25px; z-index: 2001;
         transition: bottom 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        box-shadow: 0 -10px 40px rgba(0,0,0,0.2);
-        max-height: 85vh;
-        overflow-y: auto;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 85vh; overflow-y: auto;
     }
     .sliding-sheet.active { bottom: 0; }
 
@@ -124,9 +67,26 @@
     .sheet-price { color: var(--primary-color); font-weight: bold; font-size: 1.2rem; }
     .sheet-close { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #999; }
     
-    .sheet-body img {
+    /* Layout ảnh trong Popup */
+    .popup-gallery {
+        float: left; width: 120px; margin-right: 20px;
+    }
+    .popup-main-img {
         width: 120px; height: 120px; object-fit: cover; border-radius: 12px;
-        float: left; margin-right: 20px; border: 1px solid #eee;
+        border: 1px solid #eee; margin-bottom: 10px;
+    }
+    
+    /* CSS CHO DANH SÁCH ẢNH NHỎ (THUMBNAILS) */
+    .thumbnail-list {
+        display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .thumb-img {
+        width: 35px; height: 35px; object-fit: cover; 
+        border-radius: 4px; cursor: pointer; border: 2px solid transparent;
+        transition: 0.2s;
+    }
+    .thumb-img:hover, .thumb-img.active {
+        border-color: var(--primary-color);
     }
     
     .option-group { margin-bottom: 20px; clear: both; }
@@ -145,7 +105,6 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html">
@@ -175,12 +134,10 @@
     </div>
   </section>
 
-  <!-- PHẦN HIỂN THỊ 2 SẢN PHẨM (TO & RÕ) -->
   <section class="section">
     <div class="container">
       <div class="product-grid">
-
-        <!-- SẢN PHẨM 1: TẤT (Ảnh Tất trắng) -->
+        <!-- SẢN PHẨM 1: TẤT -->
         <article class="product-card" onclick="openPopup('sock')">
           <img src="image/1.png" class="product-img" alt="Tất Cotton Premium">
           <div class="product-info">
@@ -190,7 +147,7 @@
           </div>
         </article>
 
-        <!-- SẢN PHẨM 2: SỔ (Ảnh Sổ tay) -->
+        <!-- SẢN PHẨM 2: SỔ -->
         <article class="product-card" onclick="openPopup('book')">
           <img src="image/4.png" class="product-img" alt="Sổ Tay Minimalist">
           <div class="product-info">
@@ -199,12 +156,11 @@
             <button class="btn-select">Thêm vào giỏ</button>
           </div>
         </article>
-
       </div>
     </div>
   </section>
 
-  <!-- KHUNG POP-UP TRƯỢT (SLIDING SHEET) -->
+  <!-- KHUNG POP-UP TRƯỢT -->
   <div class="popup-overlay" id="popup-overlay" onclick="closePopup()"></div>
   
   <div class="sliding-sheet" id="product-sheet">
@@ -217,7 +173,15 @@
       </div>
 
       <div class="sheet-body">
-          <img id="popup-img" src="" alt="Ảnh chi tiết">
+          <div class="popup-gallery">
+              <!-- Ảnh chính -->
+              <img id="popup-img" class="popup-main-img" src="" alt="Ảnh chi tiết">
+              
+              <!-- Khu vực ảnh nhỏ (Thumbnails) -->
+              <div id="notebook-thumbnails" class="thumbnail-list">
+                  <!-- Các ảnh nhỏ sẽ được JavaScript tự động thêm vào đây -->
+              </div>
+          </div>
           
           <!-- Các tùy chọn cho Tất -->
           <div id="sock-options">
@@ -261,7 +225,6 @@
         .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
         .bct-logo { width: 150px; margin-top: 15px; display: block; }
     </style>
-
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
@@ -315,7 +278,7 @@
 
   <!-- LOGIC POPUP & CART -->
   <script>
-      // 1. KHO ẢNH
+      // 1. KHO ẢNH TẤT
       const sockImages = {
           "S_Đen": "image/conganden.png",
           "M_Đen": "image/colung1den.png",
@@ -324,7 +287,17 @@
           "M_Trắng": "image/tatcolung1.jpg",
           "L_Trắng": "image/tatcodai.jpg"
       };
-      
+
+      // 👇👇👇 DANH SÁCH ẢNH SỔ TAY (BẠN ĐIỀN TÊN FILE ẢNH VÀO ĐÂY) 👇👇👇
+      // Bạn có thể thêm bao nhiêu ảnh tùy thích, cách nhau bằng dấu phẩy
+      const notebookImages = [
+          "image/4.png",          // Ảnh 1 (Ảnh chính)
+          "image/sotay_1.jpg",    // Ảnh 2 (Ví dụ) -> Bạn sửa tên file này
+          "image/sotay_2.jpg",    // Ảnh 3 (Ví dụ) -> Bạn sửa tên file này
+          "image/sotay_3.jpg"     // Ảnh 4 (Ví dụ) -> Bạn sửa tên file này
+      ];
+      // 👆👆👆 ---------------------------------------------------- 👆👆👆
+
       let currentProductType = '';
 
       // 2. MỞ POPUP
@@ -335,19 +308,48 @@
           const sockOptions = document.getElementById('sock-options');
           const qtyInput = document.getElementById('popup-qty');
           const imgElement = document.getElementById('popup-img');
+          const thumbContainer = document.getElementById('notebook-thumbnails');
 
           qtyInput.value = 1;
 
           if (type === 'sock') {
+              // --- CẤU HÌNH CHO TẤT ---
               document.getElementById('popup-name').innerText = "Tất Cotton Premium";
               sockOptions.style.display = 'block';
+              thumbContainer.style.display = 'none'; // Ẩn ảnh nhỏ của sổ
+              
               document.getElementById('size-sock').value = 'S';
               document.getElementById('color-sock').value = 'Trắng';
           } else {
-              // CẤU HÌNH CHO SỔ
+              // --- CẤU HÌNH CHO SỔ ---
               document.getElementById('popup-name').innerText = "Sổ Tay Minimalist";
-              sockOptions.style.display = 'none'; // Ẩn chọn size/màu
-              imgElement.src = "image/4.png"; // <-- Đặt ảnh sổ ở đây
+              sockOptions.style.display = 'none';
+              thumbContainer.style.display = 'flex'; // Hiện ảnh nhỏ của sổ
+              
+              // Mặc định hiển thị ảnh đầu tiên trong danh sách
+              imgElement.src = notebookImages[0] || "image/4.png";
+
+              // TẠO DANH SÁCH ẢNH NHỎ (THUMBNAILS)
+              thumbContainer.innerHTML = ''; // Xóa ảnh cũ
+              notebookImages.forEach((src, index) => {
+                  let thumb = document.createElement('img');
+                  thumb.src = src;
+                  thumb.className = 'thumb-img';
+                  // Nếu không tìm thấy ảnh thì dùng ảnh mặc định để không bị lỗi
+                  thumb.onerror = function() { this.src = 'image/4.png'; }; 
+                  
+                  // Sự kiện click vào ảnh nhỏ
+                  thumb.onclick = function() {
+                      // Đổi ảnh chính
+                      imgElement.src = src;
+                      // Highlight viền ảnh được chọn
+                      document.querySelectorAll('.thumb-img').forEach(el => el.classList.remove('active'));
+                      thumb.classList.add('active');
+                  };
+                  
+                  if(index === 0) thumb.classList.add('active');
+                  thumbContainer.appendChild(thumb);
+              });
           }
 
           updatePopupState();
@@ -355,13 +357,11 @@
           sheet.classList.add('active');
       }
 
-      // 3. ĐÓNG POPUP
       function closePopup() {
           document.getElementById('product-sheet').classList.remove('active');
           document.getElementById('popup-overlay').classList.remove('active');
       }
 
-      // 4. CẬP NHẬT TRẠNG THÁI POPUP
       function updatePopupState() {
           const qty = parseInt(document.getElementById('popup-qty').value) || 1;
           const priceLabel = document.getElementById('popup-price');
@@ -370,8 +370,6 @@
           if (currentProductType === 'sock') {
               const size = document.getElementById('size-sock').value;
               const color = document.getElementById('color-sock').value;
-
-              // Đổi ảnh tất theo size/màu
               const key = size + "_" + color;
               imgElement.src = sockImages[key] || 'image/1.png';
 
@@ -382,15 +380,11 @@
 
               priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫`;
           } else {
-              // Giá Sổ tay (Cố định 35k)
               const unitPrice = 35000;
-              // Nếu bạn có nhiều ảnh sổ, logic đổi ảnh sổ sẽ nằm ở đây, hiện tại cố định 1 ảnh
-              // imgElement.src = "image/4.png"; 
               priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫`;
           }
       }
 
-      // 5. THÊM VÀO GIỎ
       function confirmAddToCart() {
           let product = {};
           const qty = parseInt(document.getElementById('popup-qty').value);
@@ -422,7 +416,7 @@
                   type: 'book',
                   price: 35000,
                   quantity: qty,
-                  image: 'image/4.png'
+                  image: 'image/4.png' // Luôn lấy ảnh đại diện làm ảnh giỏ hàng
               };
           }
 
