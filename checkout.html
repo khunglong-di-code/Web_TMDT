@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thanh toán | Tất Tần Tập</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Nunito', sans-serif; margin:0; padding:0; background:#f9f9f9; }
+    header, footer { background:#222; color:#fff; padding:15px 10%; }
+    header a, footer a { color:#fff; text-decoration:none; }
+    main { padding: 40px 10%; }
+    h1,h2 { color:#222; }
+    .cart-items { margin-bottom:30px; }
+    .cart-item { display:flex; justify-content: space-between; margin-bottom:10px; }
+    .cart-item span { font-weight:600; }
+    input, textarea { width:100%; padding:10px; margin-bottom:15px; border-radius:6px; border:1px solid #ccc; }
+    label { font-weight:600; display:block; margin-bottom:5px; }
+    .payment-method { margin-bottom:20px; }
+    .payment-method input { margin-right:10px; }
+    #checkout-btn { background:#222; color:#fff; padding:12px 20px; border:none; border-radius:6px; cursor:pointer; font-size:1rem; }
+    #checkout-btn:hover { background:#555; }
+    #qr-section { display:none; margin-top:20px; text-align:center; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html"><i class="fa-solid fa-house"></i> Trang chủ</a>
+  <span style="margin-left:20px;"><i class="fa-solid fa-cart-shopping"></i> Giỏ hàng (<span id="cart-count">0</span>)</span>
+</header>
+
+<main>
+  <h1>Thanh toán</h1>
+
+  <!-- GIỎ HÀNG -->
+  <section class="cart-items" id="cart-items">
+    <!-- JS sẽ render giỏ hàng ở đây -->
+  </section>
+  <p><strong>Tổng tiền: <span id="cart-total">0₫</span></strong></p>
+
+  <!-- THÔNG TIN KHÁCH HÀNG -->
+  <h2>Thông tin khách hàng</h2>
+  <label for="name">Họ và tên</label>
+  <input type="text" id="name" placeholder="Nhập họ tên">
+
+  <label for="phone">Số điện thoại</label>
+  <input type="text" id="phone" placeholder="Nhập số điện thoại">
+
+  <label for="email">Email</label>
+  <input type="email" id="email" placeholder="Nhập email (không bắt buộc)">
+
+  <label for="address">Địa chỉ giao hàng</label>
+  <textarea id="address" placeholder="Nhập địa chỉ"></textarea>
+
+  <label for="note">Ghi chú từ khách</label>
+  <textarea id="note" placeholder="Ví dụ: Gói quà sinh nhật"></textarea>
+
+  <!-- PHƯƠNG THỨC THANH TOÁN -->
+  <div class="payment-method">
+    <label>Chọn phương thức thanh toán:</label>
+    <input type="radio" name="payment" value="cod" checked> Thanh toán khi nhận hàng (COD)<br>
+    <input type="radio" name="payment" value="qr"> Thanh toán qua QR tĩnh
+  </div>
+
+  <!-- NÚT ĐẶT HÀNG -->
+  <button id="checkout-btn">Đặt hàng</button>
+
+  <!-- QR TĨNH -->
+  <div id="qr-section">
+    <h2>Quét QR để thanh toán</h2>
+    <img id="qr-code" src="image/qr_placeholder.png" alt="QR thanh toán">
+  </div>
+</main>
+
+<footer>
+  © 2025 Tất Tần Tập. All rights reserved.
+</footer>
+
+<script>
+  // Giả lập dữ liệu sản phẩm
+  const products = {
+    "tat1": {name: "Tất cổ ngắn", price: 10000},
+    "tat2": {name: "Tất cổ lửng 1", price: 12000},
+    "tat3": {name: "Tất cổ lửng 2", price: 15000},
+    "tat4": {name: "Tất cổ dài", price: 18000},
+    "tap": {name: "Tập thiết kế", price: 35000}
+  };
+
+  // Lấy giỏ hàng từ localStorage hoặc tạo mới
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart') || '[]');
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const container = document.getElementById('cart-items');
+    container.innerHTML = '';
+    let total = 0;
+    cart.forEach(id => {
+      const item = products[id];
+      total += item.price;
+      const div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = `<span>${item.name}</span> <span>${item.price.toLocaleString()}₫</span>`;
+      container.appendChild(div);
+    });
+    document.getElementById('cart-count').innerText = cart.length;
+    document.getElementById('cart-total').innerText = total.toLocaleString() + '₫';
+    return total;
+  }
+
+  renderCart();
+
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const paymentRadios = document.querySelectorAll('input[name="payment"]');
+  const qrSection = document.getElementById('qr-section');
+
+  // Hiển thị QR khi chọn phương thức QR
+  paymentRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      qrSection.style.display = document.querySelector('input[name="payment"]:checked').value === 'qr' ? 'block' : 'none';
+    });
+  });
+
+  checkoutBtn.addEventListener('click', () => {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const note = document.getElementById('note').value.trim();
+    const total = renderCart();
+    const payment = document.querySelector('input[name="payment"]:checked').value === 'qr' ? 'QR chuyển khoản' : 'Thanh toán khi nhận';
+
+    if(!name || !phone || !address) {
+      alert('Vui lòng nhập đầy đủ thông tin.');
+      return;
+    }
+
+    const orderId = `DH${Date.now()}`;
+    const cart = getCart();
+    const productNames = cart.map(id => products[id].name).join(', ');
+
+    const orderData = {
+      orderId, name, phone, email, address, product: productNames,
+      total: total.toLocaleString() + '₫',
+      payment, status: 'Chờ xác nhận', note
+    };
+
+    // POST lên Google Sheet WebApp
+    fetch("YOUR_WEBAPP_URL_HERE", {
+      method: "POST",
+      body: JSON.stringify(orderData)
+    })
+    .then(res => res.json())
+    .then(res => {
+      if(res.result === "success") {
+        alert(`Đặt hàng thành công!\nMã đơn: ${orderId}\nTổng: ${total.toLocaleString()}₫`);
+        localStorage.removeItem('cart');
+        renderCart();
+        qrSection.style.display = 'none';
+      } else {
+        alert("Có lỗi khi lưu đơn hàng: " + res.message);
+      }
+    })
+    .catch(err => alert("Lỗi mạng: " + err));
+  });
+</script>
+
+</body>
+</html>
