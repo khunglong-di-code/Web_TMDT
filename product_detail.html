@@ -176,7 +176,7 @@
     </div>
   </footer>
 
-  <!-- SCRIPT XỬ LÝ -->
+ <!-- SCRIPT XỬ LÝ -->
   <script>
     // --- 1. CẤU HÌNH API ---
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwg7NjJmkQ_12OOHY8pQWaWBtdv5BHQjzSVOqYzrefHcrJw97lMdKRYMY8jwvceaHCbbQ/exec";
@@ -240,7 +240,7 @@
         loadReviewsFromSheet();
     }
 
-    // --- 4. LOGIC GIÁ & GIỎ HÀNG ---
+    // --- 4. LOGIC GIÁ & GIỎ HÀNG (ĐÃ SỬA) ---
     function updatePrice() {
         const qty = parseInt(document.getElementById('sel-qty').value) || 1;
         let unitPrice = 0;
@@ -254,9 +254,51 @@
         document.getElementById('p-price').innerText = `${(unitPrice * qty).toLocaleString('vi-VN')}₫`;
     }
 
+    // --- HÀM ADD TO CART ĐƯỢC SỬA LẠI ---
     function addToCart() {
-        alert("Đã thêm vào giỏ hàng (Demo)");
-        // Bạn có thể giữ logic thêm vào localStorage cũ ở đây
+        const qtyInput = document.getElementById('sel-qty');
+        const qty = parseInt(qtyInput.value) || 1;
+
+        // Tạo object sản phẩm để lưu
+        let item = {
+            id: productId,
+            name: productData.name,
+            type: productData.type,
+            quantity: qty,
+            image: productData.images[0]
+        };
+
+        // Lấy thông tin size/màu nếu là tất
+        if (productData.type === 'sock') {
+            item.size = document.getElementById('sel-size').value;
+            item.color = document.getElementById('sel-color').value;
+            item.price = 0; // Giá tất sẽ được tính lại trong cart.html dựa trên tổng số lượng
+        } else {
+            // Sách hoặc sản phẩm khác có giá cố định
+            item.price = productData.price_fixed;
+            item.size = "";  // Không có size
+            item.color = ""; // Không có màu
+        }
+
+        // Lấy giỏ hàng cũ từ LocalStorage
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+
+        // Kiểm tra xem sản phẩm này (cùng size, cùng màu) đã có trong giỏ chưa
+        let existingItem = cart.find(x => x.id === item.id && x.size === item.size && x.color === item.color);
+
+        if (existingItem) {
+            existingItem.quantity += qty; // Nếu có rồi thì cộng thêm số lượng
+        } else {
+            cart.push(item); // Nếu chưa thì thêm mới
+        }
+
+        // Lưu ngược lại vào LocalStorage
+        localStorage.setItem('myCart', JSON.stringify(cart));
+
+        // Cập nhật số lượng trên icon giỏ hàng header ngay lập tức
+        updateCartCount();
+
+        alert(`Đã thêm ${qty} sản phẩm "${item.name}" vào giỏ hàng!`);
     }
 
     function updateCartCount() {
