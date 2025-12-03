@@ -9,159 +9,105 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="image/logo.png" type="image/png">
 
-  <!-- THÊM CSS CHO PHẦN TRA CỨU -->
+  <!-- CSS RIÊNG CHO TRANG GIỎ HÀNG & TRA CỨU -->
   <style>
-    /* CSS CHO KHU VỰC TRA CỨU TRONG CART */
+    /* CSS CHO KHU VỰC TRA CỨU */
     .lookup-section {
         margin-top: 50px;
         padding-top: 30px;
-        border-top: 2px dashed #ddd; /* Đường kẻ phân cách */
-        max-width: 800px; /* Giới hạn chiều rộng cho đẹp */
+        border-top: 2px dashed #ddd;
+        max-width: 800px;
         margin-left: auto;
         margin-right: auto;
     }
 
-    .lookup-header h3 {
-        font-size: 1.3rem;
-        color: #333;
-        margin-bottom: 5px;
-    }
+    .lookup-header h3 { font-size: 1.3rem; color: #333; margin-bottom: 5px; }
+    .lookup-header p { color: #666; font-size: 0.9rem; margin-bottom: 15px; }
 
-    .lookup-header p {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 15px;
-    }
-
-    .lookup-form {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
+    .lookup-form { display: flex; gap: 10px; margin-bottom: 20px; }
     .lookup-form input {
-        flex: 1;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        outline: none;
+        flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px; outline: none;
     }
-
     .lookup-form button {
-        padding: 0 25px;
-        background: #555; 
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.3s;
+        padding: 0 25px; background: #555; color: white; border: none; border-radius: 6px;
+        cursor: pointer; font-weight: bold; transition: 0.3s;
     }
+    .lookup-form button:hover { background: #333; }
+    .lookup-form button:disabled { background: #ccc; cursor: not-allowed; }
 
-    .lookup-form button:hover {
-        background: #333;
-    }
-
-    /* CSS KẾT QUẢ TRA CỨU (Card đơn hàng) */
+    /* CSS KẾT QUẢ TRA CỨU */
     .order-history-item {
-        background: #f9f9f9;
-        border: 1px solid #eee;
-        padding: 15px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        border-left: 4px solid #ccc;
+        background: #fff; border: 1px solid #eee; padding: 15px; margin-bottom: 15px;
+        border-radius: 8px; border-left: 5px solid #ccc; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-
+    
     /* Màu trạng thái */
-    .order-history-item.status-pending { border-left-color: #f1c40f; } /* Vàng */
-    .order-history-item.status-shipping { border-left-color: #3498db; } /* Xanh */
-    .order-history-item.status-done { border-left-color: #27ae60; } /* Xanh lá */
-    .order-history-item.status-cancel { border-left-color: #e74c3c; } /* Đỏ */
+    .status-pending { border-left-color: #f1c40f; } /* Chờ xác nhận (Vàng) */
+    .status-shipping { border-left-color: #3498db; } /* Đang giao (Xanh dương) */
+    .status-done { border-left-color: #27ae60; }     /* Đã giao (Xanh lá) */
+    .status-cancel { border-left-color: #e74c3c; }   /* Hủy (Đỏ) */
 
-    .history-header {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.85rem;
-        color: #888;
-        margin-bottom: 8px;
-    }
+    .history-header { display: flex; justify-content: space-between; font-size: 0.9rem; color: #888; margin-bottom: 10px; }
+    .history-body { font-weight: 500; color: #333; margin-bottom: 10px; line-height: 1.5; }
+    .history-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px; }
+    .history-price { color: #d35400; font-weight: bold; font-size: 1.1rem; }
+    .history-status { background: #f0f0f0; padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; color: #333; }
 
-    .history-body {
-        font-weight: 500;
-        color: #333;
-        margin-bottom: 8px;
-        white-space: pre-line;
-    }
-
-    .history-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid #eee;
-        padding-top: 8px;
-    }
-
-    .history-price { color: #d35400; font-weight: bold; }
-    .history-status { background: #e0e0e0; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; }
-
-    /* Mã feedback */
+    /* Hộp mã feedback */
     .fb-code-box {
-        margin-top: 10px;
-        background: #dff0d8;
-        color: #3c763d;
-        padding: 8px;
-        border-radius: 4px;
-        font-size: 0.9rem;
-        text-align: center;
-        border: 1px dashed #3c763d;
+        margin-top: 15px; background: #e8f5e9; color: #2e7d32; padding: 10px;
+        border-radius: 6px; font-size: 0.95rem; text-align: center; border: 1px dashed #2e7d32;
     }
   </style>
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="header-inner">
-          <a class="logo" href="index.html">
-            <img src="image/Tattantap_logo1.png" alt="Logo">
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="image/Tattantap_logo1.png" alt="Logo">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>      
+          <li><a href="about.html">Về chúng tôi</a></li>
+          <li><a href="products.html">Cửa hàng</a></li>
+          <li><a href="faq.html">Hỗ trợ</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+          <a class="cart-link" href="cart.html" style="color: #d35400;">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count" id="cart-count">0</span>
           </a>
-          <nav class="main-nav">
-            <ul>
-              <li><a href="index.html">Trang chủ</a></li>      
-              <li><a href="about.html">Về chúng tôi</a></li>
-              <li><a href="products.html">Cửa hàng</a></li>
-              <li><a href="faq.html">Hỗ trợ</a></li>
-            </ul>
-          </nav>
-          <div class="header-actions">
-              <a class="cart-link" href="cart.html" style="color: #d35400;">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <span class="cart-count" id="cart-count">0</span>
-              </a>
-          </div>
-        </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
+  <!-- NỘI DUNG CHÍNH -->
   <main class="cart-section">
     <h1>Giỏ hàng của bạn</h1>
     
+    <!-- Bảng giỏ hàng -->
     <table class="cart-table">
         <thead>
             <tr>
                 <th>Sản phẩm</th>
                 <th>Số lượng</th>
-                <th>Đơn giá (theo mức)</th>
+                <th>Đơn giá</th>
                 <th>Thành tiền</th>
                 <th>Xóa</th>
             </tr>
         </thead>
-        <tbody id="cart-body">
-            </tbody>
+        <tbody id="cart-body"></tbody>
     </table>
 
     <div class="total-section">
         Tổng cộng: <span id="cart-total" style="color: #f08146; font-size: 1.5rem;">0₫</span>
     </div>
 
+    <!-- Form thanh toán -->
     <div class="checkout-form" id="checkout-section">
         <h2>Thông tin thanh toán</h2>
         <div class="form-group">
@@ -188,10 +134,11 @@
                 </div>
             </div>
             
-            <div id="qr-code-image">
+            <div id="qr-code-image" style="display: none; margin-top: 15px; text-align: center;">
                 <p>Vui lòng quét mã bên dưới:</p>
-                <img src="https://via.placeholder.com/200x200.png?text=QR+Code+Here" alt="Mã QR Chuyển khoản">
-                <p>Nội dung CK: Tên + SĐT</p>
+                <!-- Thay link ảnh QR thật của bạn vào đây -->
+                <img src="https://via.placeholder.com/200x200.png?text=QR+Code" alt="Mã QR" style="max-width: 200px;">
+                <p style="font-size: 0.9rem; color: #666;">Nội dung CK: Tên + SĐT</p>
             </div>
         </div>
 
@@ -199,7 +146,7 @@
     </div>
 
     <!-- ============================================== -->
-    <!-- KHU VỰC TRA CỨU ĐƠN HÀNG (THÊM MỚI VÀO ĐÂY) -->
+    <!-- KHU VỰC TRA CỨU ĐƠN HÀNG (MỚI) -->
     <!-- ============================================== -->
     <section class="lookup-section">
         <div class="lookup-header">
@@ -218,40 +165,35 @@
 
   </main>
 
- <!-- Messenger Chat Plugin Code -->
-<div id="fb-root"></div>
-<div id="fb-customer-chat" class="fb-customerchat"></div>
+ <!-- Chat Plugin -->
+ <div id="fb-root"></div>
+ <div id="fb-customer-chat" class="fb-customerchat"></div>
+ <script>
+   var chatbox = document.getElementById('fb-customer-chat');
+   chatbox.setAttribute("page_id", "61582495130534"); // ID Fanpage
+   chatbox.setAttribute("attribution", "biz_inbox");
+   window.fbAsyncInit = function() { FB.init({ xfbml : true, version : 'v18.0' }); };
+   (function(d, s, id) {
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) return;
+     js = d.createElement(s); js.id = id;
+     js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+ </script>
 
-<script>
-  var chatbox = document.getElementById('fb-customer-chat');
-  chatbox.setAttribute("page_id", "61582495130534N");
-  chatbox.setAttribute("attribution", "biz_inbox");
-  window.fbAsyncInit = function() {
-    FB.init({ xfbml : true, version : 'v18.0' });
-  };
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-
+  <!-- JAVASCRIPT LOGIC -->
   <script>
-    // --- API ENDPOINT CHUNG ---
-    const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwo1JtpJ-2ASGMNhz1jJwb8AWmsCyPI-1I0xn9pzKFwcaTvnjxcIQDCC2QGzXAuAxbwcg/exec';
+    // --- CẤU HÌNH API (LINK GOOGLE SCRIPT CỦA BẠN) ---
+    // Đảm bảo bạn đã Deploy script mới nhất có hàm doGet xử lý phone
+    const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwg7NjJmkQ_12OOHY8pQWaWBtdv5BHQjzSVOqYzrefHcrJw97lMdKRYMY8jwvceaHCbbQ/exec';
 
-    // === LOGIC TÍNH GIÁ TIỀN ===
+    // === 1. LOGIC GIỎ HÀNG ===
     function calculateSockPrice(size, qty) {
         let price = 0;
-        if (size === 'S') {
-            if (qty >= 10) price = 6000; else if (qty >= 5) price = 8000; else price = 10000;
-        } else if (size === 'M') {
-            if (qty >= 10) price = 8000; else if (qty >= 5) price = 10000; else price = 12000;
-        } else if (size === 'L') {
-            if (qty >= 10) price = 10000; else if (qty >= 5) price = 12000; else price = 14000;
-        }
+        if (size === 'S') { price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000; } 
+        else if (size === 'M') { price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000; } 
+        else if (size === 'L') { price = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000; }
         return price;
     }
 
@@ -263,7 +205,7 @@
         let grandTotal = 0;
 
         if (cart.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">Giỏ hàng trống</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 20px;">Giỏ hàng trống</td></tr>';
             document.getElementById('checkout-section').style.display = 'none';
             totalEl.innerText = '0₫';
             return;
@@ -280,18 +222,19 @@
                 <tr>
                     <td>
                         <strong>${item.name}</strong><br>
-                        ${item.type === 'sock' ? `<small>Size: ${item.size}, Màu: ${item.color}</small>` : ''}
+                        ${item.type === 'sock' ? `<small style="color:#666">Size: ${item.size}, Màu: ${item.color}</small>` : ''}
                     </td>
                     <td>${item.quantity}</td>
                     <td>${unitPrice.toLocaleString('vi-VN')}₫</td>
                     <td>${subTotal.toLocaleString('vi-VN')}₫</td>
-                    <td><button onclick="removeItem(${index})" style="color:red; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                    <td><button onclick="removeItem(${index})" style="color:red; border:none; background:none; cursor:pointer; font-size:1.1rem;"><i class="fa-solid fa-trash"></i></button></td>
                 </tr>
             `;
             tbody.innerHTML += row;
         });
 
         totalEl.innerText = grandTotal.toLocaleString('vi-VN') + '₫';
+        updateCartCount();
     }
 
     function removeItem(index) {
@@ -301,7 +244,13 @@
         renderCart();
     }
 
-    // === LOGIC THANH TOÁN ===
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+        let total = cart.reduce((acc, item) => acc + item.quantity, 0);
+        document.getElementById('cart-count').innerText = total;
+    }
+
+    // === 2. LOGIC THANH TOÁN ===
     let selectedPayment = null;
 
     function selectPayment(method) {
@@ -325,10 +274,8 @@
         let address = document.getElementById('cus-address').value.trim();
         let phone = document.getElementById('cus-phone').value.trim();
 
-        if (name === "") { alert("Vui lòng nhập tên!"); document.getElementById('cus-name').focus(); return; }
-        if (address === "") { alert("Vui lòng nhập địa chỉ!"); document.getElementById('cus-address').focus(); return; }
-        if (phone === "") { alert("Vui lòng nhập SĐT!"); document.getElementById('cus-phone').focus(); return; }
-        if (!selectedPayment) { alert("Vui lòng chọn thanh toán!"); return; }
+        if (!name || !address || !phone) { alert("Vui lòng điền đầy đủ thông tin!"); return; }
+        if (!selectedPayment) { alert("Vui lòng chọn hình thức thanh toán!"); return; }
 
         let orderData = {
             customer: { name: name, phone: phone, address: address },
@@ -343,135 +290,55 @@
         btn.disabled = true;
 
         try {
+            // Sử dụng no-cors để gửi dữ liệu đi (POST)
             await fetch(API_ENDPOINT, {
                 method: 'POST',
-                mode: 'no-cors', // Dùng cho đặt hàng để tránh lỗi CORS khi ghi dữ liệu
+                mode: 'no-cors', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
             });
-            alert("🎉 Đặt hàng thành công! Chúng tôi sẽ liên hệ sớm.");
+
+            // Giao diện thành công giả lập (vì no-cors không đọc được response)
+            document.querySelector('.cart-section').innerHTML = `
+                <div style="text-align:center; padding:50px;">
+                    <i class="fa-solid fa-circle-check" style="color:green; font-size:60px; margin-bottom:20px;"></i>
+                    <h2>ĐẶT HÀNG THÀNH CÔNG!</h2>
+                    <p>Cảm ơn <strong>${name}</strong> đã ủng hộ.</p>
+                    <p>Chúng tôi sẽ sớm liên hệ qua SĐT: <strong>${phone}</strong> để xác nhận.</p>
+                    <a href="index.html" style="display:inline-block; margin-top:30px; background:#333; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px;">Tiếp tục mua sắm</a>
+                </div>
+            `;
             localStorage.removeItem('myCart');
-            window.location.href = 'index.html';
+            updateCartCount();
 
         } catch (error) {
             console.error("Lỗi:", error);
-            alert("⚠️ Lỗi kết nối. Vui lòng thử lại sau.");
-        } finally {
+            alert("⚠️ Có lỗi xảy ra. Vui lòng thử lại!");
             btn.innerText = originalText;
             btn.disabled = false;
         }
     }
 
-    // === LOGIC TRA CỨU ĐƠN HÀNG (MỚI) ===
+    // === 3. LOGIC TRA CỨU ĐƠN HÀNG (DÙNG GET ĐỂ SỬA LỖI UNDEFINED) ===
     function lookupOrder() {
         const phone = document.getElementById('lookup-phone').value.trim();
         const btn = document.getElementById('btn-lookup');
         const resultDiv = document.getElementById('lookup-results');
 
-        if (!phone) {
-            alert("Vui lòng nhập số điện thoại cần tra cứu!");
-            return;
-        }
+        if (!phone) { alert("Vui lòng nhập số điện thoại!"); return; }
 
-        // Hiệu ứng đang tải
+        // Hiệu ứng loading
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
         btn.disabled = true;
         resultDiv.innerHTML = "";
 
-        fetch(API_ENDPOINT, {
-            method: 'POST',
-            // LƯU Ý: Tra cứu cần đọc dữ liệu trả về nên KHÔNG dùng 'no-cors'
-            // Đảm bảo Script Google đã deploy quyền "Anyone"
-            body: JSON.stringify({
-                type: 'lookup', // Báo cho Google Script biết đây là tra cứu
-                phone: phone
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.result === 'success') {
-                let html = `<p style="margin-bottom:10px; color:#27ae60;">Tìm thấy <strong>${data.orders.length}</strong> đơn hàng:</p>`;
-                
-                data.orders.forEach(order => {
-                    // Màu sắc trạng thái
-                    let statusClass = '';
-                    if (order.status.includes('Chờ')) statusClass = 'status-pending';
-                    else if (order.status.includes('Đang')) statusClass = 'status-shipping';
-                    else if (order.status.includes('Đã')) statusClass = 'status-done';
-                    else if (order.status.includes('Hủy')) statusClass = 'status-cancel';
-
-                    // Mã Feedback
-                    let feedbackHtml = '';
-                    if (order.fb_code) {
-                        feedbackHtml = `
-                            <div class="fb-code-box">
-                                🎁 Mã Feedback: <strong>${order.fb_code}</strong>
-                                <div style="font-size:0.8rem; margin-top:2px;">(Dùng mã này để đánh giá sản phẩm)</div>
-                            </div>
-                        `;
-                    }
-
-                    html += `
-                        <div class="order-history-item ${statusClass}">
-                            <div class="history-header">
-                                <span>📅 ${order.date}</span>
-                            </div>
-                            <div class="history-body">
-                                ${order.products}
-                            </div>
-                            <div class="history-footer">
-                                <span class="history-price">${order.total}</span>
-                                <span class="history-status">${order.status}</span>
-                            </div>
-                            ${feedbackHtml}
-                        </div>
-                    `;
-                });
-                resultDiv.innerHTML = html;
-            } else {
-                resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">🚫 ${data.message}</div>`;
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Lỗi kết nối server hoặc chưa tìm thấy đơn hàng!");
-        })
-        .finally(() => {
-            btn.innerHTML = "Kiểm Tra";
-            btn.disabled = false;
-        });
-    }
-
-    // Chạy khi tải trang
-    renderCart();
-    // === LOGIC TRA CỨU ĐƠN HÀNG (ĐÃ SỬA LỖI UNDEFINED) ===
-    function lookupOrder() {
-        const phone = document.getElementById('lookup-phone').value.trim();
-        const btn = document.getElementById('btn-lookup');
-        const resultDiv = document.getElementById('lookup-results');
-
-        if (!phone) {
-            alert("Vui lòng nhập số điện thoại cần tra cứu!");
-            return;
-        }
-
-        // 1. Hiệu ứng đang tải
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
-        btn.disabled = true;
-        resultDiv.innerHTML = "";
-
-        // 2. GỌI API BẰNG PHƯƠNG THỨC GET (Quan trọng)
-        // Chúng ta nối số điện thoại vào URL: ?phone=09xxx
+        // GỌI API BẰNG GET (Thêm tham số ?phone=...)
         fetch(`${API_ENDPOINT}?phone=${phone}`)
         .then(response => {
-            // Kiểm tra nếu server trả về lỗi
-            if (!response.ok) {
-                throw new Error("Lỗi mạng hoặc sai URL");
-            }
+            if (!response.ok) throw new Error("Lỗi mạng");
             return response.json();
         })
         .then(data => {
-            // 3. XỬ LÝ DỮ LIỆU TRẢ VỀ
             if (data.result === 'success') {
                 if (data.orders.length === 0) {
                     resultDiv.innerHTML = `<div style="text-align:center; padding:15px; color:#666;">Không tìm thấy đơn hàng nào với SĐT <strong>${phone}</strong></div>`;
@@ -481,20 +348,22 @@
                 let html = `<p style="margin-bottom:10px; color:#27ae60;">Tìm thấy <strong>${data.orders.length}</strong> đơn hàng:</p>`;
                 
                 data.orders.forEach(order => {
-                    // Màu sắc trạng thái
-                    let statusClass = '';
-                    if (order.status.includes('Chờ')) statusClass = 'status-pending';
-                    else if (order.status.includes('Đang')) statusClass = 'status-shipping';
+                    // Xử lý class màu sắc
+                    let statusClass = 'status-pending'; // Mặc định
+                    if (order.status.includes('Đang')) statusClass = 'status-shipping';
                     else if (order.status.includes('Đã')) statusClass = 'status-done';
                     else if (order.status.includes('Hủy')) statusClass = 'status-cancel';
 
-                    // Mã Feedback
+                    // Xử lý hiển thị sản phẩm (xuống dòng)
+                    let productList = order.products.replace(/\n/g, '<br>');
+
+                    // Xử lý mã Feedback
                     let feedbackHtml = '';
-                    if (order.fb_code) {
+                    if (order.fb_code && order.fb_code.trim() !== "") {
                         feedbackHtml = `
                             <div class="fb-code-box">
                                 🎁 Mã Feedback: <strong>${order.fb_code}</strong>
-                                <div style="font-size:0.8rem; margin-top:2px;">(Dùng mã này để đánh giá sản phẩm)</div>
+                                <div style="font-size:0.8rem; margin-top:2px;">(Copy mã này để đánh giá sản phẩm)</div>
                             </div>
                         `;
                     }
@@ -505,7 +374,7 @@
                                 <span>📅 ${order.date}</span>
                             </div>
                             <div class="history-body">
-                                ${order.products.replace(/\n/g, '<br>')}
+                                ${productList}
                             </div>
                             <div class="history-footer">
                                 <span class="history-price">${order.total}</span>
@@ -517,11 +386,11 @@
                 });
                 resultDiv.innerHTML = html;
             } else {
-                resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">🚫 Có lỗi xảy ra.</div>`;
+                resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">🚫 ${data.message || "Lỗi không xác định"}</div>`;
             }
         })
         .catch(err => {
-            console.error("Chi tiết lỗi:", err);
+            console.error(err);
             resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">⚠️ Lỗi kết nối! Vui lòng thử lại.</div>`;
         })
         .finally(() => {
@@ -529,6 +398,9 @@
             btn.disabled = false;
         });
     }
+
+    // Chạy khi tải trang
+    renderCart();
   </script>
 
 </body>
