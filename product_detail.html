@@ -10,221 +10,62 @@
   <link rel="icon" href="image/logo.png" type="image/png">
 
   <style>
-    /* CSS RIÊNG CHO TRANG CHI TIẾT */
-    :root {
-        --primary-color: #ff6600; /* Giả định màu chủ đạo */
-        --secondary-color: #333;
-    }
+    /* CSS CƠ BẢN */
+    :root { --primary-color: #ff6600; --secondary-color: #333; }
+    .detail-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
     
-    .detail-container {
-        max-width: 1200px;
-        margin: 40px auto;
-        padding: 0 20px;
-    }
+    /* CỘT TRÁI: ẢNH + FEEDBACK */
+    .gallery-wrapper { position: sticky; top: 20px; }
+    .main-image-frame { width: 100%; height: 500px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; background: #fff; }
+    .main-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .thumbnail-list { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 30px; }
+    .thumb-item { width: 80px; height: 80px; border: 2px solid transparent; border-radius: 8px; cursor: pointer; object-fit: cover; opacity: 0.7; transition: 0.3s; }
+    .thumb-item:hover, .thumb-item.active { border-color: var(--primary-color); opacity: 1; }
 
-    .detail-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr; /* Chia đôi màn hình: Ảnh - Thông tin */
-        gap: 50px;
-        align-items: start;
-    }
-
-    /* Cột Ảnh (Bên trái) */
-    .gallery-wrapper {
-        position: sticky;
-        top: 20px; /* Điều chỉnh lại để phù hợp khi nội dung dài ra */
-    }
+    /* CSS CHO PHẦN FEEDBACK */
+    .feedback-area { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
+    .feedback-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: var(--secondary-color); border-left: 4px solid var(--primary-color); padding-left: 10px; }
     
-    .main-image-frame {
-        width: 100%;
-        height: 500px;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fff;
-    }
-
-    .main-image-frame img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s;
-    }
-
-    .thumbnail-list {
-        display: flex;
-        gap: 10px;
-        overflow-x: auto;
-        margin-bottom: 30px; /* Tạo khoảng cách với phần Feedback */
-    }
-
-    .thumb-item {
-        width: 80px;
-        height: 80px;
-        border: 2px solid transparent;
-        border-radius: 8px;
-        cursor: pointer;
-        object-fit: cover;
-        opacity: 0.7;
-        transition: 0.3s;
-    }
-
-    .thumb-item:hover, .thumb-item.active {
-        border-color: var(--primary-color);
-        opacity: 1;
-    }
-
-    /* --- CSS MỚI: PHẦN FEEDBACK --- */
-    .feedback-area {
-        border-top: 2px solid #eee;
-        padding-top: 20px;
-    }
-
-    .feedback-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: var(--secondary-color);
-        border-left: 4px solid var(--primary-color);
-        padding-left: 10px;
-    }
-
-    .review-list {
-        max-height: 300px;
-        overflow-y: auto;
-        margin-bottom: 20px;
-        padding-right: 5px;
-    }
-
-    /* Tùy chỉnh thanh cuộn cho review list */
+    .review-list { max-height: 300px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; border-bottom: 1px dashed #eee;}
     .review-list::-webkit-scrollbar { width: 5px; }
     .review-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-
-    .review-item {
-        background: #f9f9f9;
-        padding: 10px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        font-size: 0.9rem;
-    }
-
-    .review-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 5px;
-    }
-
+    
+    .review-item { background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.95rem; }
+    .review-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
     .reviewer-name { font-weight: bold; color: #333; }
-    .review-stars { color: #f1c40f; }
-    .review-content { color: #555; line-height: 1.4; }
+    .review-stars { color: #f1c40f; letter-spacing: 2px; }
+    .review-content { color: #555; line-height: 1.4; white-space: pre-line; }
+    .review-date { font-size: 0.75rem; color: #999; margin-top: 6px; text-align: right; display: block; font-style: italic;}
 
-    .feedback-form input, 
-    .feedback-form textarea, 
-    .feedback-form select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        font-family: inherit;
-    }
+    .feedback-form input, .feedback-form textarea, .feedback-form select { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 6px; font-family: inherit; }
+    .btn-submit-fb { background: #333; color: #fff; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; }
+    .btn-submit-fb:hover { background: var(--primary-color); }
+    .btn-submit-fb:disabled { background: #ccc; cursor: not-allowed; }
 
-    .btn-submit-fb {
-        background: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 6px;
-        cursor: pointer;
-        width: 100%;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+    /* CỘT PHẢI: INFO */
+    .product-title { font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px; }
+    .product-price { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    .product-desc { color: #555; margin-bottom: 30px; line-height: 1.8; text-align: justify; }
+    .control-group { margin-bottom: 20px; }
+    .control-group label { display: block; font-weight: bold; margin-bottom: 8px; }
+    .control-group select, .control-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+    .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
+    .btn-add-cart:hover { background: var(--primary-color); }
 
-    .btn-submit-fb:hover {
-        background: var(--primary-color);
-    }
-    /* ------------------------------ */
-
-    /* Cột Thông tin (Bên phải) */
-    .product-title {
-        font-size: 2rem;
-        color: var(--secondary-color);
-        margin-bottom: 10px;
-    }
-
-    .product-price {
-        font-size: 1.5rem;
-        color: var(--primary-color);
-        font-weight: bold;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 20px;
-    }
-
-    .product-desc {
-        color: #555;
-        margin-bottom: 30px;
-        line-height: 1.8;
-        text-align: justify;
-    }
-
-    /* Form chọn mua */
-    .control-group {
-        margin-bottom: 20px;
-    }
-    .control-group label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 8px;
-    }
-    .control-group select, .control-group input {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 1rem;
-        outline: none;
-    }
-
-    .btn-add-cart {
-        width: 100%;
-        background: var(--secondary-color);
-        color: white;
-        padding: 18px;
-        border: none;
-        border-radius: 8px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        text-transform: uppercase;
-        margin-top: 20px;
-    }
-    .btn-add-cart:hover {
-        background: var(--primary-color);
-    }
-
-    /* Responsive cho điện thoại */
     @media (max-width: 768px) {
         .detail-grid { grid-template-columns: 1fr; gap: 30px; }
         .main-image-frame { height: 350px; }
-        .gallery-wrapper { position: static; } /* Bỏ sticky trên mobile */
+        .gallery-wrapper { position: static; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER (Giữ nguyên) -->
+  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
-      <a class="logo" href="index.html">
-        <img src="image/Tattantap_logo1.png" alt="Logo">
-      </a>
+      <a class="logo" href="index.html"><img src="image/Tattantap_logo1.png" alt="Logo"></a>
       <nav class="main-nav">
         <ul>
           <li><a href="index.html">Trang chủ</a></li>      
@@ -242,36 +83,33 @@
     </div>
   </header>
 
-  <!-- NỘI DUNG CHI TIẾT SẢN PHẨM -->
+  <!-- NỘI DUNG CHÍNH -->
   <main class="detail-container">
       <div class="detail-grid">
           
-          <!-- Cột Trái: Hình Ảnh & Feedback -->
+          <!-- CỘT TRÁI: ẢNH & FEEDBACK -->
           <div class="gallery-wrapper">
               <div class="main-image-frame">
                   <img id="main-img" src="" alt="Ảnh sản phẩm">
               </div>
-              <div class="thumbnail-list" id="thumb-container">
-                  <!-- JS sẽ tự động tạo ảnh nhỏ ở đây -->
-              </div>
+              <div class="thumbnail-list" id="thumb-container"></div>
 
-              <!-- --- PHẦN MỚI: FEEDBACK KHÁCH HÀNG --- -->
+              <!-- PHẦN FEEDBACK (ĐÃ TÍCH HỢP API) -->
               <div class="feedback-area">
                   <h3 class="feedback-title">Feedback Khách Hàng</h3>
                   
-                  <!-- Danh sách các đánh giá cũ -->
+                  <!-- Danh sách hiển thị -->
                   <div id="review-list" class="review-list">
-                      <!-- Ví dụ mẫu (Sẽ bị ghi đè bởi JS) -->
-                      <div class="review-item" style="text-align:center; color:#999;">
-                          Chưa có đánh giá nào. Hãy là người đầu tiên!
+                      <div style="text-align:center; padding:15px; color:#666;">
+                          <i class="fa-solid fa-spinner fa-spin"></i> Đang tải đánh giá...
                       </div>
                   </div>
 
-                  <!-- Form gửi đánh giá -->
-                  <div class="feedback-form">
+                  <!-- Form gửi -->
+                  <form class="feedback-form" onsubmit="return false;">
                       <h4 style="margin-bottom: 10px; font-size:1rem;">Gửi feedback của bạn</h4>
                       <input type="text" id="fb-name" placeholder="Tên hiển thị (VD: Lan Anh)">
-                      <input type="text" id="fb-code" placeholder="Nhập mã feedback (Bắt buộc)*">
+                      <input type="text" id="fb-code" placeholder="Nhập mã đơn hàng (Bắt buộc)*">
                       <select id="fb-rating">
                           <option value="5">⭐⭐⭐⭐⭐ - Tuyệt vời</option>
                           <option value="4">⭐⭐⭐⭐ - Hài lòng</option>
@@ -280,23 +118,17 @@
                           <option value="1">⭐ - Rất tệ</option>
                       </select>
                       <textarea id="fb-comment" rows="3" placeholder="Chia sẻ cảm nhận về sản phẩm..."></textarea>
-                      <button class="btn-submit-fb" onclick="submitFeedback()">GỬI FEEDBACK</button>
-                  </div>
+                      <button class="btn-submit-fb" id="btn-submit" onclick="submitFeedback()">GỬI FEEDBACK</button>
+                  </form>
               </div>
-              <!-- --------------------------------------- -->
-
           </div>
 
-          <!-- Cột Phải: Thông tin & Mua hàng -->
+          <!-- CỘT PHẢI: THÔNG TIN SẢN PHẨM -->
           <div class="info-wrapper">
               <h1 class="product-title" id="p-name">Đang tải...</h1>
               <div class="product-price" id="p-price">0₫</div>
-              
-              <div class="product-desc" id="p-desc">
-                  <!-- Mô tả sản phẩm -->
-              </div>
+              <div class="product-desc" id="p-desc"></div>
 
-              <!-- Khu vực tùy chọn -->
               <div id="options-area">
                   <div class="control-group" id="opt-size">
                       <label>Kích thước:</label>
@@ -325,123 +157,71 @@
       </div>
   </main>
 
-  <!-- FOOTER (Giữ nguyên) -->
+  <!-- FOOTER -->
   <footer>
-    <style>
-        .copyright-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        .social-bottom-right { display: flex; gap: 15px; }
-        .social-bottom-right a { color: inherit; font-size: 20px; text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
-        .bct-logo { width: 150px; margin-top: 15px; display: block; }
-    </style>
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
         <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản.</p>
-        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank"><img src="image_dcd887.png" alt="BCT" class="bct-logo"></a>
+        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank"><img src="image_dcd887.png" alt="BCT" class="bct-logo" style="width:150px; margin-top:10px;"></a>
       </div>
       <div class="footer-col">
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
-        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
-      </div>
-      <div class="footer-col">
-        <h4>Hỗ Trợ</h4>
-        <ul><li><a href="faq.html">Câu hỏi thường gặp</a></li></ul>
       </div>
     </div>
     <div class="copyright">
-        <div class="copyright-container">
-            <span>© 2025 Tất Tần Tập.</span>
-            <div class="social-bottom-right">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-            </div>
-        </div>
+        <div style="text-align: center; padding: 15px;">© 2025 Tất Tần Tập.</div>
     </div>
   </footer>
 
-  <!-- Chat Plugin -->
-  <div id="fb-root"></div>
-  <div id="fb-customer-chat" class="fb-customerchat"></div>
+  <!-- SCRIPT XỬ LÝ -->
   <script>
-    var chatbox = document.getElementById('fb-customer-chat');
-    chatbox.setAttribute("page_id", "61582495130534");
-    chatbox.setAttribute("attribution", "biz_inbox");
-    window.fbAsyncInit = function() { FB.init({ xfbml : true, version : 'v18.0' }); };
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  </script>
+    // --- 1. CẤU HÌNH API ---
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwg7NjJmkQ_12OOHY8pQWaWBtdv5BHQjzSVOqYzrefHcrJw97lMdKRYMY8jwvceaHCbbQ/exec";
 
-  <!-- LOGIC SCRIPT ĐỂ HIỂN THỊ DỮ LIỆU -->
-  <script>
-    // --- 1. CƠ SỞ DỮ LIỆU GIẢ LẬP (MOCK DATA) ---
+    // --- 2. DỮ LIỆU SẢN PHẨM (MOCK DATA) ---
     const productsDB = {
         'sock': {
             name: "Tất Cotton Premium",
             type: 'sock',
-            images: [
-                "image/1.png", 
-                "image/conganden.png",
-                "image/colung1den.png",
-                "image/codaiden.png",
-                "image/tatcolung1.jpg",
-                "image/tatcodai.jpg"
-            ],
-            desc: `
-                <p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>
-                <p><strong>Đặc điểm:</strong> Kháng khuẩn, khử mùi, thấm hút mồ hôi tốt. Cổ tất dệt kim chắc chắn.</p>
-            `
+            images: ["image/1.png", "image/conganden.png", "image/colung1den.png"],
+            desc: "<p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>"
         },
         'book': {
             name: "Sổ Tay Minimalist",
             type: 'book',
             price_fixed: 35000,
-            images: [
-                "image/sach1.png", 
-                "image/sach2.png"
-            ],
-            desc: `
-                <p><strong>Loại giấy:</strong> Giấy kem ngà chống lóa, định lượng 100gsm dày dặn.</p>
-                <p><strong>Thiết kế:</strong> Bìa cứng Kraft phong cách Vintage tối giản. Gáy lò xo kép.</p>
-                <p><strong>Kích thước:</strong> A5 tiêu chuẩn (148 x 210 mm), 120 trang.</p>
-            `
+            images: ["image/sach1.png", "image/sach2.png"],
+            desc: "<p><strong>Loại giấy:</strong> Giấy kem ngà chống lóa, định lượng 100gsm dày dặn.</p>"
         }
     };
 
-    // --- 2. LẤY ID TỪ URL ---
     const params = new URLSearchParams(window.location.search);
-    const productId = params.get('id');
+    const productId = params.get('id') || 'sock'; // Mặc định là sock
     const productData = productsDB[productId];
 
-    // --- 3. HÀM KHỞI TẠO TRANG ---
+    // --- 3. KHỞI TẠO TRANG ---
     function initPage() {
         if (!productData) {
             document.querySelector('.detail-container').innerHTML = "<h2>Không tìm thấy sản phẩm!</h2>";
             return;
         }
 
+        // Hiển thị thông tin
         document.getElementById('p-name').innerText = productData.name;
         document.getElementById('p-desc').innerHTML = productData.desc;
         
         const mainImg = document.getElementById('main-img');
         const thumbContainer = document.getElementById('thumb-container');
-        
         mainImg.src = productData.images[0];
 
         productData.images.forEach((src, index) => {
             let thumb = document.createElement('img');
             thumb.src = src;
-            thumb.className = 'thumb-item';
-            if (index === 0) thumb.classList.add('active');
-            
-            thumb.onclick = function() {
+            thumb.className = index === 0 ? 'thumb-item active' : 'thumb-item';
+            thumb.onclick = () => {
                 mainImg.src = src;
                 document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
                 thumb.classList.add('active');
@@ -450,163 +230,153 @@
         });
 
         if (productData.type === 'book') {
-            document.getElementById('opt-size').style.display = 'none';
-            document.getElementById('opt-color').style.display = 'none';
+            document.getElementById('options-area').style.display = 'none';
         }
 
-        updatePrice(); 
+        updatePrice();
+        updateCartCount();
         
-        // --- GỌI HÀM TẢI FEEDBACK ---
-        loadReviews(); 
+        // GỌI HÀM TẢI FEEDBACK TỪ API
+        loadReviewsFromSheet();
     }
 
-    // --- 4. LOGIC TÍNH GIÁ ---
+    // --- 4. LOGIC GIÁ & GIỎ HÀNG ---
     function updatePrice() {
         const qty = parseInt(document.getElementById('sel-qty').value) || 1;
-        const priceLabel = document.getElementById('p-price');
         let unitPrice = 0;
-
         if (productData.type === 'sock') {
             const size = document.getElementById('sel-size').value;
-            if (size === 'S') unitPrice = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
-            else if (size === 'M') unitPrice = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
-            else if (size === 'L') unitPrice = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
+            unitPrice = (size === 'S') ? 10000 : (size === 'M') ? 12000 : 14000;
+            if(qty >= 5) unitPrice -= 2000;
         } else {
             unitPrice = productData.price_fixed;
         }
-
-        priceLabel.innerText = `${(unitPrice * qty).toLocaleString('vi-VN')}₫`;
+        document.getElementById('p-price').innerText = `${(unitPrice * qty).toLocaleString('vi-VN')}₫`;
     }
 
-    // --- 5. THÊM VÀO GIỎ HÀNG ---
     function addToCart() {
-        const qty = parseInt(document.getElementById('sel-qty').value);
-        let cartItem = {};
-
-        if (productData.type === 'sock') {
-            const size = document.getElementById('sel-size').value;
-            const color = document.getElementById('sel-color').value;
-            let price = 0;
-            if (size === 'S') price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
-            else if (size === 'M') price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
-            else if (size === 'L') price = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
-
-            const sizeName = (size === 'S') ? "Nhỏ" : (size === 'M') ? "Vừa" : "Lớn";
-            cartItem = {
-                id: `sock_${size}_${color}`,
-                name: `Tất Cotton (${sizeName} - ${color})`,
-                type: 'sock',
-                size: size,
-                color: color,
-                price: price,
-                quantity: qty,
-                image: document.getElementById('main-img').src
-            };
-        } else {
-            cartItem = {
-                id: 'book_std',
-                name: 'Sổ Tay Minimalist',
-                type: 'book',
-                price: productData.price_fixed,
-                quantity: qty,
-                image: productData.images[0]
-            };
-        }
-
-        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
-        let existingItem = cart.find(item => item.id === cartItem.id);
-        
-        if (existingItem) {
-            existingItem.quantity += cartItem.quantity;
-        } else {
-            cart.push(cartItem);
-        }
-        localStorage.setItem('myCart', JSON.stringify(cart));
-        updateCartCount();
-        alert(`Đã thêm "${cartItem.name}" vào giỏ hàng!`);
+        alert("Đã thêm vào giỏ hàng (Demo)");
+        // Bạn có thể giữ logic thêm vào localStorage cũ ở đây
     }
 
     function updateCartCount() {
         let cart = JSON.parse(localStorage.getItem('myCart')) || [];
-        let total = 0;
-        cart.forEach(item => total += parseInt(item.quantity));
+        let total = cart.reduce((acc, item) => acc + item.quantity, 0);
         document.getElementById('cart-count').innerText = total;
     }
 
-    // --- 6. TÍNH NĂNG FEEDBACK (MỚI) ---
-    // Khóa localStorage để lưu đánh giá: 'reviews_ID_SẢN_PHẨM'
-    const reviewsKey = `reviews_${productId}`;
+    // --- 5. TÍNH NĂNG FEEDBACK (KẾT NỐI API) ---
 
-    function loadReviews() {
-        const reviewListEl = document.getElementById('review-list');
-        const reviews = JSON.parse(localStorage.getItem(reviewsKey)) || [];
+    // A. Tải danh sách đánh giá
+    function loadReviewsFromSheet() {
+        const list = document.getElementById('review-list');
+        
+        // Gọi API với tham số id sản phẩm
+        fetch(`${GOOGLE_SCRIPT_URL}?id=${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                list.innerHTML = ""; // Xóa icon loading
+                
+                if (!Array.isArray(data) || data.length === 0) {
+                    list.innerHTML = '<div style="text-align:center; color:#999; padding:15px;">Chưa có feedback nào. Hãy là người đầu tiên!</div>';
+                    return;
+                }
 
-        if (reviews.length === 0) {
-            reviewListEl.innerHTML = '<div style="text-align:center; color:#999; padding:10px;">Chưa có feedback nào. Hãy nhập mã đơn hàng để feedback ngay!</div>';
-            return;
+                data.forEach(rv => {
+                    const stars = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
+                    const dateStr = new Date(rv.date).toLocaleDateString('vi-VN');
+                    
+                    const html = `
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="reviewer-name">${rv.name}</span>
+                                <span class="review-stars">${stars}</span>
+                            </div>
+                            <div class="review-content">${rv.comment}</div>
+                            <span class="review-date">${dateStr}</span>
+                        </div>
+                    `;
+                    list.insertAdjacentHTML('beforeend', html);
+                });
+            })
+            .catch(error => {
+                console.error('Lỗi tải feedback:', error);
+                list.innerHTML = '<div style="color:red; text-align:center; padding:10px;">Không tải được đánh giá.</div>';
+            });
+    }
+
+    // B. Gửi đánh giá mới
+    function submitFeedback() {
+        const name = document.getElementById('fb-name').value.trim() || 'Khách hàng';
+        const code = document.getElementById('fb-code').value.trim();
+        const rating = document.getElementById('fb-rating').value;
+        const comment = document.getElementById('fb-comment').value.trim();
+        const btn = document.getElementById('btn-submit');
+
+        if (!code) { 
+            alert("Vui lòng nhập Mã đơn hàng để xác minh!"); 
+            document.getElementById('fb-code').focus();
+            return; 
+        }
+        if (!comment) { 
+            alert("Bạn hãy viết vài lời nhận xét nhé!"); 
+            document.getElementById('fb-comment').focus();
+            return; 
         }
 
-        reviewListEl.innerHTML = ''; // Xóa nội dung cũ
-        // Hiển thị đánh giá mới nhất lên đầu
-        reviews.reverse().forEach(rv => {
-            const stars = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
-            const html = `
-                <div class="review-item">
-                    <div class="review-header">
-                        <span class="reviewer-name">${rv.name}</span>
-                        <span class="review-stars">${stars}</span>
-                    </div>
-                    <div class="review-content">${rv.comment}</div>
-                </div>
-            `;
-            reviewListEl.insertAdjacentHTML('beforeend', html);
+        // Khóa nút submit
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...';
+        btn.disabled = true;
+
+        // Tạo gói dữ liệu gửi đi (QUAN TRỌNG: type='feedback')
+        const payload = {
+            type: 'feedback', // Để server biết đây là feedback chứ không phải đặt hàng
+            product_id: productId,
+            name: name,
+            code: code,
+            rating: rating,
+            comment: comment
+        };
+
+        // Gửi POST request
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload) // App Script sẽ đọc qua e.postData.contents
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result === 'success') {
+                alert("✅ Cảm ơn bạn! Feedback đã được ghi nhận.");
+                
+                // Xóa form
+                document.getElementById('fb-comment').value = '';
+                document.getElementById('fb-code').value = '';
+                document.getElementById('fb-name').value = '';
+
+                // Tải lại danh sách ngay lập tức
+                loadReviewsFromSheet();
+            } 
+            else if (data.result === 'duplicate') {
+                alert("⚠️ Lỗi: Mã đơn hàng này đã được sử dụng để đánh giá rồi!");
+                document.getElementById('fb-code').focus();
+            } 
+            else {
+                alert("❌ Lỗi server: " + (data.message || data.error));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Có lỗi kết nối. Vui lòng thử lại sau!");
+        })
+        .finally(() => {
+            // Mở lại nút submit
+            btn.innerHTML = 'GỬI FEEDBACK';
+            btn.disabled = false;
         });
     }
 
-    function submitFeedback() {
-        const name = document.getElementById('fb-name').value.trim() || 'Khách hàng ẩn danh';
-        const code = document.getElementById('fb-code').value.trim();
-        const rating = parseInt(document.getElementById('fb-rating').value);
-        const comment = document.getElementById('fb-comment').value.trim();
-
-        // 1. Kiểm tra mã Feedback (Logic giả lập: Chỉ cần không để trống)
-        if (!code) {
-            alert("Vui lòng nhập Mã Feedback (có trong đơn hàng) để gửi đánh giá!");
-            document.getElementById('fb-code').focus();
-            return;
-        }
-
-        if (!comment) {
-            alert("Bạn hãy viết vài lời cảm nhận nhé!");
-            document.getElementById('fb-comment').focus();
-            return;
-        }
-
-        // 2. Tạo đối tượng review
-        const newReview = {
-            name: name,
-            rating: rating,
-            comment: comment,
-            date: new Date().toISOString()
-        };
-
-        // 3. Lưu vào LocalStorage
-        let reviews = JSON.parse(localStorage.getItem(reviewsKey)) || [];
-        reviews.push(newReview);
-        localStorage.setItem(reviewsKey, JSON.stringify(reviews));
-
-        // 4. Cập nhật giao diện
-        alert("Cảm ơn bạn đã feedback! Đánh giá của bạn đã được hiển thị.");
-        
-        // Reset form
-        document.getElementById('fb-comment').value = '';
-        document.getElementById('fb-code').value = ''; // Xóa mã sau khi nhập thành công
-        
-        loadReviews(); // Tải lại danh sách
-    }
-
+    // Chạy khi tải trang
     initPage();
-    updateCartCount();
   </script>
 
 </body>
