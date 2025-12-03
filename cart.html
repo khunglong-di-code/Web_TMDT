@@ -319,45 +319,61 @@
         }
     }
 
-    // === 3. LOGIC TRA CỨU ĐƠN HÀNG (DÙNG GET ĐỂ SỬA LỖI UNDEFINED) ===
-    function lookupOrder() {
-        const phone = document.getElementById('lookup-phone').value.trim();
+function lookupOrder() {
+        // Lấy số điện thoại và xóa khoảng trắng thừa
+        const phoneInput = document.getElementById('lookup-phone').value;
+        const phone = phoneInput ? phoneInput.trim() : "";
+        
         const btn = document.getElementById('btn-lookup');
         const resultDiv = document.getElementById('lookup-results');
 
-        if (!phone) { alert("Vui lòng nhập số điện thoại!"); return; }
+        if (!phone) { 
+            alert("Vui lòng nhập số điện thoại!"); 
+            return; 
+        }
 
         // Hiệu ứng loading
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang tìm...';
         btn.disabled = true;
         resultDiv.innerHTML = "";
 
-        // GỌI API BẰNG GET (Thêm tham số ?phone=...)
-        fetch(`${API_ENDPOINT}?phone=${phone}`)
+        // GỌI API BẰNG GET 
+        // QUAN TRỌNG: Nối ?phone=... vào sau link API
+        const requestUrl = `${API_ENDPOINT}?phone=${phone}`;
+
+        console.log("Đang gọi API:", requestUrl); // Dùng để debug (F12)
+
+        fetch(requestUrl)
         .then(response => {
-            if (!response.ok) throw new Error("Lỗi mạng");
+            if (!response.ok) throw new Error("Lỗi kết nối mạng");
             return response.json();
         })
         .then(data => {
+            console.log("Dữ liệu nhận được:", data); // Debug xem server trả về gì
+
+            // Kiểm tra kết quả
             if (data.result === 'success') {
-                if (data.orders.length === 0) {
-                    resultDiv.innerHTML = `<div style="text-align:center; padding:15px; color:#666;">Không tìm thấy đơn hàng nào với SĐT <strong>${phone}</strong></div>`;
+                if (!data.orders || data.orders.length === 0) {
+                    resultDiv.innerHTML = `<div style="text-align:center; padding:20px; color:#666; background:#fff; border-radius:8px; border:1px solid #eee;">
+                        <i class="fa-solid fa-circle-info" style="font-size:30px; margin-bottom:10px;"></i><br>
+                        Không tìm thấy đơn hàng nào với SĐT <strong>${phone}</strong>
+                    </div>`;
                     return;
                 }
 
-                let html = `<p style="margin-bottom:10px; color:#27ae60;">Tìm thấy <strong>${data.orders.length}</strong> đơn hàng:</p>`;
+                let html = `<p style="margin-bottom:15px; color:#2e7d32; font-weight:bold;">
+                    <i class="fa-solid fa-check"></i> Tìm thấy <strong>${data.orders.length}</strong> đơn hàng:
+                </p>`;
                 
                 data.orders.forEach(order => {
-                    // Xử lý class màu sắc
-                    let statusClass = 'status-pending'; // Mặc định
+                    let statusClass = 'status-pending';
                     if (order.status.includes('Đang')) statusClass = 'status-shipping';
                     else if (order.status.includes('Đã')) statusClass = 'status-done';
                     else if (order.status.includes('Hủy')) statusClass = 'status-cancel';
 
-                    // Xử lý hiển thị sản phẩm (xuống dòng)
-                    let productList = order.products.replace(/\n/g, '<br>');
+                    // Xử lý xuống dòng cho tên sản phẩm
+                    let productList = order.products ? order.products.replace(/\n/g, '<br>') : "Chi tiết không có sẵn";
 
-                    // Xử lý mã Feedback
                     let feedbackHtml = '';
                     if (order.fb_code && order.fb_code.trim() !== "") {
                         feedbackHtml = `
@@ -386,7 +402,8 @@
                 });
                 resultDiv.innerHTML = html;
             } else {
-                resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">🚫 ${data.message || "Lỗi không xác định"}</div>`;
+                // Trường hợp API trả về lỗi khác (status alive v.v...)
+                resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">Server phản hồi: ${data.message || "Không rõ lỗi"}</div>`;
             }
         })
         .catch(err => {
