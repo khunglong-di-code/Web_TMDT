@@ -10,65 +10,88 @@
   <link rel="icon" href="image/Tattantap_logo1.png" type="image/png">
 
   <style>
-    /* --- CSS SẢN PHẨM (GIỮ NGUYÊN) --- */
-    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; max-width: 1000px; margin: 0 auto; }
-    .product-card { background: #fff; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; border-radius: 12px; overflow: hidden; border: 1px solid #eee; }
-    .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-    .product-img { width: 100%; height: 450px; object-fit: cover; border-bottom: 1px solid #f0f0f0; }
-    .product-info { padding: 25px; text-align: center; }
-    .product-name { font-size: 1.4rem; margin-bottom: 10px; color: var(--secondary-color); }
-    .product-price-preview { display: block; font-size: 1.1rem; color: var(--primary-color); font-weight: bold; margin-bottom: 15px; }
-    .btn-select { background: var(--secondary-color); color: white; border: none; padding: 12px 30px; border-radius: 30px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; width: 100%; }
-    .btn-select:hover { background: var(--primary-color); transform: scale(1.02); }
-    @media (max-width: 768px) { .product-grid { grid-template-columns: 1fr; } .product-img { height: 350px; } }
+    /* --- CSS SẢN PHẨM --- */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 Cột */
+        gap: 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
 
-    /* --- CSS POP-UP TRƯỢT --- */
-    .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(2px); }
-    .popup-overlay.active { opacity: 1; visibility: visible; }
+    .product-card {
+        background: #fff;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #eee;
+    }
 
-    .sliding-sheet { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: white; border-radius: 20px 20px 0 0; padding: 0; z-index: 2001; transition: bottom 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column; }
-    .sliding-sheet.active { bottom: 0; }
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
 
-    /* Header của Popup */
-    .sheet-header { padding: 20px 25px 10px; display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #f0f0f0; }
-    .sheet-info h3 { margin: 0 0 5px 0; font-size: 1.3rem; color: var(--secondary-color); }
-    .sheet-price { color: var(--primary-color); font-weight: bold; font-size: 1.2rem; }
-    .sheet-close { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #999; }
+    .product-img {
+        width: 100%;
+        height: 450px; /* Ảnh to cao */
+        object-fit: cover;
+        border-bottom: 1px solid #f0f0f0;
+    }
 
-    /* --- CSS MỚI: TAB SWITCHER --- */
-    .sheet-tabs { display: flex; border-bottom: 1px solid #eee; background: #f9f9f9; }
-    .tab-btn { flex: 1; padding: 15px; border: none; background: none; cursor: pointer; font-weight: bold; color: #888; font-size: 1rem; border-bottom: 3px solid transparent; transition: 0.3s; }
-    .tab-btn.active { color: var(--primary-color); border-bottom-color: var(--primary-color); background: #fff; }
+    .product-info {
+        padding: 25px;
+        text-align: center;
+    }
+
+    .product-name {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        color: var(--secondary-color);
+        font-weight: 700;
+    }
+
+    .product-price-preview {
+        display: block;
+        font-size: 1.1rem;
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .btn-select {
+        background: var(--secondary-color);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        width: 100%;
+    }
     
-    .sheet-content-wrapper { padding: 25px; overflow-y: auto; flex: 1; }
-    
-    /* Ẩn hiện nội dung Tab */
-    .tab-content { display: none; animation: fadeIn 0.3s; }
-    .tab-content.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .btn-select:hover {
+        background: var(--primary-color);
+        transform: scale(1.02);
+    }
 
-    /* CSS cho nội dung cũ (Tab Thông tin) */
-    .popup-gallery { float: left; width: 120px; margin-right: 20px; }
-    .popup-main-img { width: 120px; height: 120px; object-fit: cover; border-radius: 12px; border: 1px solid #eee; margin-bottom: 10px; }
-    .thumbnail-list { display: flex; gap: 8px; flex-wrap: wrap; }
-    .thumb-img { width: 35px; height: 35px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
-    .thumb-img:hover, .thumb-img.active { border-color: var(--primary-color); }
-    
-    .option-group { margin-bottom: 20px; clear: both; }
-    .option-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.95rem; color: #444; }
-    .option-group select, .option-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; outline: none; }
-    .option-group select:focus, .option-group input:focus { border-color: var(--primary-color); }
-
-    /* CSS cho Tab Mô tả */
-    .desc-text { color: #555; line-height: 1.6; font-size: 0.95rem; text-align: justify; }
-    .desc-text p { margin-bottom: 10px; }
-
-    .sheet-footer { padding: 15px 25px 25px; border-top: 1px solid #eee; background: #fff; }
-    .btn-add-cart { width: 100%; background: var(--primary-color); color: white; padding: 16px; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+    /* RESPONSIVE MOBILE */
+    @media (max-width: 768px) {
+        .product-grid {
+            grid-template-columns: 1fr; /* Mobile hiện 1 cột */
+        }
+        .product-img {
+            height: 350px;
+        }
+    }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html">
@@ -91,20 +114,22 @@
     </div>
   </header>
 
+  <!-- TITLE SECTION -->
   <section class="section bg-light" style="padding: 40px 5%; text-align: center;">
     <div class="container">
       <h1 style="font-size: 2rem; color: var(--secondary-color);">Cửa Hàng</h1>
-      <p style="color: var(--text-gray);">Chạm vào sản phẩm để xem chi tiết</p>
+      <p style="color: var(--text-gray);">Chọn sản phẩm để xem chi tiết</p>
     </div>
   </section>
 
+  <!-- PRODUCT LIST -->
   <section class="section">
     <div class="container">
       <div class="product-grid">
+
         <!-- SẢN PHẨM 1: TẤT -->
-       <!-- SẢN PHẨM 1: TẤT -->
-        <!-- Link chuyển hướng: product-detail.html?id=sock -->
-        <article class="product-card" onclick="window.location.href='product-detail.html?id=sock'">
+        <!-- Bấm vào sẽ nhảy sang trang product_detail.html với id=sock -->
+        <article class="product-card" onclick="window.location.href='product_detail.html?id=sock'">
           <img src="image/1.png" class="product-img" alt="Tất Cotton Premium">
           <div class="product-info">
             <h3 class="product-name">Tất Cotton Premium</h3>
@@ -114,8 +139,8 @@
         </article>
 
         <!-- SẢN PHẨM 2: SỔ -->
-        <!-- Link chuyển hướng: product-detail.html?id=book -->
-        <article class="product-card" onclick="window.location.href='product-detail.html?id=book'">
+        <!-- Bấm vào sẽ nhảy sang trang product_detail.html với id=book -->
+        <article class="product-card" onclick="window.location.href='product_detail.html?id=book'">
           <img src="image/4.png" class="product-img" alt="Sổ Tay Minimalist">
           <div class="product-info">
             <h3 class="product-name">Sổ Tay Minimalist</h3>
@@ -123,80 +148,10 @@
             <button class="btn-select">Xem chi tiết</button>
           </div>
         </article>
+
       </div>
     </div>
   </section>
-
-  <!-- KHUNG POP-UP TRƯỢT (GIAO DIỆN MỚI CÓ TAB) -->
-  <div class="popup-overlay" id="popup-overlay" onclick="closePopup()"></div>
-  
-  <div class="sliding-sheet" id="product-sheet">
-      <!-- 1. Header Popup -->
-      <div class="sheet-header">
-          <div class="sheet-info">
-              <h3 id="popup-name">Tên Sản Phẩm</h3>
-              <div class="sheet-price" id="popup-price">0₫</div>
-          </div>
-          <button class="sheet-close" onclick="closePopup()"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-
-      <!-- 2. Tabs Navigation -->
-      <div class="sheet-tabs">
-          <button class="tab-btn active" onclick="switchTab('info', this)">Tùy chọn</button>
-          <button class="tab-btn" onclick="switchTab('desc', this)">Mô tả chi tiết</button>
-      </div>
-
-      <!-- 3. Nội dung cuộn -->
-      <div class="sheet-content-wrapper">
-          
-          <!-- TAB 1: THÔNG TIN & TÙY CHỌN (Giao diện cũ) -->
-          <div id="tab-info" class="tab-content active">
-              <div class="popup-gallery">
-                  <img id="popup-img" class="popup-main-img" src="" alt="Ảnh chi tiết">
-                  <div id="notebook-thumbnails" class="thumbnail-list"></div>
-              </div>
-              
-              <!-- Tùy chọn cho Tất -->
-              <div id="sock-options">
-                  <div class="option-group">
-                      <label>Kích thước (Size):</label>
-                      <select id="size-sock" onchange="updatePopupState()">
-                          <option value="S">Nhỏ (S)</option>
-                          <option value="M">Vừa (M)</option>
-                          <option value="L">Lớn (L)</option>
-                      </select>
-                  </div>
-                  <div class="option-group">
-                      <label>Màu sắc:</label>
-                      <select id="color-sock" onchange="updatePopupState()">
-                          <option value="Trắng">Trắng</option>
-                          <option value="Đen">Đen</option>
-                      </select>
-                  </div>
-              </div>
-
-              <!-- Số lượng chung -->
-              <div class="option-group">
-                  <label>Số lượng:</label>
-                  <input type="number" id="popup-qty" value="1" min="1" onchange="updatePopupState()">
-              </div>
-              <div style="clear:both;"></div>
-          </div>
-
-          <!-- TAB 2: MÔ TẢ SẢN PHẨM -->
-          <div id="tab-desc" class="tab-content">
-              <div id="popup-desc-text" class="desc-text">
-                  <!-- Nội dung mô tả sẽ được JS điền vào đây -->
-              </div>
-          </div>
-
-      </div>
-
-      <!-- 4. Footer Button (Luôn hiển thị) -->
-      <div class="sheet-footer">
-          <button class="btn-add-cart" onclick="confirmAddToCart()">Thêm Vào Giỏ Hàng</button>
-      </div>
-  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -207,10 +162,11 @@
         .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
         .bct-logo { width: 150px; margin-top: 15px; display: block; }
     </style>
+
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
-        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản.</p>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
         <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
             <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
         </a>
@@ -219,7 +175,7 @@
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
-        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.shop</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
       </div>
       <div class="footer-col">
         <h4>Hỗ Trợ</h4>
@@ -227,7 +183,6 @@
           <li><a href="faq.html">Câu hỏi thường gặp</a></li>
           <li><a href="#">Chính sách đổi trả</a></li>
           <li><a href="#">Hướng dẫn mua hàng</a></li>
-          <p><i class="fa-solid fa-envelope"></i> hotro@tattantap.shop</p>
         </ul>
       </div>
     </div>
@@ -259,194 +214,15 @@
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  <!-- LOGIC SCRIPT -->
+  <!-- Script Cập nhật số lượng giỏ hàng -->
   <script>
-      // 1. DỮ LIỆU SẢN PHẨM (ẢNH & MÔ TẢ)
-      const sockImages = {
-          "S_Đen": "image/conganden.png",
-          "M_Đen": "image/colung1den.png",
-          "L_Đen": "image/codaiden.png",
-          "S_Trắng": "image/1.png",
-          "M_Trắng": "image/tatcolung1.jpg",
-          "L_Trắng": "image/tatcodai.jpg"
-      };
-
-      const notebookImages = [ "image/4.png", "image/sach1.png", "image/sach2.png" ];
-
-      // 👇👇👇 BẠN ĐIỀN MÔ TẢ VÀO ĐÂY 👇👇👇
-      const productDescriptions = {
-          'sock': `
-              <p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>
-              <p><strong>Đặc điểm:</strong> Kháng khuẩn, khử mùi, thấm hút mồ hôi tốt. Cổ tất dệt kim chắc chắn, không bị dão sau nhiều lần giặt.</p>
-              <p><strong>Hướng dẫn bảo quản:</strong> Giặt máy ở chế độ nhẹ hoặc giặt tay. Tránh phơi trực tiếp dưới ánh nắng gắt.</p>
-          `,
-          'book': `
-              <p><strong>Loại giấy:</strong> Giấy kem ngà chống lóa, định lượng 100gsm dày dặn, viết bút mực không bị thấm sang trang sau.</p>
-              <p><strong>Thiết kế:</strong> Bìa cứng Kraft phong cách Vintage tối giản. Gáy lò xo kép chắc chắn, dễ dàng lật mở 360 độ.</p>
-              <p><strong>Kích thước:</strong> A5 tiêu chuẩn (148 x 210 mm), 120 trang.</p>
-          `
-      };
-      // 👆👆👆 -------------------------------- 👆👆👆
-
-      let currentProductType = '';
-
-      // 2. HÀM CHUYỂN TAB
-      function switchTab(tabName, btnElement) {
-          // Ẩn tất cả nội dung tab
-          document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-          // Bỏ active ở tất cả nút
-          document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-
-          // Hiện tab được chọn
-          document.getElementById('tab-' + tabName).classList.add('active');
-          // Active nút được bấm
-          if(btnElement) {
-              btnElement.classList.add('active');
-          } else {
-              // Mặc định active nút đầu tiên nếu không truyền btnElement
-              document.querySelector('.sheet-tabs .tab-btn').classList.add('active');
-          }
-      }
-
-      // 3. MỞ POPUP
-      function openPopup(type) {
-          currentProductType = type;
-          const sheet = document.getElementById('product-sheet');
-          const overlay = document.getElementById('popup-overlay');
-          const sockOptions = document.getElementById('sock-options');
-          const qtyInput = document.getElementById('popup-qty');
-          const imgElement = document.getElementById('popup-img');
-          const thumbContainer = document.getElementById('notebook-thumbnails');
-          const descContent = document.getElementById('popup-desc-text');
-
-          qtyInput.value = 1;
-          
-          // Reset về tab đầu tiên mỗi khi mở
-          switchTab('info', document.querySelector('.sheet-tabs .tab-btn:first-child'));
-
-          // Load Mô tả sản phẩm
-          descContent.innerHTML = productDescriptions[type];
-
-          if (type === 'sock') {
-              document.getElementById('popup-name').innerText = "Tất Cotton Premium";
-              sockOptions.style.display = 'block';
-              thumbContainer.style.display = 'none'; 
-              
-              document.getElementById('size-sock').value = 'S';
-              document.getElementById('color-sock').value = 'Trắng';
-          } else {
-              document.getElementById('popup-name').innerText = "Sổ Tay Minimalist";
-              sockOptions.style.display = 'none';
-              thumbContainer.style.display = 'flex';
-              
-              imgElement.src = notebookImages[0] || "image/4.png";
-
-              thumbContainer.innerHTML = ''; 
-              notebookImages.forEach((src, index) => {
-                  let thumb = document.createElement('img');
-                  thumb.src = src;
-                  thumb.className = 'thumb-img';
-                  thumb.onerror = function() { this.src = 'image/4.png'; }; 
-                  
-                  thumb.onclick = function() {
-                      imgElement.src = src;
-                      document.querySelectorAll('.thumb-img').forEach(el => el.classList.remove('active'));
-                      thumb.classList.add('active');
-                  };
-                  if(index === 0) thumb.classList.add('active');
-                  thumbContainer.appendChild(thumb);
-              });
-          }
-
-          updatePopupState();
-          overlay.classList.add('active');
-          sheet.classList.add('active');
-      }
-
-      function closePopup() {
-          document.getElementById('product-sheet').classList.remove('active');
-          document.getElementById('popup-overlay').classList.remove('active');
-      }
-
-      function updatePopupState() {
-          const qty = parseInt(document.getElementById('popup-qty').value) || 1;
-          const priceLabel = document.getElementById('popup-price');
-          const imgElement = document.getElementById('popup-img');
-
-          if (currentProductType === 'sock') {
-              const size = document.getElementById('size-sock').value;
-              const color = document.getElementById('color-sock').value;
-              const key = size + "_" + color;
-              imgElement.src = sockImages[key] || 'image/1.png';
-
-              let unitPrice = 0;
-              if (size === 'S') unitPrice = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
-              else if (size === 'M') unitPrice = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
-              else if (size === 'L') unitPrice = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
-
-              priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫`;
-          } else {
-              const unitPrice = 35000;
-              priceLabel.innerHTML = `${unitPrice.toLocaleString('vi-VN')}₫`;
-          }
-      }
-
-      function confirmAddToCart() {
-          let product = {};
-          const qty = parseInt(document.getElementById('popup-qty').value);
-
-          if (currentProductType === 'sock') {
-              const size = document.getElementById('size-sock').value;
-              const color = document.getElementById('color-sock').value;
-              const sizeName = (size === 'S') ? "Nhỏ" : (size === 'M') ? "Vừa" : "Lớn";
-              
-              let price = 0;
-              if (size === 'S') price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
-              else if (size === 'M') price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
-              else if (size === 'L') price = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
-
-              product = {
-                  id: 'sock_' + size + '_' + color, 
-                  name: `Tất Cotton (${sizeName} - ${color})`,
-                  type: 'sock',
-                  size: size,
-                  color: color,
-                  price: price,
-                  quantity: qty,
-                  image: document.getElementById('popup-img').src
-              };
-          } else {
-              product = {
-                  id: 'book_std',
-                  name: 'Sổ Tay Minimalist',
-                  type: 'book',
-                  price: 35000,
-                  quantity: qty,
-                  image: 'image/4.png' 
-              };
-          }
-
-          let cart = JSON.parse(localStorage.getItem('myCart')) || [];
-          let existingItem = cart.find(item => item.id === product.id);
-          
-          if (existingItem) {
-              existingItem.quantity += product.quantity;
-          } else {
-              cart.push(product);
-          }
-          localStorage.setItem('myCart', JSON.stringify(cart));
-          updateCartCount();
-          closePopup();
-          alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
-      }
-
       function updateCartCount() {
           let cart = JSON.parse(localStorage.getItem('myCart')) || [];
           let total = 0;
           cart.forEach(item => total += parseInt(item.quantity));
           document.getElementById('cart-count').innerText = total;
       }
-
+      // Chạy khi tải trang
       updateCartCount();
   </script>
 
