@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chi Tiết Sản Phẩm | Tất Tần Tập</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="image/Tattantap_logo1.png" type="image/png">
+
+  <style>
+    /* CSS RIÊNG CHO TRANG CHI TIẾT */
+    .detail-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Chia đôi màn hình: Ảnh - Thông tin */
+        gap: 50px;
+    }
+
+    /* Cột Ảnh (Bên trái) */
+    .gallery-wrapper {
+        position: sticky;
+        top: 100px;
+    }
+    
+    .main-image-frame {
+        width: 100%;
+        height: 500px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-image-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    .thumbnail-list {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+    }
+
+    .thumb-item {
+        width: 80px;
+        height: 80px;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        object-fit: cover;
+        opacity: 0.7;
+        transition: 0.3s;
+    }
+
+    .thumb-item:hover, .thumb-item.active {
+        border-color: var(--primary-color);
+        opacity: 1;
+    }
+
+    /* Cột Thông tin (Bên phải) */
+    .product-title {
+        font-size: 2rem;
+        color: var(--secondary-color);
+        margin-bottom: 10px;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+    }
+
+    .product-desc {
+        color: #555;
+        margin-bottom: 30px;
+        line-height: 1.8;
+        text-align: justify;
+    }
+
+    /* Form chọn mua */
+    .control-group {
+        margin-bottom: 20px;
+    }
+    .control-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+    }
+    .control-group select, .control-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    .btn-add-cart {
+        width: 100%;
+        background: var(--secondary-color);
+        color: white;
+        padding: 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        text-transform: uppercase;
+        margin-top: 20px;
+    }
+    .btn-add-cart:hover {
+        background: var(--primary-color);
+    }
+
+    /* Responsive cho điện thoại */
+    @media (max-width: 768px) {
+        .detail-grid { grid-template-columns: 1fr; gap: 30px; }
+        .main-image-frame { height: 350px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER (Giữ nguyên) -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <img src="image/Tattantap_logo1.png" alt="Logo">
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Trang chủ</a></li>      
+          <li><a href="about.html">Về chúng tôi</a></li>
+          <li><a href="products.html" class="active">Cửa hàng</a></li>
+          <li><a href="faq.html">Hỗ trợ</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+          <a class="cart-link" href="cart.html">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="cart-count" id="cart-count">0</span>
+          </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NỘI DUNG CHI TIẾT SẢN PHẨM -->
+  <main class="detail-container">
+      <div class="detail-grid">
+          
+          <!-- Cột Trái: Hình Ảnh -->
+          <div class="gallery-wrapper">
+              <div class="main-image-frame">
+                  <img id="main-img" src="" alt="Ảnh sản phẩm">
+              </div>
+              <div class="thumbnail-list" id="thumb-container">
+                  <!-- JS sẽ tự động tạo ảnh nhỏ ở đây -->
+              </div>
+          </div>
+
+          <!-- Cột Phải: Thông tin & Mua hàng -->
+          <div class="info-wrapper">
+              <h1 class="product-title" id="p-name">Đang tải...</h1>
+              <div class="product-price" id="p-price">0₫</div>
+              
+              <div class="product-desc" id="p-desc">
+                  <!-- Mô tả sản phẩm -->
+              </div>
+
+              <!-- Khu vực tùy chọn (Ẩn/Hiện tùy loại sản phẩm) -->
+              <div id="options-area">
+                  <div class="control-group" id="opt-size">
+                      <label>Kích thước:</label>
+                      <select id="sel-size" onchange="updatePrice()">
+                          <option value="S">Nhỏ (S)</option>
+                          <option value="M">Vừa (M)</option>
+                          <option value="L">Lớn (L)</option>
+                      </select>
+                  </div>
+                  <div class="control-group" id="opt-color">
+                      <label>Màu sắc:</label>
+                      <select id="sel-color" onchange="updatePrice()">
+                          <option value="Trắng">Trắng</option>
+                          <option value="Đen">Đen</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="control-group">
+                  <label>Số lượng:</label>
+                  <input type="number" id="sel-qty" value="1" min="1" onchange="updatePrice()">
+              </div>
+
+              <button class="btn-add-cart" onclick="addToCart()">Thêm Vào Giỏ Hàng</button>
+          </div>
+      </div>
+  </main>
+
+  <!-- FOOTER (Giữ nguyên) -->
+  <footer>
+    <style>
+        .copyright-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .social-bottom-right { display: flex; gap: 15px; }
+        .social-bottom-right a { color: inherit; font-size: 20px; text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
+        .bct-logo { width: 150px; margin-top: 15px; display: block; }
+    </style>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Về Tất Tần Tập</h4>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản.</p>
+        <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank"><img src="image_dcd887.png" alt="BCT" class="bct-logo"></a>
+      </div>
+      <div class="footer-col">
+        <h4>Liên Hệ</h4>
+        <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
+        <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Hỗ Trợ</h4>
+        <ul><li><a href="faq.html">Câu hỏi thường gặp</a></li></ul>
+      </div>
+    </div>
+    <div class="copyright">
+        <div class="copyright-container">
+            <span>© 2025 Tất Tần Tập.</span>
+            <div class="social-bottom-right">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <!-- Chat Plugin -->
+  <div id="fb-root"></div>
+  <div id="fb-customer-chat" class="fb-customerchat"></div>
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "61582495130534");
+    chatbox.setAttribute("attribution", "biz_inbox");
+    window.fbAsyncInit = function() { FB.init({ xfbml : true, version : 'v18.0' }); };
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+  <!-- LOGIC SCRIPT ĐỂ HIỂN THỊ DỮ LIỆU -->
+  <script>
+    // --- 1. CƠ SỞ DỮ LIỆU GIẢ LẬP (MOCK DATA) ---
+    const productsDB = {
+        'sock': {
+            name: "Tất Cotton Premium",
+            type: 'sock',
+            images: [
+                "image/1.png", 
+                "image/conganden.png",
+                "image/colung1den.png",
+                "image/codaiden.png",
+                "image/tatcolung1.jpg",
+                "image/tatcodai.jpg"
+            ],
+            desc: `
+                <p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>
+                <p><strong>Đặc điểm:</strong> Kháng khuẩn, khử mùi, thấm hút mồ hôi tốt. Cổ tất dệt kim chắc chắn.</p>
+            `
+        },
+        'book': {
+            name: "Sổ Tay Minimalist",
+            type: 'book',
+            price_fixed: 35000,
+            images: [
+                "image/4.png", 
+                "image/sach1.png", 
+                "image/sach2.png"
+            ],
+            desc: `
+                <p><strong>Loại giấy:</strong> Giấy kem ngà chống lóa, định lượng 100gsm dày dặn.</p>
+                <p><strong>Thiết kế:</strong> Bìa cứng Kraft phong cách Vintage tối giản. Gáy lò xo kép.</p>
+                <p><strong>Kích thước:</strong> A5 tiêu chuẩn (148 x 210 mm), 120 trang.</p>
+            `
+        }
+    };
+
+    // --- 2. LẤY ID TỪ URL ---
+    // Ví dụ: product-detail.html?id=sock => lấy được 'sock'
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    const productData = productsDB[productId];
+
+    // --- 3. HÀM KHỞI TẠO TRANG ---
+    function initPage() {
+        if (!productData) {
+            document.querySelector('.detail-container').innerHTML = "<h2>Không tìm thấy sản phẩm!</h2>";
+            return;
+        }
+
+        // Điền thông tin cơ bản
+        document.getElementById('p-name').innerText = productData.name;
+        document.getElementById('p-desc').innerHTML = productData.desc;
+        
+        // Xử lý Ảnh
+        const mainImg = document.getElementById('main-img');
+        const thumbContainer = document.getElementById('thumb-container');
+        
+        // Mặc định hiển thị ảnh đầu tiên
+        mainImg.src = productData.images[0];
+
+        // Tạo danh sách ảnh nhỏ
+        productData.images.forEach((src, index) => {
+            let thumb = document.createElement('img');
+            thumb.src = src;
+            thumb.className = 'thumb-item';
+            if (index === 0) thumb.classList.add('active');
+            
+            thumb.onclick = function() {
+                mainImg.src = src; // Đổi ảnh lớn
+                document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+                thumb.classList.add('active');
+            }
+            thumbContainer.appendChild(thumb);
+        });
+
+        // Xử lý phần Tùy chọn (Size/Màu)
+        if (productData.type === 'book') {
+            document.getElementById('opt-size').style.display = 'none';
+            document.getElementById('opt-color').style.display = 'none';
+        }
+
+        updatePrice(); // Tính giá lần đầu
+    }
+
+    // --- 4. LOGIC TÍNH GIÁ ---
+    function updatePrice() {
+        const qty = parseInt(document.getElementById('sel-qty').value) || 1;
+        const priceLabel = document.getElementById('p-price');
+        
+        let unitPrice = 0;
+
+        if (productData.type === 'sock') {
+            const size = document.getElementById('sel-size').value;
+            // Logic giá tất
+            if (size === 'S') unitPrice = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
+            else if (size === 'M') unitPrice = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
+            else if (size === 'L') unitPrice = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
+        } else {
+            // Giá sổ cố định
+            unitPrice = productData.price_fixed;
+        }
+
+        priceLabel.innerText = `${(unitPrice * qty).toLocaleString('vi-VN')}₫`;
+    }
+
+    // --- 5. THÊM VÀO GIỎ HÀNG ---
+    function addToCart() {
+        const qty = parseInt(document.getElementById('sel-qty').value);
+        let cartItem = {};
+
+        if (productData.type === 'sock') {
+            const size = document.getElementById('sel-size').value;
+            const color = document.getElementById('sel-color').value;
+            // Tính lại đơn giá để lưu
+            let price = 0;
+            if (size === 'S') price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
+            else if (size === 'M') price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
+            else if (size === 'L') price = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
+
+            const sizeName = (size === 'S') ? "Nhỏ" : (size === 'M') ? "Vừa" : "Lớn";
+
+            cartItem = {
+                id: `sock_${size}_${color}`,
+                name: `Tất Cotton (${sizeName} - ${color})`,
+                type: 'sock',
+                size: size,
+                color: color,
+                price: price,
+                quantity: qty,
+                image: document.getElementById('main-img').src
+            };
+        } else {
+            cartItem = {
+                id: 'book_std',
+                name: 'Sổ Tay Minimalist',
+                type: 'book',
+                price: productData.price_fixed,
+                quantity: qty,
+                image: productData.images[0]
+            };
+        }
+
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+        let existingItem = cart.find(item => item.id === cartItem.id);
+        
+        if (existingItem) {
+            existingItem.quantity += cartItem.quantity;
+        } else {
+            cart.push(cartItem);
+        }
+        localStorage.setItem('myCart', JSON.stringify(cart));
+        updateCartCount();
+        alert(`Đã thêm "${cartItem.name}" vào giỏ hàng!`);
+    }
+
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('myCart')) || [];
+        let total = 0;
+        cart.forEach(item => total += parseInt(item.quantity));
+        document.getElementById('cart-count').innerText = total;
+    }
+
+    // Chạy các hàm khi tải trang
+    initPage();
+    updateCartCount();
+  </script>
+
+</body>
+</html>
