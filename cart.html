@@ -444,6 +444,91 @@
 
     // Chạy khi tải trang
     renderCart();
+    // === LOGIC TRA CỨU ĐƠN HÀNG (ĐÃ SỬA LỖI UNDEFINED) ===
+    function lookupOrder() {
+        const phone = document.getElementById('lookup-phone').value.trim();
+        const btn = document.getElementById('btn-lookup');
+        const resultDiv = document.getElementById('lookup-results');
+
+        if (!phone) {
+            alert("Vui lòng nhập số điện thoại cần tra cứu!");
+            return;
+        }
+
+        // 1. Hiệu ứng đang tải
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+        btn.disabled = true;
+        resultDiv.innerHTML = "";
+
+        // 2. GỌI API BẰNG PHƯƠNG THỨC GET (Quan trọng)
+        // Chúng ta nối số điện thoại vào URL: ?phone=09xxx
+        fetch(`${API_ENDPOINT}?phone=${phone}`)
+        .then(response => {
+            // Kiểm tra nếu server trả về lỗi
+            if (!response.ok) {
+                throw new Error("Lỗi mạng hoặc sai URL");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 3. XỬ LÝ DỮ LIỆU TRẢ VỀ
+            if (data.result === 'success') {
+                if (data.orders.length === 0) {
+                    resultDiv.innerHTML = `<div style="text-align:center; padding:15px; color:#666;">Không tìm thấy đơn hàng nào với SĐT <strong>${phone}</strong></div>`;
+                    return;
+                }
+
+                let html = `<p style="margin-bottom:10px; color:#27ae60;">Tìm thấy <strong>${data.orders.length}</strong> đơn hàng:</p>`;
+                
+                data.orders.forEach(order => {
+                    // Màu sắc trạng thái
+                    let statusClass = '';
+                    if (order.status.includes('Chờ')) statusClass = 'status-pending';
+                    else if (order.status.includes('Đang')) statusClass = 'status-shipping';
+                    else if (order.status.includes('Đã')) statusClass = 'status-done';
+                    else if (order.status.includes('Hủy')) statusClass = 'status-cancel';
+
+                    // Mã Feedback
+                    let feedbackHtml = '';
+                    if (order.fb_code) {
+                        feedbackHtml = `
+                            <div class="fb-code-box">
+                                🎁 Mã Feedback: <strong>${order.fb_code}</strong>
+                                <div style="font-size:0.8rem; margin-top:2px;">(Dùng mã này để đánh giá sản phẩm)</div>
+                            </div>
+                        `;
+                    }
+
+                    html += `
+                        <div class="order-history-item ${statusClass}">
+                            <div class="history-header">
+                                <span>📅 ${order.date}</span>
+                            </div>
+                            <div class="history-body">
+                                ${order.products.replace(/\n/g, '<br>')}
+                            </div>
+                            <div class="history-footer">
+                                <span class="history-price">${order.total}</span>
+                                <span class="history-status">${order.status}</span>
+                            </div>
+                            ${feedbackHtml}
+                        </div>
+                    `;
+                });
+                resultDiv.innerHTML = html;
+            } else {
+                resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">🚫 Có lỗi xảy ra.</div>`;
+            }
+        })
+        .catch(err => {
+            console.error("Chi tiết lỗi:", err);
+            resultDiv.innerHTML = `<div style="color:red; text-align:center; padding:10px;">⚠️ Lỗi kết nối! Vui lòng thử lại.</div>`;
+        })
+        .finally(() => {
+            btn.innerHTML = "Kiểm Tra";
+            btn.disabled = false;
+        });
+    }
   </script>
 
 </body>
