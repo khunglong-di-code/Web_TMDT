@@ -11,6 +11,11 @@
 
   <style>
     /* CSS RIÊNG CHO TRANG CHI TIẾT */
+    :root {
+        --primary-color: #ff6600; /* Giả định màu chủ đạo */
+        --secondary-color: #333;
+    }
+    
     .detail-container {
         max-width: 1200px;
         margin: 40px auto;
@@ -21,12 +26,13 @@
         display: grid;
         grid-template-columns: 1fr 1fr; /* Chia đôi màn hình: Ảnh - Thông tin */
         gap: 50px;
+        align-items: start;
     }
 
     /* Cột Ảnh (Bên trái) */
     .gallery-wrapper {
         position: sticky;
-        top: 100px;
+        top: 20px; /* Điều chỉnh lại để phù hợp khi nội dung dài ra */
     }
     
     .main-image-frame {
@@ -39,6 +45,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        background: #fff;
     }
 
     .main-image-frame img {
@@ -52,6 +59,7 @@
         display: flex;
         gap: 10px;
         overflow-x: auto;
+        margin-bottom: 30px; /* Tạo khoảng cách với phần Feedback */
     }
 
     .thumb-item {
@@ -69,6 +77,78 @@
         border-color: var(--primary-color);
         opacity: 1;
     }
+
+    /* --- CSS MỚI: PHẦN FEEDBACK --- */
+    .feedback-area {
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+    }
+
+    .feedback-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: var(--secondary-color);
+        border-left: 4px solid var(--primary-color);
+        padding-left: 10px;
+    }
+
+    .review-list {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+        padding-right: 5px;
+    }
+
+    /* Tùy chỉnh thanh cuộn cho review list */
+    .review-list::-webkit-scrollbar { width: 5px; }
+    .review-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+
+    .review-item {
+        background: #f9f9f9;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
+
+    .reviewer-name { font-weight: bold; color: #333; }
+    .review-stars { color: #f1c40f; }
+    .review-content { color: #555; line-height: 1.4; }
+
+    .feedback-form input, 
+    .feedback-form textarea, 
+    .feedback-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-family: inherit;
+    }
+
+    .btn-submit-fb {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .btn-submit-fb:hover {
+        background: var(--primary-color);
+    }
+    /* ------------------------------ */
 
     /* Cột Thông tin (Bên phải) */
     .product-title {
@@ -133,6 +213,7 @@
     @media (max-width: 768px) {
         .detail-grid { grid-template-columns: 1fr; gap: 30px; }
         .main-image-frame { height: 350px; }
+        .gallery-wrapper { position: static; } /* Bỏ sticky trên mobile */
     }
   </style>
 </head>
@@ -165,7 +246,7 @@
   <main class="detail-container">
       <div class="detail-grid">
           
-          <!-- Cột Trái: Hình Ảnh -->
+          <!-- Cột Trái: Hình Ảnh & Feedback -->
           <div class="gallery-wrapper">
               <div class="main-image-frame">
                   <img id="main-img" src="" alt="Ảnh sản phẩm">
@@ -173,6 +254,37 @@
               <div class="thumbnail-list" id="thumb-container">
                   <!-- JS sẽ tự động tạo ảnh nhỏ ở đây -->
               </div>
+
+              <!-- --- PHẦN MỚI: FEEDBACK KHÁCH HÀNG --- -->
+              <div class="feedback-area">
+                  <h3 class="feedback-title">Feedback Khách Hàng</h3>
+                  
+                  <!-- Danh sách các đánh giá cũ -->
+                  <div id="review-list" class="review-list">
+                      <!-- Ví dụ mẫu (Sẽ bị ghi đè bởi JS) -->
+                      <div class="review-item" style="text-align:center; color:#999;">
+                          Chưa có đánh giá nào. Hãy là người đầu tiên!
+                      </div>
+                  </div>
+
+                  <!-- Form gửi đánh giá -->
+                  <div class="feedback-form">
+                      <h4 style="margin-bottom: 10px; font-size:1rem;">Gửi feedback của bạn</h4>
+                      <input type="text" id="fb-name" placeholder="Tên hiển thị (VD: Lan Anh)">
+                      <input type="text" id="fb-code" placeholder="Nhập mã feedback (Bắt buộc)*">
+                      <select id="fb-rating">
+                          <option value="5">⭐⭐⭐⭐⭐ - Tuyệt vời</option>
+                          <option value="4">⭐⭐⭐⭐ - Hài lòng</option>
+                          <option value="3">⭐⭐⭐ - Bình thường</option>
+                          <option value="2">⭐⭐ - Tệ</option>
+                          <option value="1">⭐ - Rất tệ</option>
+                      </select>
+                      <textarea id="fb-comment" rows="3" placeholder="Chia sẻ cảm nhận về sản phẩm..."></textarea>
+                      <button class="btn-submit-fb" onclick="submitFeedback()">GỬI FEEDBACK</button>
+                  </div>
+              </div>
+              <!-- --------------------------------------- -->
+
           </div>
 
           <!-- Cột Phải: Thông tin & Mua hàng -->
@@ -184,7 +296,7 @@
                   <!-- Mô tả sản phẩm -->
               </div>
 
-              <!-- Khu vực tùy chọn (Ẩn/Hiện tùy loại sản phẩm) -->
+              <!-- Khu vực tùy chọn -->
               <div id="options-area">
                   <div class="control-group" id="opt-size">
                       <label>Kích thước:</label>
@@ -292,7 +404,6 @@
             type: 'book',
             price_fixed: 35000,
             images: [
-      
                 "image/sach1.png", 
                 "image/sach2.png"
             ],
@@ -305,7 +416,6 @@
     };
 
     // --- 2. LẤY ID TỪ URL ---
-    // Ví dụ: product-detail.html?id=sock => lấy được 'sock'
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
     const productData = productsDB[productId];
@@ -317,18 +427,14 @@
             return;
         }
 
-        // Điền thông tin cơ bản
         document.getElementById('p-name').innerText = productData.name;
         document.getElementById('p-desc').innerHTML = productData.desc;
         
-        // Xử lý Ảnh
         const mainImg = document.getElementById('main-img');
         const thumbContainer = document.getElementById('thumb-container');
         
-        // Mặc định hiển thị ảnh đầu tiên
         mainImg.src = productData.images[0];
 
-        // Tạo danh sách ảnh nhỏ
         productData.images.forEach((src, index) => {
             let thumb = document.createElement('img');
             thumb.src = src;
@@ -336,37 +442,36 @@
             if (index === 0) thumb.classList.add('active');
             
             thumb.onclick = function() {
-                mainImg.src = src; // Đổi ảnh lớn
+                mainImg.src = src;
                 document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
                 thumb.classList.add('active');
             }
             thumbContainer.appendChild(thumb);
         });
 
-        // Xử lý phần Tùy chọn (Size/Màu)
         if (productData.type === 'book') {
             document.getElementById('opt-size').style.display = 'none';
             document.getElementById('opt-color').style.display = 'none';
         }
 
-        updatePrice(); // Tính giá lần đầu
+        updatePrice(); 
+        
+        // --- GỌI HÀM TẢI FEEDBACK ---
+        loadReviews(); 
     }
 
     // --- 4. LOGIC TÍNH GIÁ ---
     function updatePrice() {
         const qty = parseInt(document.getElementById('sel-qty').value) || 1;
         const priceLabel = document.getElementById('p-price');
-        
         let unitPrice = 0;
 
         if (productData.type === 'sock') {
             const size = document.getElementById('sel-size').value;
-            // Logic giá tất
             if (size === 'S') unitPrice = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
             else if (size === 'M') unitPrice = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
             else if (size === 'L') unitPrice = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
         } else {
-            // Giá sổ cố định
             unitPrice = productData.price_fixed;
         }
 
@@ -381,14 +486,12 @@
         if (productData.type === 'sock') {
             const size = document.getElementById('sel-size').value;
             const color = document.getElementById('sel-color').value;
-            // Tính lại đơn giá để lưu
             let price = 0;
             if (size === 'S') price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000;
             else if (size === 'M') price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000;
             else if (size === 'L') price = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000;
 
             const sizeName = (size === 'S') ? "Nhỏ" : (size === 'M') ? "Vừa" : "Lớn";
-
             cartItem = {
                 id: `sock_${size}_${color}`,
                 name: `Tất Cotton (${sizeName} - ${color})`,
@@ -430,7 +533,78 @@
         document.getElementById('cart-count').innerText = total;
     }
 
-    // Chạy các hàm khi tải trang
+    // --- 6. TÍNH NĂNG FEEDBACK (MỚI) ---
+    // Khóa localStorage để lưu đánh giá: 'reviews_ID_SẢN_PHẨM'
+    const reviewsKey = `reviews_${productId}`;
+
+    function loadReviews() {
+        const reviewListEl = document.getElementById('review-list');
+        const reviews = JSON.parse(localStorage.getItem(reviewsKey)) || [];
+
+        if (reviews.length === 0) {
+            reviewListEl.innerHTML = '<div style="text-align:center; color:#999; padding:10px;">Chưa có feedback nào. Hãy nhập mã đơn hàng để feedback ngay!</div>';
+            return;
+        }
+
+        reviewListEl.innerHTML = ''; // Xóa nội dung cũ
+        // Hiển thị đánh giá mới nhất lên đầu
+        reviews.reverse().forEach(rv => {
+            const stars = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
+            const html = `
+                <div class="review-item">
+                    <div class="review-header">
+                        <span class="reviewer-name">${rv.name}</span>
+                        <span class="review-stars">${stars}</span>
+                    </div>
+                    <div class="review-content">${rv.comment}</div>
+                </div>
+            `;
+            reviewListEl.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    function submitFeedback() {
+        const name = document.getElementById('fb-name').value.trim() || 'Khách hàng ẩn danh';
+        const code = document.getElementById('fb-code').value.trim();
+        const rating = parseInt(document.getElementById('fb-rating').value);
+        const comment = document.getElementById('fb-comment').value.trim();
+
+        // 1. Kiểm tra mã Feedback (Logic giả lập: Chỉ cần không để trống)
+        if (!code) {
+            alert("Vui lòng nhập Mã Feedback (có trong đơn hàng) để gửi đánh giá!");
+            document.getElementById('fb-code').focus();
+            return;
+        }
+
+        if (!comment) {
+            alert("Bạn hãy viết vài lời cảm nhận nhé!");
+            document.getElementById('fb-comment').focus();
+            return;
+        }
+
+        // 2. Tạo đối tượng review
+        const newReview = {
+            name: name,
+            rating: rating,
+            comment: comment,
+            date: new Date().toISOString()
+        };
+
+        // 3. Lưu vào LocalStorage
+        let reviews = JSON.parse(localStorage.getItem(reviewsKey)) || [];
+        reviews.push(newReview);
+        localStorage.setItem(reviewsKey, JSON.stringify(reviews));
+
+        // 4. Cập nhật giao diện
+        alert("Cảm ơn bạn đã feedback! Đánh giá của bạn đã được hiển thị.");
+        
+        // Reset form
+        document.getElementById('fb-comment').value = '';
+        document.getElementById('fb-code').value = ''; // Xóa mã sau khi nhập thành công
+        
+        loadReviews(); // Tải lại danh sách
+    }
+
     initPage();
     updateCartCount();
   </script>
