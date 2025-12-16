@@ -15,7 +15,6 @@
     .detail-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
     
-    /* Cột trái */
     .gallery-wrapper { position: sticky; top: 20px; }
     .main-image-frame { width: 100%; height: 500px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; background: #fff; }
     .main-image-frame img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
@@ -23,7 +22,6 @@
     .thumb-item { width: 80px; height: 80px; border: 2px solid transparent; border-radius: 8px; cursor: pointer; object-fit: cover; opacity: 0.7; transition: 0.3s; }
     .thumb-item:hover, .thumb-item.active { border-color: var(--primary-color); opacity: 1; border-width: 2px; }
 
-    /* Feedback Area */
     .feedback-area { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
     .feedback-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: var(--secondary-color); border-left: 4px solid var(--primary-color); padding-left: 10px; }
     
@@ -43,7 +41,6 @@
     .btn-submit-fb:hover { background: var(--primary-color); }
     .btn-submit-fb:disabled { background: #ccc; cursor: not-allowed; }
 
-    /* Cột phải: Info */
     .product-title { font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px; }
     .product-price { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
     .product-desc { color: #555; margin-bottom: 30px; line-height: 1.8; text-align: justify; }
@@ -53,7 +50,6 @@
     .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
     .btn-add-cart:hover { background: var(--primary-color); }
 
-    /* Toast Notification */
     #toast-notification {
         visibility: hidden;
         min-width: 300px;
@@ -262,7 +258,7 @@
         'sock': {
             name: "Tất Cotton Premium",
             type: 'sock',
-            images: ["image/1.png", "image/conganden.png", "image/colung1den.png"], // 0: Nhỏ, 1: Vừa, 2: Lớn
+            images: ["image/1.png", "image/conganden.png", "image/colung1den.png"],
             desc: "<p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>"
         },
         'book': {
