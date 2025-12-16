@@ -52,8 +52,22 @@
     .control-group { margin-bottom: 20px; }
     .control-group label { display: block; font-weight: bold; margin-bottom: 8px; }
     .control-group select, .control-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; cursor: pointer; }
+    
     .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
     .btn-add-cart:hover { background: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+    /* --- CSS MỚI CHO DÒNG GỢI Ý --- */
+    .freeship-suggestion {
+        margin-top: 15px;
+        text-align: center;
+        font-size: 0.95rem;
+        color: #28a745; /* Màu xanh lá cây tạo cảm giác ưu đãi */
+        font-weight: 600;
+        font-style: italic;
+    }
+    .freeship-suggestion i {
+        margin-right: 5px;
+    }
 
     /* Toast Notification */
     #toast-notification {
@@ -175,7 +189,11 @@
               </div>
 
               <button class="btn-add-cart" onclick="addToCart()">Thêm Vào Giỏ Hàng</button>
-          </div>
+              
+              <p class="freeship-suggestion">
+                  <i class="fa-solid fa-truck-fast"></i> Mua 10 đôi tất cùng 1 quyển sổ để được freeship ngay thôi nào!
+              </p>
+              </div>
       </div>
   </main>
 
