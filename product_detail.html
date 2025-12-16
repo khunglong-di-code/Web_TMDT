@@ -39,37 +39,19 @@
     .btn-submit-fb:hover { background: var(--primary-color); }
     .btn-submit-fb:disabled { background: #ccc; cursor: not-allowed; }
 
-    #toast-notification {
-        visibility: hidden;
-        min-width: 280px;
-        background-color: #28a745;
-        color: #fff;
-        text-align: center;
-        border-radius: 8px;
-        padding: 15px;
-        position: fixed;
-        z-index: 9999;
-        right: 20px;
-        top: 90px;
-        font-size: 16px;
-        font-weight: 600;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        opacity: 0;
-        transition: opacity 0.5s, top 0.5s;
-    }
-
-    #toast-notification.show {
-        visibility: visible;
-        opacity: 1;
-        top: 110px;
-    }
+    .product-title { font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px; }
+    .product-price { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    .product-desc { color: #555; margin-bottom: 30px; line-height: 1.8; text-align: justify; }
+    .control-group { margin-bottom: 20px; }
+    .control-group label { display: block; font-weight: bold; margin-bottom: 8px; }
+    .control-group select, .control-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+    .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
+    .btn-add-cart:hover { background: var(--primary-color); }
 
     @media (max-width: 768px) {
         .detail-grid { grid-template-columns: 1fr; gap: 30px; }
         .main-image-frame { height: 350px; }
         .gallery-wrapper { position: static; }
-        #toast-notification { right: 50%; transform: translateX(50%); top: 20px; width: 90%; }
-        #toast-notification.show { top: 40px; }
     }
   </style>
 </head>
@@ -94,10 +76,6 @@
       </div>
     </div>
   </header>
-
-  <div id="toast-notification">
-      <i class="fa-solid fa-check-circle"></i> Đã thêm vào giỏ hàng!
-  </div>
 
   <main class="detail-container">
       <div class="detail-grid">
@@ -360,12 +338,7 @@
         localStorage.setItem('myCart', JSON.stringify(cart));
         updateCartCount();
 
-        const toast = document.getElementById("toast-notification");
-        toast.className = "show";
-        
-        setTimeout(function(){ 
-            toast.className = toast.className.replace("show", ""); 
-        }, 3000);
+        alert(`Đã thêm ${qty} sản phẩm "${item.name}" vào giỏ hàng!`);
     }
 
     function updateCartCount() {
