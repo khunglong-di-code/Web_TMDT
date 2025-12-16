@@ -10,9 +10,12 @@
   <link rel="icon" href="image/logo.png" type="image/png">
 
   <style>
-     :root { --primary-color: #ff6600; --secondary-color: #333; }
+    :root { --primary-color: #ff6600; --secondary-color: #333; }
+    
     .detail-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+    
+    /* Cột trái */
     .gallery-wrapper { position: sticky; top: 20px; }
     .main-image-frame { width: 100%; height: 500px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; background: #fff; }
     .main-image-frame img { width: 100%; height: 100%; object-fit: cover; }
@@ -20,6 +23,7 @@
     .thumb-item { width: 80px; height: 80px; border: 2px solid transparent; border-radius: 8px; cursor: pointer; object-fit: cover; opacity: 0.7; transition: 0.3s; }
     .thumb-item:hover, .thumb-item.active { border-color: var(--primary-color); opacity: 1; }
 
+    /* Feedback Area */
     .feedback-area { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
     .feedback-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: var(--secondary-color); border-left: 4px solid var(--primary-color); padding-left: 10px; }
     
@@ -39,24 +43,35 @@
     .btn-submit-fb:hover { background: var(--primary-color); }
     .btn-submit-fb:disabled { background: #ccc; cursor: not-allowed; }
 
+    /* Cột phải: Info */
+    .product-title { font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px; }
+    .product-price { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    .product-desc { color: #555; margin-bottom: 30px; line-height: 1.8; text-align: justify; }
+    .control-group { margin-bottom: 20px; }
+    .control-group label { display: block; font-weight: bold; margin-bottom: 8px; }
+    .control-group select, .control-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+    .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
+    .btn-add-cart:hover { background: var(--primary-color); }
+
+    /* CSS CHO THÔNG BÁO (TOAST) - CHÍNH GIỮA MÀN HÌNH */
     #toast-notification {
         visibility: hidden;
         min-width: 300px;
-        background-color: #28a745;
+        background-color: #28a745; /* Màu xanh thành công */
         color: #fff;
         text-align: center;
         border-radius: 8px;
         padding: 20px;
-        position: fixed;
-        z-index: 9999;
+        position: fixed; /* Cố định vị trí */
+        z-index: 9999; /* Luôn nổi lên trên cùng */
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); /* Căn chính giữa chuẩn xác */
         font-size: 18px;
         font-weight: 600;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         opacity: 0;
-        transition: opacity 0.3s;
+        transition: opacity 0.3s ease-in-out;
     }
 
     #toast-notification.show {
@@ -68,6 +83,7 @@
         .detail-grid { grid-template-columns: 1fr; gap: 30px; }
         .main-image-frame { height: 350px; }
         .gallery-wrapper { position: static; }
+        #toast-notification { width: 90%; }
     }
   </style>
 </head>
@@ -92,10 +108,6 @@
       </div>
     </div>
   </header>
-
-  <div id="toast-notification">
-      <i class="fa-solid fa-check-circle"></i> Đã thêm vào giỏ hàng!
-  </div>
 
   <main class="detail-container">
       <div class="detail-grid">
@@ -238,6 +250,10 @@
         </div>
     </div>
   </footer>
+
+  <div id="toast-notification">
+      <i class="fa-solid fa-check-circle"></i> Đã thêm vào giỏ hàng!
+  </div>
 
   <script>
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRrUyTKLc98YgQ5Ppjn6SOEzPF6RWt4NRfQ6VGFU_vFX1FpVOckUAeygKnLXFesp6yvQ/exec";
