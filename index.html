@@ -9,6 +9,21 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="image/logo.png" type="image/png">
 
+  <style>
+    :root { --primary-color: #ff6600; }
+    
+    .btn-primary {
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .btn-primary:hover {
+        background-color: #fff !important;
+        color: var(--primary-color) !important; 
+        border: 1px solid var(--primary-color);
+    }
+  </style>
+
 </head>
 
 <script type="text/javascript">
@@ -108,19 +123,19 @@ s0.parentNode.insertBefore(s1,s0);
       </div>
       <div class="product-grid">
         <article class="product-card">
-          <a href="products.html"><img src="image/1.png" class="product-img" alt="Tất"></a>
+          <a href="product_detail.html?id=sock"><img src="image/1.png" class="product-img" alt="Tất"></a>
           <div class="product-info">
             <div class="product-name">Tất Cotton Basic</div>
             <span class="product-price-preview">Chỉ từ 6.000₫</span>
-            <a href="products.html" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
+            <a href="product_detail.html?id=sock" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
           </div>
         </article>
         <article class="product-card">
-          <a href="products.html"><img src="image/sach1.png" class="product-img" alt="Sổ"></a>
+          <a href="product_detail.html?id=book"><img src="image/sach1.png" class="product-img" alt="Sổ"></a>
           <div class="product-info">
             <div class="product-name">Sổ Tay Minimalist</div>
             <span class="product-price-preview">35.000₫</span>
-            <a href="products.html" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
+            <a href="product_detail.html?id=book" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
           </div>
         </article>
        
