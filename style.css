@@ -89,6 +89,18 @@ ul { list-style: none; }
 .hero-content {
   position: relative; z-index: 1; max-width: 800px; padding: 20px;
 }
+.banner-slogan {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    
+    /* Code quan trọng để giữ chữ trên 1 dòng */
+    white-space: nowrap;
+    
+    /* Tự động chỉnh size chữ theo màn hình (To hơn banner thường một chút) */
+    font-size: clamp(18px, 5vw, 48px);
+}
 .hero h1 {
   font-size: 3rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;
 }
