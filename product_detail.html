@@ -179,38 +179,82 @@
       </div>
   </main>
 
-  <footer>
+    <footer>
+    <style>
+        .copyright-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .social-bottom-right {
+            display: flex;
+            gap: 15px;
+        }
+        .social-bottom-right a {
+            color: inherit;
+            font-size: 20px;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        .social-bottom-right a:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .bct-logo {
+            width: 150px;
+            margin-top: 15px;
+            display: block;
+        }
+    </style>
+
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
-        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao.</p>
+        <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
+        
         <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
-            <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo" style="width:150px; margin-top:15px;">
+            <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
         </a>
       </div>
+
       <div class="footer-col">
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Hai Bà Trưng, Hà Nội</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
+        <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.shop</p>
       </div>
+
       <div class="footer-col">
         <h4>Hỗ Trợ</h4>
         <ul>
           <li><a href="faq.html">Câu hỏi thường gặp</a></li>
           <li><a href="#">Chính sách đổi trả</a></li>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+          <p><i class="fa-solid fa-envelope"></i> hotro@tattantap.shop</p>
         </ul>
       </div>
     </div>
+
     <div class="copyright">
         <div class="copyright-container">
             <span>© 2025 Bản quyền thuộc về Tất Tần Tập.</span>
+            
             <div class="social-bottom-right">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
             </div>
         </div>
     </div>
-  </footer>
+</footer>
+
 
   <div id="toast-notification">
       <i class="fa-solid fa-check-circle"></i> Đã thêm vào giỏ hàng!
