@@ -73,38 +73,78 @@ ul { list-style: none; }
 .hero {
   position: relative;
   height: 500px;
-  background-image: url('image/banner.png'); /* Đảm bảo file ảnh banner đẹp */
+  background-image: url('image/banner.png'); /* Đảm bảo file ảnh đẹp */
   background-size: cover;
   background-position: center;
+  
+  /* CĂN GIỮA: Flexbox giúp căn giữa cả dọc và ngang */
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  align-items: center;     /* Căn giữa dọc */
+  justify-content: center; /* Căn giữa ngang cho khung nội dung */
+  text-align: center;      /* Căn giữa văn bản bên trong */
   color: white;
 }
+
 .hero::after {
-  content: ''; position: absolute; inset: 0;
-  background: rgba(0,0,0,0.4); /* Lớp phủ đen mờ để rõ chữ */
+  content: ''; 
+  position: absolute; 
+  inset: 0;
+  background: rgba(0,0,0,0.4); /* Lớp phủ đen mờ */
 }
+
 .hero-content {
-  position: relative; z-index: 1; max-width: 800px; padding: 20px;
+  position: relative; 
+  z-index: 1; 
+  
+  /* THAY ĐỔI QUAN TRỌNG: */
+  /* Thay vì fix cứng 800px có thể làm chữ bị lệch nếu dài quá, ta để 100% */
+  width: 100%; 
+  max-width: 1000px; /* Tăng giới hạn lên một chút để slogan dài không bị chèn ép */
+  padding: 0 20px;   /* Padding 2 bên để trên mobile không bị sát mép */
+  
+  /* Đảm bảo khung nội dung luôn nằm giữa (phòng hờ) */
+  margin-left: auto;
+  margin-right: auto;
 }
+
 .banner-slogan {
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 20px;
     
-    /* Code quan trọng để giữ chữ trên 1 dòng */
+    /* Code giữ chữ trên 1 dòng */
     white-space: nowrap;
     
-    /* Tự động chỉnh size chữ theo màn hình (To hơn banner thường một chút) */
+    /* Căn giữa chữ slogan */
+    text-align: center;
+    display: block; /* Đảm bảo nó chiếm đủ dòng để căn giữa */
+    width: 100%;
+    
+    /* Tự động chỉnh size chữ */
     font-size: clamp(18px, 5vw, 48px);
 }
+
+/* Xóa .hero h1 cũ nếu bạn đã dùng .banner-slogan thay thế, 
+   hoặc giữ lại nếu dùng cho mục đích khác */
 .hero h1 {
-  font-size: 3rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;
+  font-size: 3rem; 
+  margin-bottom: 15px; 
+  text-transform: uppercase; 
+  letter-spacing: 2px;
 }
-.hero p { font-size: 1.2rem; margin-bottom: 30px; font-weight: 300; }
+
+.hero p { 
+  font-size: 1.2rem; 
+  margin-bottom: 30px; 
+  font-weight: 300; 
+  
+  /* Giới hạn độ rộng của đoạn văn (P) để nó không bè ra quá rộng, nhìn thẩm mỹ hơn */
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .btn-primary {
   background: var(--primary-color);
   color: white;
@@ -113,9 +153,14 @@ ul { list-style: none; }
   font-weight: bold;
   text-transform: uppercase;
   border: 2px solid var(--primary-color);
+  
+  /* Đảm bảo nút hiển thị dạng inline-block để nhận padding */
+  display: inline-block; 
 }
+
 .btn-primary:hover {
-  background: transparent; color: var(--white);
+  background: transparent; 
+  color: var(--white);
 }
 
 /* ===== SECTIONS CHUNG ===== */
