@@ -11,7 +11,6 @@
 
 </head>
 
-<!--Start of Tawk.to Script-->
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -23,7 +22,6 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
-<!--End of Tawk.to Script-->
 
 <body>
 
@@ -125,41 +123,38 @@ s0.parentNode.insertBefore(s1,s0);
             <a href="products.html" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
           </div>
         </article>
-      
+       
       </div>
     </div>
   </section>
 
   <footer>
     <style>
-        /* CSS cho phần cuối trang: Dàn hàng ngang, đẩy 2 bên */
         .copyright-container {
             display: flex;
-            justify-content: space-between; /* Text bên trái, Icon bên phải */
-            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: space-between;
+            align-items: center;
             width: 100%;
         }
 
-        /* CSS cho icon Mạng xã hội ở góc phải */
         .social-bottom-right {
             display: flex;
-            gap: 15px; /* Khoảng cách giữa 2 icon */
+            gap: 15px;
         }
         .social-bottom-right a {
-            color: inherit; /* Giữ nguyên màu chữ hiện tại của web */
+            color: inherit;
             font-size: 20px;
             text-decoration: none;
             opacity: 0.8;
             transition: 0.3s;
         }
         .social-bottom-right a:hover {
-            opacity: 1; /* Sáng lên khi di chuột */
+            opacity: 1;
             transform: scale(1.1);
         }
 
-        /* CSS cho logo Bộ Công Thương */
         .bct-logo {
-            width: 150px; /* Kích thước logo vừa vặn */
+            width: 150px;
             margin-top: 15px;
             display: block;
         }
@@ -210,7 +205,6 @@ s0.parentNode.insertBefore(s1,s0);
 </footer>
 
   <script>
-    // Update Cart Count
     let cart = JSON.parse(localStorage.getItem('myCart')) || [];
     let total = 0;
     cart.forEach(item => total += parseInt(item.quantity));
