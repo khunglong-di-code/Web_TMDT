@@ -18,10 +18,10 @@
     /* Cột trái */
     .gallery-wrapper { position: sticky; top: 20px; }
     .main-image-frame { width: 100%; height: 500px; border: 1px solid #eee; border-radius: 12px; overflow: hidden; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; background: #fff; }
-    .main-image-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .main-image-frame img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
     .thumbnail-list { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 30px; }
     .thumb-item { width: 80px; height: 80px; border: 2px solid transparent; border-radius: 8px; cursor: pointer; object-fit: cover; opacity: 0.7; transition: 0.3s; }
-    .thumb-item:hover, .thumb-item.active { border-color: var(--primary-color); opacity: 1; }
+    .thumb-item:hover, .thumb-item.active { border-color: var(--primary-color); opacity: 1; border-width: 2px; }
 
     /* Feedback Area */
     .feedback-area { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
@@ -53,20 +53,20 @@
     .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
     .btn-add-cart:hover { background: var(--primary-color); }
 
-    /* CSS CHO THÔNG BÁO (TOAST) - CHÍNH GIỮA MÀN HÌNH */
+    /* Toast Notification */
     #toast-notification {
         visibility: hidden;
         min-width: 300px;
-        background-color: #28a745; /* Màu xanh thành công */
+        background-color: #28a745;
         color: #fff;
         text-align: center;
         border-radius: 8px;
         padding: 20px;
-        position: fixed; /* Cố định vị trí */
-        z-index: 9999; /* Luôn nổi lên trên cùng */
+        position: fixed;
+        z-index: 9999;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%); /* Căn chính giữa chuẩn xác */
+        transform: translate(-50%, -50%);
         font-size: 18px;
         font-weight: 600;
         box-shadow: 0 4px 15px rgba(0,0,0,0.3);
@@ -152,7 +152,7 @@
               <div id="options-area">
                   <div class="control-group" id="opt-size">
                       <label>Kích thước:</label>
-                      <select id="sel-size" onchange="updatePrice()">
+                      <select id="sel-size" onchange="onSizeChange()">
                           <option value="S">Nhỏ (S)</option>
                           <option value="M">Vừa (M)</option>
                           <option value="L">Lớn (L)</option>
@@ -262,7 +262,7 @@
         'sock': {
             name: "Tất Cotton Premium",
             type: 'sock',
-            images: ["image/1.png", "image/conganden.png", "image/colung1den.png"],
+            images: ["image/1.png", "image/conganden.png", "image/colung1den.png"], // 0: Nhỏ, 1: Vừa, 2: Lớn
             desc: "<p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>"
         },
         'book': {
@@ -295,10 +295,9 @@
             let thumb = document.createElement('img');
             thumb.src = src;
             thumb.className = index === 0 ? 'thumb-item active' : 'thumb-item';
+            thumb.setAttribute('data-index', index); 
             thumb.onclick = () => {
-                mainImg.src = src;
-                document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
-                thumb.classList.add('active');
+                updateMainImage(index);
             }
             thumbContainer.appendChild(thumb);
         });
@@ -309,8 +308,37 @@
 
         updatePrice();
         updateCartCount();
-        
         loadReviewsFromSheet();
+    }
+
+    function updateMainImage(index) {
+        if (productData.images[index]) {
+            const mainImg = document.getElementById('main-img');
+            mainImg.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                mainImg.src = productData.images[index];
+                mainImg.style.opacity = '1';
+            }, 150);
+
+            document.querySelectorAll('.thumb-item').forEach(el => el.classList.remove('active'));
+            const activeThumb = document.querySelector(`.thumb-item[data-index="${index}"]`);
+            if(activeThumb) activeThumb.classList.add('active');
+        }
+    }
+
+    function onSizeChange() {
+        updatePrice();
+        
+        if (productData.type === 'sock') {
+            const size = document.getElementById('sel-size').value;
+            let imgIndex = 0;
+            if (size === 'S') imgIndex = 0;
+            else if (size === 'M') imgIndex = 1;
+            else if (size === 'L') imgIndex = 2;
+            
+            updateMainImage(imgIndex);
+        }
     }
 
     function updatePrice() {
@@ -349,7 +377,7 @@
             name: productData.name,
             type: productData.type,
             quantity: qty,
-            image: productData.images[0]
+            image: document.getElementById('main-img').src 
         };
 
         if (productData.type === 'sock') {
