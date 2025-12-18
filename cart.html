@@ -149,7 +149,6 @@
             <input type="tel" id="lookup-phone" placeholder="Nhập số điện thoại của bạn...">
             <button onclick="lookupOrder()" id="btn-lookup">Kiểm Tra</button>
         </div>
-
         <div id="lookup-results"></div>
     </section>
 
@@ -159,7 +158,7 @@
  <div id="fb-customer-chat" class="fb-customerchat"></div>
  <script>
    var chatbox = document.getElementById('fb-customer-chat');
-   chatbox.setAttribute("page_id", "61582495130534"); // ID Fanpage
+   chatbox.setAttribute("page_id", "61582495130534");
    chatbox.setAttribute("attribution", "biz_inbox");
    window.fbAsyncInit = function() { FB.init({ xfbml : true, version : 'v18.0' }); };
    (function(d, s, id) {
@@ -172,13 +171,11 @@
  </script>
 
 <script>
-    // --- CẤU HÌNH API ---
     const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxRrUyTKLc98YgQ5Ppjn6SOEzPF6RWt4NRfQ6VGFU_vFX1FpVOckUAeygKnLXFesp6yvQ/exec';
 
-    // === 1. LOGIC GIỎ HÀNG (ĐÃ NÂNG CẤP) ===
+    // === 1. LOGIC GIỎ HÀNG ===
     function calculateSockPrice(size, qty) {
         let price = 0;
-        // Logic giá tất theo số lượng
         if (size === 'S') { price = (qty >= 10) ? 6000 : (qty >= 5) ? 8000 : 10000; } 
         else if (size === 'M') { price = (qty >= 10) ? 8000 : (qty >= 5) ? 10000 : 12000; } 
         else if (size === 'L') { price = (qty >= 10) ? 10000 : (qty >= 5) ? 12000 : 14000; }
@@ -190,16 +187,10 @@
         let tbody = document.getElementById('cart-body');
         let totalEl = document.getElementById('cart-total');
         
-        // --- PHẦN QUAN TRỌNG: ĐỌC DỮ LIỆU AN TOÀN ---
         try {
             let rawData = localStorage.getItem('myCart');
-            console.log("Dữ liệu thô trong LocalStorage:", rawData); 
-            
-            if (rawData) {
-                cart = JSON.parse(rawData);
-            }
+            if (rawData) { cart = JSON.parse(rawData); }
         } catch (e) {
-            console.error("Dữ liệu giỏ hàng bị lỗi, đang reset...", e);
             localStorage.removeItem('myCart');
             cart = [];
         }
@@ -217,26 +208,26 @@
             document.getElementById('checkout-section').style.display = 'block';
         }
 
-        // Duyệt qua từng sản phẩm để hiển thị
         cart.forEach((item, index) => {
             let unitPrice = 0;
 
-            // === [FIX LOGIC TÍNH GIÁ] ===
             if (item.type === 'sock') {
-                // Logic cũ cho Tất
                 unitPrice = calculateSockPrice(item.size, item.quantity);
             } else {
-                // Logic MỚI cho Sổ tay và các sản phẩm khác
-                // Bước này làm sạch giá tiền: Xóa hết dấu chấm, phẩy, chữ 'đ' -> chỉ giữ lại số
-                // Ví dụ: "50.000" -> "50000", "50,000đ" -> "50000"
+                // 1. Cố gắng làm sạch giá
                 let cleanPrice = String(item.price).replace(/[^0-9]/g, "");
                 unitPrice = parseInt(cleanPrice) || 0;
+
+                // === [FIX LOGIC] KIỂM TRA TÊN SẢN PHẨM ===
+                // Nếu tên có chữ "Minimalist" -> Ép giá thành 35000 ngay lập tức
+                if (item.name && item.name.toLowerCase().includes('minimalist')) {
+                    unitPrice = 35000;
+                }
             }
             
             let subTotal = unitPrice * item.quantity;
             grandTotal += subTotal;
 
-            // Tạo dòng HTML
             let row = `
                 <tr>
                     <td>
@@ -269,24 +260,19 @@
         let cart = JSON.parse(localStorage.getItem('myCart')) || [];
         cart.splice(index, 1);
         localStorage.setItem('myCart', JSON.stringify(cart));
-        renderCart(); // Vẽ lại bảng sau khi xóa
+        renderCart();
     }
 
     function updateCartCount(cartData) {
-        // Nếu không truyền cartData vào thì tự lấy lại
         let cart = cartData;
         if (!cart) {
             try { cart = JSON.parse(localStorage.getItem('myCart')) || []; } 
             catch { cart = []; }
         }
-        
-        // Nếu cart là số (do gọi updateCartCount(0)) thì gán luôn
         let total = 0;
         if (Array.isArray(cart)) {
             total = cart.reduce((acc, item) => acc + item.quantity, 0);
         }
-        
-        // Cập nhật số trên icon
         const countEl = document.getElementById('cart-count');
         if(countEl) countEl.innerText = total;
     }
@@ -415,8 +401,6 @@
         });
     }
 
-    // CHẠY KHI TẢI TRANG
-    // Để đảm bảo HTML đã load xong, ta bọc trong DOMContentLoaded (tuỳ chọn)
     document.addEventListener('DOMContentLoaded', () => {
         renderCart();
     });
