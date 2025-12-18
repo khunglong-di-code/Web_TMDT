@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="image/logo.png" type="image/png">
 
-  <!-- CSS RIÊNG CHO TRANG GIỎ HÀNG & TRA CỨU -->
   <style>
     /* CSS CHO KHU VỰC TRA CỨU */
     .lookup-section {
@@ -44,8 +43,8 @@
     /* Màu trạng thái */
     .status-pending { border-left-color: #f1c40f; } /* Chờ xác nhận (Vàng) */
     .status-shipping { border-left-color: #3498db; } /* Đang giao (Xanh dương) */
-    .status-done { border-left-color: #27ae60; }     /* Đã giao (Xanh lá) */
-    .status-cancel { border-left-color: #e74c3c; }   /* Hủy (Đỏ) */
+    .status-done { border-left-color: #27ae60; }      /* Đã giao (Xanh lá) */
+    .status-cancel { border-left-color: #e74c3c; }    /* Hủy (Đỏ) */
 
     .history-header { display: flex; justify-content: space-between; font-size: 0.9rem; color: #888; margin-bottom: 10px; }
     .history-body { font-weight: 500; color: #333; margin-bottom: 10px; line-height: 1.5; }
@@ -62,7 +61,6 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <a class="logo" href="index.html">
@@ -85,11 +83,9 @@
     </div>
   </header>
 
-  <!-- NỘI DUNG CHÍNH -->
   <main class="cart-section">
     <h1>Giỏ hàng của bạn</h1>
     
-    <!-- Bảng giỏ hàng -->
     <table class="cart-table">
         <thead>
             <tr>
@@ -107,7 +103,6 @@
         Tổng cộng: <span id="cart-total" style="color: #f08146; font-size: 1.5rem;">0₫</span>
     </div>
 
-    <!-- Form thanh toán -->
     <div class="checkout-form" id="checkout-section">
         <h2>Thông tin thanh toán</h2>
         <div class="form-group">
@@ -136,8 +131,7 @@
             
             <div id="qr-code-image" style="display: none; margin-top: 15px; text-align: center;">
                 <p>Vui lòng quét mã bên dưới:</p>
-                <!-- Thay link ảnh QR thật của bạn vào đây -->
-                  <img src="image/qr.png">
+                <img src="image/qr.png">
                 <p style="font-size: 0.9rem; color: #666;">Nội dung CK: Tên + SĐT</p>
             </div>
         </div>
@@ -145,9 +139,6 @@
         <button class="btn-checkout" onclick="checkout()">ĐẶT HÀNG NGAY</button>
     </div>
 
-    <!-- ============================================== -->
-    <!-- KHU VỰC TRA CỨU ĐƠN HÀNG (MỚI) -->
-    <!-- ============================================== -->
     <section class="lookup-section">
         <div class="lookup-header">
             <h3><i class="fa-solid fa-magnifying-glass"></i> Tra Cứu Đơn Hàng Cũ</h3>
@@ -159,13 +150,11 @@
             <button onclick="lookupOrder()" id="btn-lookup">Kiểm Tra</button>
         </div>
 
-        <!-- Khu vực hiển thị kết quả -->
         <div id="lookup-results"></div>
     </section>
 
   </main>
 
- <!-- Chat Plugin -->
  <div id="fb-root"></div>
  <div id="fb-customer-chat" class="fb-customerchat"></div>
  <script>
@@ -182,8 +171,7 @@
    }(document, 'script', 'facebook-jssdk'));
  </script>
 
-<!-- JAVASCRIPT LOGIC CHO CART.HTML -->
-  <script>
+<script>
     // --- CẤU HÌNH API ---
     const API_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxRrUyTKLc98YgQ5Ppjn6SOEzPF6RWt4NRfQ6VGFU_vFX1FpVOckUAeygKnLXFesp6yvQ/exec';
 
@@ -205,7 +193,7 @@
         // --- PHẦN QUAN TRỌNG: ĐỌC DỮ LIỆU AN TOÀN ---
         try {
             let rawData = localStorage.getItem('myCart');
-            console.log("Dữ liệu thô trong LocalStorage:", rawData); // Kiểm tra F12 xem có dữ liệu không
+            console.log("Dữ liệu thô trong LocalStorage:", rawData); 
             
             if (rawData) {
                 cart = JSON.parse(rawData);
@@ -231,8 +219,19 @@
 
         // Duyệt qua từng sản phẩm để hiển thị
         cart.forEach((item, index) => {
-            // Tính giá: Nếu là tất (sock) thì tính theo bảng giá, nếu là sp khác thì lấy giá gốc
-            let unitPrice = (item.type === 'sock') ? calculateSockPrice(item.size, item.quantity) : parseInt(item.price);
+            let unitPrice = 0;
+
+            // === [FIX LOGIC TÍNH GIÁ] ===
+            if (item.type === 'sock') {
+                // Logic cũ cho Tất
+                unitPrice = calculateSockPrice(item.size, item.quantity);
+            } else {
+                // Logic MỚI cho Sổ tay và các sản phẩm khác
+                // Bước này làm sạch giá tiền: Xóa hết dấu chấm, phẩy, chữ 'đ' -> chỉ giữ lại số
+                // Ví dụ: "50.000" -> "50000", "50,000đ" -> "50000"
+                let cleanPrice = String(item.price).replace(/[^0-9]/g, "");
+                unitPrice = parseInt(cleanPrice) || 0;
+            }
             
             let subTotal = unitPrice * item.quantity;
             grandTotal += subTotal;
