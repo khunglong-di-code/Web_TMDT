@@ -127,36 +127,42 @@
   <!-- ========== FOOTER (Từ index.html) ========== -->
   <footer>
     <style>
-        /* CSS cho phần cuối trang: Dàn hàng ngang, đẩy 2 bên */
         .copyright-container {
             display: flex;
-            justify-content: space-between; /* Text bên trái, Icon bên phải */
-            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: space-between;
+            align-items: center;
             width: 100%;
         }
 
-        /* CSS cho icon Mạng xã hội ở góc phải */
         .social-bottom-right {
             display: flex;
-            gap: 15px; /* Khoảng cách giữa 2 icon */
+            gap: 15px;
         }
         .social-bottom-right a {
-            color: inherit; /* Giữ nguyên màu chữ hiện tại của web */
+            color: inherit;
             font-size: 20px;
             text-decoration: none;
             opacity: 0.8;
             transition: 0.3s;
         }
         .social-bottom-right a:hover {
-            opacity: 1; /* Sáng lên khi di chuột */
+            opacity: 1;
             transform: scale(1.1);
         }
 
-        /* CSS cho logo Bộ Công Thương */
         .bct-logo {
-            width: 150px; /* Kích thước logo vừa vặn */
+            width: 150px;
             margin-top: 15px;
             display: block;
+        }
+
+        /* Thêm CSS cho Maps để không làm thay đổi layout chính */
+        .footer-map {
+            margin-top: 15px;
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            border: 0;
         }
     </style>
 
@@ -172,10 +178,17 @@
 
       <div class="footer-col">
         <h4>Liên Hệ</h4>
-        <p><i class="fa-solid fa-location-dot"></i> Số nhà 3 ngách 5/17 Hoàng Tích Trí phường Kim Liên Hà Nội
-</p>
+        <p><i class="fa-solid fa-location-dot"></i> Số 3, Ngách 5/17, Phố Hoàng Tích Trí, Phường Kim Liên, Hà Nội.</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
         <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.shop</p>
+        
+        <iframe 
+            class="footer-map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.634125740428!2d105.8340795759685!3d21.00730018851416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1ea0ae8b5b%3A0x6cc9075796d61570!2zUGjhu5EgSG_DoG5nIFTDrWNoIFRyw60sIMSQ4buRbmcgRGEsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
       </div>
 
       <div class="footer-col">
