@@ -23,44 +23,63 @@
         border: 1px solid var(--primary-color);
     }
 
-    /* CSS RIÊNG CHO BANNER ĐÔI */
-    .banner-dual-container {
+    /* --- CSS CHO BỐ CỤC 2 CỘT (MỚI) --- */
+    .layout-container {
         display: flex;
-        gap: 20px;
-        align-items: center; /* Căn giữa theo chiều dọc */
-        flex-wrap: wrap; /* Tự xuống dòng trên mobile */
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+        gap: 40px; /* Khoảng cách giữa nội dung và banner */
+        align-items: flex-start; /* Căn banner lên đầu */
     }
 
-    .banner-vertical {
-        flex: 1; /* Chiếm 1 phần (khoảng 30-35%) */
-        min-width: 250px; /* Đảm bảo không quá nhỏ trên màn hình bé */
-    }
-
-    .banner-horizontal {
-        flex: 2; /* Chiếm 2 phần (khoảng 65-70%) */
-        min-width: 300px;
-    }
-
-    .ad-img {
+    .main-content {
+        flex: 3; /* Chiếm 3 phần (75%) */
         width: 100%;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease;
+    }
+
+    .sidebar-right {
+        flex: 1; /* Chiếm 1 phần (25%) */
+        min-width: 300px; /* Chiều rộng tối thiểu của banner */
+        position: sticky; /* Giữ banner trôi theo khi cuộn (tùy chọn) */
+        top: 20px;
+    }
+
+    /* CSS cho Banner trong Sidebar */
+    .sidebar-ad-item {
+        margin-bottom: 30px;
         display: block;
+        transition: transform 0.3s;
+    }
+    
+    .sidebar-ad-item:hover {
+        transform: translateY(-5px);
     }
 
-    .ad-img:hover {
-        transform: scale(1.02); /* Hiệu ứng phóng to nhẹ khi di chuột */
+    .sidebar-ad-item img {
+        width: 100%; /* Banner luôn full chiều rộng cột */
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    @media (max-width: 768px) {
-        .banner-dual-container {
-            flex-direction: column; /* Trên điện thoại sẽ xếp chồng lên nhau */
+    .sidebar-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #333;
+        border-bottom: 2px solid var(--primary-color);
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+
+    /* Mobile: Xếp chồng banner xuống dưới */
+    @media (max-width: 900px) {
+        .layout-container {
+            flex-direction: column;
         }
-        .banner-vertical, .banner-horizontal {
-            width: 100%; /* Full màn hình điện thoại */
-            flex: auto;
+        .sidebar-right {
+            width: 100%;
+            margin-top: 30px;
         }
     }
   </style>
@@ -105,7 +124,6 @@ s0.parentNode.insertBefore(s1,s0);
 
 <section class="hero">
     <div class="hero-overlay"></div>
-    
     <div class="hero-content">
         <h1 class="banner-slogan">Nâng bước chân - Lưu tri thức</h1>
         <p>Người ta thường nói về tri thức nằm trong những cuốn sách, nhưng chúng tôi tin rằng tri thức còn nằm trên những con đường bạn đi qua.</p>
@@ -113,75 +131,64 @@ s0.parentNode.insertBefore(s1,s0);
     </div>
 </section>
 
-  <section class="section bg-light">
-    <div class="container">
-      <div class="section-title">
-        <h2>Giá Trị Cốt Lõi</h2>
-        <p>Kim chỉ nam cho mọi hoạt động của Tất Tần Tập</p>
-      </div>
-      <div class="values-grid">
-        <div class="value-card">
-            <div class="value-icon"><i class="fa-solid fa-star"></i></div>
-            <h3>Chất Lượng Thật</h3>
-            <p>Sản phẩm thật, chất liệu thật. Không hào nhoáng ảo, chúng tôi tập trung tối đa vào trải nghiệm sử dụng thực tế của khách hàng.</p>
-        </div>
-        <div class="value-card">
-            <div class="value-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-            <h3>Tận Tâm</h3>
-            <p>Khách hàng là bạn đồng hành. Chúng tôi lắng nghe mọi phản hồi và phục vụ bằng cả trái tim và sự chân thành.</p>
-        </div>
-        <div class="value-card">
-            <div class="value-icon"><i class="fa-solid fa-leaf"></i></div>
-            <h3>Bền Vững</h3>
-            <p>Ưu tiên các chất liệu thân thiện môi trường, bao bì tái chế và cổ vũ lối sống xanh, giảm rác thải nhựa.</p>
-        </div>
-      </div>
+<div class="layout-container">
+
+    <div class="main-content">
+        
+        <section style="margin-bottom: 60px;">
+            <div class="section-title" style="text-align: left;">
+                <h2>Giá Trị Cốt Lõi</h2>
+                <p>Kim chỉ nam cho mọi hoạt động</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-star"></i></div>
+                    <h3>Chất Lượng Thật</h3>
+                    <p>Sản phẩm thật, chất liệu thật. Tập trung tối đa vào trải nghiệm.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <h3>Tận Tâm</h3>
+                    <p>Lắng nghe mọi phản hồi và phục vụ bằng cả trái tim.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fa-solid fa-leaf"></i></div>
+                    <h3>Bền Vững</h3>
+                    <p>Ưu tiên chất liệu thân thiện môi trường và lối sống xanh.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="story-wrap">
+            <div class="story-img">
+                <img src="image/AB3.jpg" alt="Về chúng tôi">
+            </div>
+            <div class="story-content">
+                <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+                    <h2>Câu Chuyện Thương Hiệu</h2>
+                </div>
+                <p><strong>"Tất để đi, Tập để ghi"</strong> – Đó không chỉ là slogan, đó là phong cách sống.</p>
+                <p>Chúng tôi tin rằng cảm hứng bắt đầu từ những điều nhỏ nhất. Một đôi tất êm ái giúp bạn tự tin sải bước, một cuốn sổ tinh tươm giúp bạn lưu giữ những ý tưởng tuyệt vời.</p>
+                <a href="about.html" style="color: var(--primary-color); font-weight: bold;">Xem thêm <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </section>
+
+    </div> 
+    <aside class="sidebar-right">
+        
+        <div class="sidebar-title">Có thể bạn quan tâm</div>
+
+        <a href="aurumlabelvn.site" target="_blank" class="sidebar-ad-item">
+            <img src="banner1.jfif" alt="Quảng cáo dọc">
+        </a>
+
+        <a href="aurumlabelvn.site" target="_blank" class="sidebar-ad-item">
+            <img src="banner2.jfif" alt="Quảng cáo ngang">
+        </a>
+
+    </aside>
     </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="story-wrap">
-        <div class="story-img">
-          <img src="image/AB3.jpg" alt="Về chúng tôi">
-        </div>
-        <div class="story-content">
-          <div class="section-title" style="text-align: left; margin-bottom: 20px;">
-            <h2>Câu Chuyện Thương Hiệu</h2>
-          </div>
-          <p><strong>"Tất để đi, Tập để ghi"</strong> – Đó không chỉ là slogan, đó là phong cách sống.</p>
-          <p>Chúng tôi tin rằng cảm hứng bắt đầu từ những điều nhỏ nhất. Một đôi tất êm ái giúp bạn tự tin sải bước, một cuốn sổ tinh tươm giúp bạn lưu giữ những ý tưởng tuyệt vời.</p>
-          <p>Tại Tất Tần Tập, chúng tôi không bán sản phẩm, chúng tôi bán sự khởi đầu cho một ngày mới đầy năng lượng.</p>
-          <a href="about.html" style="color: var(--primary-color); font-weight: bold;">Xem thêm về chúng tôi <i class="fa-solid fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" style="padding-top: 0; padding-bottom: 40px;">
-      <div class="container">
-          
-          <div class="banner-dual-container">
-
-            
-              <div class="banner-horizontal">
-                  <a href="aurumlabelvn.site" target="_blank">
-                      <img src="banner1.jfif" alt="Quảng cáo Ngang" class="ad-img">
-                  </a>
-              </div>
-            
-              <div class="banner-vertical">
-                  <a href="aurumlabelvn.site" target="_blank">
-                      <img src="banner2.jfif" alt="Quảng cáo Dọc" class="ad-img">
-                  </a>
-              </div>
-
-
-          </div>
-
-      </div>
-  </section>
-  <section class="section bg-light">
+<section class="section bg-light" style="margin-top: 0;">
     <div class="container">
       <div class="section-title">
         <h2>Sản Phẩm Nổi Bật</h2>
@@ -204,77 +211,35 @@ s0.parentNode.insertBefore(s1,s0);
             <a href="product_detail.html?id=book" class="btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Mua ngay</a>
           </div>
         </article>
-        
       </div>
     </div>
-  </section>
+</section>
 
   <footer>
     <style>
-        .copyright-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .social-bottom-right {
-            display: flex;
-            gap: 15px;
-        }
-        .social-bottom-right a {
-            color: inherit;
-            font-size: 20px;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: 0.3s;
-        }
-        .social-bottom-right a:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .bct-logo {
-            width: 150px;
-            margin-top: 15px;
-            display: block;
-        }
-
-        /* Thêm CSS cho Maps để không làm thay đổi layout chính */
-        .footer-map {
-            margin-top: 15px;
-            width: 100%;
-            height: 150px;
-            border-radius: 8px;
-            border: 0;
-        }
+        .copyright-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .social-bottom-right { display: flex; gap: 15px; }
+        .social-bottom-right a { color: inherit; font-size: 20px; text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
+        .bct-logo { width: 150px; margin-top: 15px; display: block; }
+        .footer-map { margin-top: 15px; width: 100%; height: 150px; border-radius: 8px; border: 0; }
     </style>
 
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
         <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
-        
         <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
             <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
         </a>
       </div>
-
       <div class="footer-col">
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Số 3, Ngách 5/17, Phố Hoàng Tích Trí, Phường Kim Liên, Hà Nội.</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
         <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.shop</p>
-        
-        <iframe 
-            class="footer-map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.634125740428!2d105.8340795759685!3d21.00730018851416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1ea0ae8b5b%3A0x6cc9075796d61570!2zUGjhu5EgSG_DoG5nIFTDrWNoIFRyw60sIMSQ4buRbmcgRGEsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <iframe class="footer-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.634125740428!2d105.8340795759685!3d21.00730018851416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac1ea0ae8b5b%3A0x6cc9075796d61570!2zUGjhu5EgSG_DoG5nIFTDrWNoIFRyw60sIMSQ4buRbmcgRGEsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1700000000000" allowfullscreen="" loading="lazy"></iframe>
       </div>
-
       <div class="footer-col">
         <h4>Hỗ Trợ</h4>
         <ul>
@@ -285,18 +250,12 @@ s0.parentNode.insertBefore(s1,s0);
         </ul>
       </div>
     </div>
-
     <div class="copyright">
         <div class="copyright-container">
             <span>© 2025 Bản quyền thuộc về Tất Tần Tập.</span>
-            
             <div class="social-bottom-right">
-                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
-                    <i class="fa-brands fa-facebook"></i>
-                </a>
+                <a href="https://www.instagram.com/tattantap/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             </div>
         </div>
     </div>
