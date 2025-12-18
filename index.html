@@ -22,6 +22,47 @@
         color: var(--primary-color) !important; 
         border: 1px solid var(--primary-color);
     }
+
+    /* CSS RIÊNG CHO BANNER ĐÔI */
+    .banner-dual-container {
+        display: flex;
+        gap: 20px;
+        align-items: center; /* Căn giữa theo chiều dọc */
+        flex-wrap: wrap; /* Tự xuống dòng trên mobile */
+    }
+
+    .banner-vertical {
+        flex: 1; /* Chiếm 1 phần (khoảng 30-35%) */
+        min-width: 250px; /* Đảm bảo không quá nhỏ trên màn hình bé */
+    }
+
+    .banner-horizontal {
+        flex: 2; /* Chiếm 2 phần (khoảng 65-70%) */
+        min-width: 300px;
+    }
+
+    .ad-img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        display: block;
+    }
+
+    .ad-img:hover {
+        transform: scale(1.02); /* Hiệu ứng phóng to nhẹ khi di chuột */
+    }
+
+    @media (max-width: 768px) {
+        .banner-dual-container {
+            flex-direction: column; /* Trên điện thoại sẽ xếp chồng lên nhau */
+        }
+        .banner-vertical, .banner-horizontal {
+            width: 100%; /* Full màn hình điện thoại */
+            flex: auto;
+        }
+    }
   </style>
 
 </head>
@@ -67,9 +108,7 @@ s0.parentNode.insertBefore(s1,s0);
     
     <div class="hero-content">
         <h1 class="banner-slogan">Nâng bước chân - Lưu tri thức</h1>
-        
         <p>Người ta thường nói về tri thức nằm trong những cuốn sách, nhưng chúng tôi tin rằng tri thức còn nằm trên những con đường bạn đi qua.</p>
-        
         <a href="products.html" class="btn-primary">Khám phá ngay</a>
     </div>
 </section>
@@ -120,13 +159,25 @@ s0.parentNode.insertBefore(s1,s0);
   </section>
 
   <section class="section" style="padding-top: 0; padding-bottom: 40px;">
-      <div class="container" style="text-align: center;">
+      <div class="container">
           
-          <a href="https://link-trang-web-khac.com" target="_blank">
-              <img src="https://via.placeholder.com/1200x300" 
-                   alt="Banner Quảng Cáo" 
-                   style="width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: block;">
-          </a>
+          <div class="banner-dual-container">
+
+            
+              <div class="banner-horizontal">
+                  <a href="aurumlabelvn.site" target="_blank">
+                      <img src="banner1.jfif" alt="Quảng cáo Ngang" class="ad-img">
+                  </a>
+              </div>
+            
+              <div class="banner-vertical">
+                  <a href="aurumlabelvn.site" target="_blank">
+                      <img src="banner2.jfif" alt="Quảng cáo Dọc" class="ad-img">
+                  </a>
+              </div>
+
+
+          </div>
 
       </div>
   </section>
