@@ -28,11 +28,9 @@
     /* Feedback Area */
     .feedback-area { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
     .feedback-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; color: var(--secondary-color); border-left: 4px solid var(--primary-color); padding-left: 10px; }
-    
     .review-list { max-height: 300px; overflow-y: auto; margin-bottom: 20px; padding-right: 5px; border-bottom: 1px dashed #eee;}
     .review-list::-webkit-scrollbar { width: 5px; }
     .review-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-    
     .review-item { background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 10px; font-size: 0.95rem; }
     .review-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
     .reviewer-name { font-weight: bold; color: #333; }
@@ -48,10 +46,21 @@
     /* Cột phải: Info */
     .product-title { font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px; }
     
-    /* STYLE MỚI CHO GIÁ TIỀN */
-    .product-price { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    /* Dòng thông báo ưu đãi */
+    .promo-suggestion {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        color: #856404;
+    }
+    .promo-suggestion i { margin-right: 8px; color: #ff6600; }
+
+    /* Giá tiền */
+    .product-price { font-size: 1.5rem; color: var(--primary-color); font-weight: bold; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; display: flex; align-items: center; gap: 15px; }
     .old-price { text-decoration: line-through; color: #999; font-size: 1.1rem; font-weight: normal; }
-    .price-arrow { color: #ff6600; font-size: 1rem; }
     
     .product-desc { color: #555; margin-bottom: 30px; line-height: 1.8; text-align: justify; }
     .control-group { margin-bottom: 20px; }
@@ -61,25 +70,13 @@
     .btn-add-cart { width: 100%; background: var(--secondary-color); color: white; padding: 18px; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; margin-top: 20px; }
     .btn-add-cart:hover { background: var(--primary-color); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-    .freeship-suggestion {
-        margin-top: 15px;
-        text-align: center;
-        font-size: 0.95rem;
-        color: #28a745; 
-        font-weight: 600;
-        font-style: italic;
-    }
+    .freeship-suggestion { margin-top: 15px; text-align: center; font-size: 0.95rem; color: #28a745; font-weight: 600; font-style: italic; }
 
     /* Toast Notification */
-    #toast-notification {
-        visibility: hidden; min-width: 300px; background-color: #28a745; color: #fff; text-align: center; border-radius: 8px; padding: 20px; position: fixed; z-index: 9999; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s ease-in-out;
-    }
+    #toast-notification { visibility: hidden; min-width: 300px; background-color: #28a745; color: #fff; text-align: center; border-radius: 8px; padding: 20px; position: fixed; z-index: 9999; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s ease-in-out; }
     #toast-notification.show { visibility: visible; opacity: 1; }
 
-    @media (max-width: 768px) {
-        .detail-grid { grid-template-columns: 1fr; gap: 30px; }
-        .main-image-frame { height: 350px; }
-    }
+    @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; gap: 30px; } .main-image-frame { height: 350px; } }
   </style>
 </head>
 <body>
@@ -137,6 +134,11 @@
           <div class="info-wrapper">
               <h1 class="product-title" id="p-name">Đang tải...</h1>
               
+              <div id="quantity-promo" class="promo-suggestion" style="display: none;">
+                <i class="fa-solid fa-tags"></i>
+                <span>Mua từ <b>5 đôi</b> giảm ngay <b>20%</b>. Mua từ <b>10 đôi</b> giảm sâu đến <b>40%</b>!</span>
+              </div>
+
               <div class="product-price" id="price-container">
                   <span id="p-price">0₫</span>
               </div>
@@ -177,70 +179,28 @@
 
   <footer>
     <style>
-        .copyright-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .social-bottom-right {
-            display: flex;
-            gap: 15px;
-        }
-        .social-bottom-right a {
-            color: inherit;
-            font-size: 20px;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: 0.3s;
-        }
-        .social-bottom-right a:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        .bct-logo {
-            width: 150px;
-            margin-top: 15px;
-            display: block;
-        }
-
-        /* Thêm CSS cho Maps để không làm thay đổi layout chính */
-        .footer-map {
-            margin-top: 15px;
-            width: 100%;
-            height: 150px;
-            border-radius: 8px;
-            border: 0;
-        }
+        .copyright-container { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .social-bottom-right { display: flex; gap: 15px; }
+        .social-bottom-right a { color: inherit; font-size: 20px; text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .social-bottom-right a:hover { opacity: 1; transform: scale(1.1); }
+        .bct-logo { width: 150px; margin-top: 15px; display: block; }
+        .footer-map { margin-top: 15px; width: 100%; height: 150px; border-radius: 8px; border: 0; }
     </style>
-
     <div class="footer-grid">
       <div class="footer-col">
         <h4>Về Tất Tần Tập</h4>
         <p>Chúng tôi cung cấp các sản phẩm văn phòng phẩm và phụ kiện thời trang tối giản, chất lượng cao với mức giá hợp lý.</p>
-        
         <a href="http://online.gov.vn/Home/WebDetails/10940" target="_blank">
             <img src="image_dcd887.png" alt="Đã thông báo Bộ Công Thương" class="bct-logo">
         </a>
       </div>
-
       <div class="footer-col">
         <h4>Liên Hệ</h4>
         <p><i class="fa-solid fa-location-dot"></i> Số 3, Ngách 5/17, Phố Hoàng Tích Trí, Phường Kim Liên, Hà Nội.</p>
         <p><i class="fa-solid fa-phone"></i> 0967 067 332</p>
         <p><i class="fa-solid fa-envelope"></i> lienhe@tattantap.shop</p>
-        
-        <iframe 
-            class="footer-map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1m1!1s0x3135ab882662cc9b%3A0x2724213123861234!2zSG_DoG5nIFTDrWNoIFRyw60sIEtpbSBMacOqbiwgxJDhu5FuZyDEkGEsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1715000000000" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+        <iframe class="footer-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m13!1m1!1s0x3135ab882662cc9b%3A0x2724213123861234!2zSG_DoG5nIFTDrWNoIFRyw60sIEtpbSBMacOqbiwgxJDhu5FuZyDEkGEsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1715000000000" allowfullscreen="" loading="lazy"></iframe>
       </div>
-
       <div class="footer-col">
         <h4>Hỗ Trợ</h4>
         <ul>
@@ -251,18 +211,12 @@
         </ul>
       </div>
     </div>
-
     <div class="copyright">
         <div class="copyright-container">
             <span>© 2025 Bản quyền thuộc về Tất Tần Tập.</span>
-            
             <div class="social-bottom-right">
-                <a href="https://www.instagram.com/tattantap/" target="_blank" title="Instagram">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank" title="Facebook">
-                    <i class="fa-brands fa-facebook"></i>
-                </a>
+                <a href="https://www.instagram.com/tattantap/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61582495130534" target="_blank"><i class="fa-brands fa-facebook"></i></a>
             </div>
         </div>
     </div>
@@ -277,15 +231,12 @@
 
     const productsDB = {
         'sock': {
-            name: "Tất Cotton Premium",
-            type: 'sock',
+            name: "Tất Cotton Premium", type: 'sock',
             images: ["image/1.png", "image/tatcolung1.jpg", "image/tatcodai.jpg", "image/conganden.png", "image/colungden2.png", "image/codaiden.png"],
             desc: "<p><strong>Chất liệu:</strong> 90% Cotton tự nhiên, 10% Spandex giúp co giãn 4 chiều.</p>"
         },
         'book': {
-            name: "Sổ Tay Minimalist",
-            type: 'book',
-            price_fixed: 35000,
+            name: "Sổ Tay Minimalist", type: 'book', price_fixed: 35000,
             images: ["image/sach1.png", "image/sach2.png"],
             desc: "<p><strong>Loại giấy:</strong> Giấy kem ngà chống lóa, định lượng 100gsm dày dặn.</p>"
         }
@@ -296,7 +247,7 @@
     const productData = productsDB[productId];
 
     function initPage() {
-        if (!productData) { document.querySelector('.detail-container').innerHTML = "<h2>Không tìm thấy sản phẩm!</h2>"; return; }
+        if (!productData) return;
         document.getElementById('p-name').innerText = productData.name;
         document.getElementById('p-desc').innerHTML = productData.desc;
         const thumbContainer = document.getElementById('thumb-container');
@@ -307,7 +258,14 @@
             thumbContainer.appendChild(thumb);
         });
         updateMainImage(0);
-        if (productData.type === 'book') { document.getElementById('options-area').style.display = 'none'; }
+        
+        // Hiện gợi ý giảm giá nếu là Tất
+        if (productData.type === 'sock') {
+            document.getElementById('quantity-promo').style.display = 'block';
+        } else {
+            document.getElementById('options-area').style.display = 'none';
+        }
+        
         handleSelectionChange(); updateCartCount(); loadReviewsFromSheet();
     }
 
@@ -357,23 +315,21 @@
             const size = document.getElementById('sel-size').value;
             baseUnitPrice = (size === 'S') ? 10000 : (size === 'M') ? 12000 : 14000;
 
-            if (qty >= 10) finalUnitPrice = (size === 'S') ? 6000 : (size === 'M') ? 8000 : 10000;
-            else if (qty >= 5) finalUnitPrice = baseUnitPrice - 2000;
+            if (qty >= 10) finalUnitPrice = (size === 'S') ? 6000 : (size === 'M') ? 7200 : 8400; // Giảm 40%
+            else if (qty >= 5) finalUnitPrice = baseUnitPrice * 0.8; // Giảm 20%
             else finalUnitPrice = baseUnitPrice;
         } else {
             baseUnitPrice = productData.price_fixed;
             finalUnitPrice = baseUnitPrice;
         }
 
-        // Cập nhật giao diện hiển thị giá
         const totalBase = baseUnitPrice * qty;
         const totalFinal = finalUnitPrice * qty;
 
         if (totalFinal < totalBase) {
             priceContainer.innerHTML = `
-                <span class="old-price">${totalBase.toLocaleString('vi-VN')}₫</span>
-                <span class="price-arrow"><i class="fa-solid fa-right-long"></i></span>
-                <span>${totalFinal.toLocaleString('vi-VN')}₫</span>
+                <span class="old-price">${Math.round(totalBase).toLocaleString('vi-VN')}₫</span>
+                <span>${Math.round(totalFinal).toLocaleString('vi-VN')}₫</span>
             `;
         } else {
             priceContainer.innerHTML = `<span>${totalFinal.toLocaleString('vi-VN')}₫</span>`;
@@ -382,17 +338,10 @@
 
     function addToCart() {
         const qty = parseInt(document.getElementById('sel-qty').value) || 1;
-        let item = {
-            id: productId, name: productData.name, type: productData.type, quantity: qty,
-            image: document.getElementById('main-img').src 
-        };
+        let item = { id: productId, name: productData.name, type: productData.type, quantity: qty, image: document.getElementById('main-img').src };
         if (productData.type === 'sock') {
             item.size = document.getElementById('sel-size').value;
             item.color = document.getElementById('sel-color').value;
-            item.price = 0;
-        } else {
-            item.price = productData.price_fixed;
-            item.size = ""; item.color = "";
         }
         let cart = JSON.parse(localStorage.getItem('myCart')) || [];
         let existingItem = cart.find(x => x.id === item.id && x.size === item.size && x.color === item.color);
@@ -415,34 +364,25 @@
         fetch(`${GOOGLE_SCRIPT_URL}?id=${productId}`).then(res => res.json()).then(data => {
             list.innerHTML = ""; 
             if (!Array.isArray(data) || data.length === 0) {
-                list.innerHTML = '<div style="text-align:center; color:#999; padding:15px;">Chưa có feedback nào. Hãy là người đầu tiên!</div>';
+                list.innerHTML = '<div style="text-align:center; color:#999; padding:15px;">Chưa có feedback nào.</div>';
                 return;
             }
             data.forEach(rv => {
                 const stars = '★'.repeat(rv.rating) + '☆'.repeat(5 - rv.rating);
-                list.insertAdjacentHTML('beforeend', `
-                    <div class="review-item">
-                        <div class="review-header"><span class="reviewer-name">${rv.name}</span><span class="review-stars">${stars}</span></div>
-                        <div class="review-content">${rv.comment}</div>
-                        <span class="review-date">${new Date(rv.date).toLocaleDateString('vi-VN')}</span>
-                    </div>`);
+                list.insertAdjacentHTML('beforeend', `<div class="review-item"><div class="review-header"><span class="reviewer-name">${rv.name}</span><span class="review-stars">${stars}</span></div><div class="review-content">${rv.comment}</div><span class="review-date">${new Date(rv.date).toLocaleDateString('vi-VN')}</span></div>`);
             });
-        }).catch(() => list.innerHTML = '<div style="color:red; text-align:center; padding:10px;">Không tải được đánh giá.</div>');
+        });
     }
 
     function submitFeedback() {
-        const name = document.getElementById('fb-name').value.trim() || 'Khách hàng';
-        const code = document.getElementById('fb-code').value.trim();
-        const rating = document.getElementById('fb-rating').value;
-        const comment = document.getElementById('fb-comment').value.trim();
-        const btn = document.getElementById('btn-submit');
+        const code = document.getElementById('fb-code').value;
+        const comment = document.getElementById('fb-comment').value;
         if (!code || !comment) { alert("Vui lòng điền đủ thông tin!"); return; }
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang gửi...'; btn.disabled = true;
-        fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ type: 'feedback', product_id: productId, name, code, rating, comment }) })
-        .then(res => res.json()).then(data => {
-            if (data.result === 'success') { alert("✅ Feedback thành công."); loadReviewsFromSheet(); }
-            else alert("❌ Lỗi: " + data.result);
-        }).finally(() => { btn.innerHTML = 'GỬI FEEDBACK'; btn.disabled = false; });
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true;
+        fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ type: 'feedback', product_id: productId, name: document.getElementById('fb-name').value || 'Khách hàng', code, rating: document.getElementById('fb-rating').value, comment }) })
+        .then(() => { alert("Cảm ơn bạn đã feedback!"); loadReviewsFromSheet(); })
+        .finally(() => btn.disabled = false);
     }
 
     initPage();
